@@ -4,6 +4,7 @@ interface ProductoCartaProps {
   nombre: string;
   descripcion: string;
   precio: number;
+  tiempoEstimadoCocina: number;
   verDetalles: () => void;
   agregarCarrito: () => void;
 }
@@ -12,6 +13,7 @@ const ProductoCarta: React.FC<ProductoCartaProps> = ({
   nombre,
   descripcion,
   precio,
+  tiempoEstimadoCocina,
   verDetalles,
   agregarCarrito,
 }) => {

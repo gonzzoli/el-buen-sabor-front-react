@@ -4,6 +4,7 @@ interface Producto {
   nombre: string;
   descripcion: string;
   precio: number;
+  tiempoEstimadoCocina: number;
   verDetalles: () => void
   agregarCarrito: () => void
 }

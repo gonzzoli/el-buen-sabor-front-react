@@ -6,18 +6,18 @@ import FiltrosProductos from "./FiltrosProductos";
 import ListaProductos from "./ListaProductos";
 
 interface Producto {
-    nombre: string;
-    descripcion: string;
-    precio: number;
-    verDetalles: () => void
-    agregarCarrito: () => void
-  }
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  tiempoEstimadoCocina: number;
+  verDetalles: () => void;
+  agregarCarrito: () => void;
+}
 
-  interface CategoriaProducto {
-    nombreCategoria: string;
-    productos: Producto[];
-  }
-  
+interface CategoriaProducto {
+  nombreCategoria: string;
+  productos: Producto[];
+}
 
 const PaginaPrincipal: React.FC = () => {
   const [productos, setProductos] = useState<CategoriaProducto[]>([]);
@@ -26,10 +26,15 @@ const PaginaPrincipal: React.FC = () => {
   // primero hay que subirlo a render
   useEffect(() => {
     async function traerProductos() {
-      const respuesta = fetch(
-        `${import.meta.env.URL_API}/api/productos/paginaPrincipal`
+      const respuesta = await fetch(
+        `${import.meta.env.VITE_URL_API}/productos/paginaPrincipal`
       );
+      console.log(respuesta);
+      const datos = await respuesta.json();
+      console.log(datos);
+      setProductos(datos);
     }
+    console.log("corriendo");
     traerProductos();
   }, []);
 
@@ -37,7 +42,9 @@ const PaginaPrincipal: React.FC = () => {
     <div className="principal">
       <Hero texto="mansas burgers" rutaImagen={fotoHero} />
       <FiltrosProductos />
-      <ListaProductos categoriaProductos={productos} />
+      {productos.length > 0 && (
+        <ListaProductos categoriaProductos={productos} />
+      )}
     </div>
   );
 };
