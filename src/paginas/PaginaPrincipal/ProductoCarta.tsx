@@ -1,6 +1,7 @@
 import fotoProducto from "../../archivos/hamburguesa-producto.jpg"
 
 interface ProductoCartaProps {
+  id: number
   nombre: string;
   descripcion: string;
   precio: number;

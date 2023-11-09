@@ -1,6 +1,7 @@
 import ProductoCarta from "./ProductoCarta";
 
 interface Producto {
+  id: number
   nombre: string;
   descripcion: string;
   precio: number;
@@ -9,24 +10,24 @@ interface Producto {
   agregarCarrito: () => void
 }
 
-interface CategoriaProducto {
-  nombreCategoria: string;
+interface RubroProducto {
+  nombreRubro: string;
   productos: Producto[];
 }
 
 interface ListaProductosProps {
-  categoriaProductos: CategoriaProducto[];
+  rubroProductos: RubroProducto[];
 }
 
 const ListaProductos: React.FC<ListaProductosProps> = ({
-  categoriaProductos,
+  rubroProductos,
 }) => {
   return (
     <div>
-      {categoriaProductos.map((categoria: CategoriaProducto) => {
+      {rubroProductos.map((categoria: RubroProducto) => {
         return (
           <div className="categoria-productos">
-            <h2 className="titulo-3 categoria-titulo">{categoria.nombreCategoria}</h2>
+            <h2 className="titulo-3 categoria-titulo">{categoria.nombreRubro}</h2>
             <div className="categoria-lista-productos">
                 {categoria.productos.map((producto: Producto) => {
                     return (

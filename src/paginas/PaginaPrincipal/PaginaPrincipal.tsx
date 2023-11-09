@@ -6,6 +6,7 @@ import FiltrosProductos from "./FiltrosProductos";
 import ListaProductos from "./ListaProductos";
 
 interface Producto {
+  id: number
   nombre: string;
   descripcion: string;
   precio: number;
@@ -14,13 +15,13 @@ interface Producto {
   agregarCarrito: () => void;
 }
 
-interface CategoriaProducto {
-  nombreCategoria: string;
+interface RubroProducto {
+  nombreRubro: string;
   productos: Producto[];
 }
 
 const PaginaPrincipal: React.FC = () => {
-  const [productos, setProductos] = useState<CategoriaProducto[]>([]);
+  const [productos, setProductos] = useState<RubroProducto[]>([]);
 
   // aca traeriamos los productos desde el backend
   // primero hay que subirlo a render
@@ -43,7 +44,7 @@ const PaginaPrincipal: React.FC = () => {
       <Hero texto="mansas burgers" rutaImagen={fotoHero} />
       <FiltrosProductos />
       {productos.length > 0 && (
-        <ListaProductos categoriaProductos={productos} />
+        <ListaProductos rubroProductos={productos} />
       )}
     </div>
   );
