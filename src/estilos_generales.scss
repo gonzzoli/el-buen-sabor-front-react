@@ -89,16 +89,16 @@ header {
   // pero no modificar este archivo. sobreescribanlo con su
   // css
   height: 40vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("./fuente/hamburguesa_prueba.jpg");
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  .foto-hero {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    filter: brightness(0.6);
+  }
   .texto-hero {
     color: white;
     font-size: 40px;
@@ -106,6 +106,7 @@ header {
     max-width: 700px;
     text-align: center;
     line-height: 48px;
+    position: absolute;
   }
 }
 

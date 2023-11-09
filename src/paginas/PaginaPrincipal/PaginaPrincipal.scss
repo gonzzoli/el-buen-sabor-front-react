@@ -1,21 +1,9 @@
-@use "./fuente/estilos_generales.scss" as *;
+@use "../../estilos_generales.scss" as *;
 
-.hero {
-  @media screen and (max-width: $min-width-small) {
-    height: 30vh;
-
-    .texto-hero {
-      width: 100%;
-      font-size: 28px;
-      line-height: 40px;
-    }
-  }
-}
 
 .principal {
-  margin: 30px 0;
-  padding: 0 20px;
   .filtros-busqueda {
+    margin: 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,8 +14,7 @@
       align-items: center;
       min-width: 170px;
       max-width: 250px;
-      width: 50%;
-      i {
+      .icono {
         font-size: 28px;
         cursor: pointer;
         transition: 0.1s ease;
