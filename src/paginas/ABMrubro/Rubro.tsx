@@ -14,11 +14,13 @@ interface RubroProps{
     nombreRubro: String;
     tipoRubro: TipoRubro;
     estado: EstadoRubro;
-
-
 }
 
-const Rubro = () => {
+const Rubro: React.FC<RubroProps> = ({
+    nombreRubro:,
+    tipoRubro:,
+    estado:,
+}) => {
     return(
         <>
         <Header/>
