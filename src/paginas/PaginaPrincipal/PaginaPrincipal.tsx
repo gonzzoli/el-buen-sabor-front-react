@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import "./PaginaPrincipal.scss";
 import Hero from "../../componentes/Hero";
 import fotoHero from "../../archivos/hero-foto.jpg";

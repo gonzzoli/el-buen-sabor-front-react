@@ -1,4 +1,4 @@
-import fotoProducto from "../../archivos/hamburguesa-producto.jpg"
+import fotoProducto from "../../archivos/hamburguesa-producto.jpg";
 
 interface ProductoCartaProps {
   id: number
