@@ -17,14 +17,13 @@ interface RubroProps{
 }
 
 const Rubro: React.FC<RubroProps> = ({
-    nombreRubro:,
-    tipoRubro:,
-    estado:,
+    nombreRubro,
+    tipoRubro,
+    estado,
 }) => {
     return(
         <>
         <Header/>
-
         <Footer/>
 
         </>
