@@ -2,7 +2,7 @@ export interface Empleado{
     id?: number;
     idUsuario?: number;
     nombre: string;
-    apellid: string;
+    apellido: string;
     telefono: string;
     email: string;
     //Faltan domicilios
