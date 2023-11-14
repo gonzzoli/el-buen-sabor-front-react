@@ -1,9 +1,9 @@
 //enumeraciones
-enum TipoRubro{
+export enum TipoRubro{
     bebida= 'BEBIDA',
     cocina='COCINA',
 }
-enum EstadoRubro{
+export enum EstadoRubro{
     activo='ACTIVO',
     inactivo='INACTIVO',
 }
