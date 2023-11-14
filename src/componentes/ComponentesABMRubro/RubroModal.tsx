@@ -1,16 +1,16 @@
 
 import { Button, Form, Modal } from "react-bootstrap";
-import { ModalType } from "../tipos/ModalType";
+import { ModalType } from "../../tipos/ModalType";
 
 //Dependencias para validar los formularios
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { RubroService} from "../sevicios/RubroServicio"
+import { RubroService} from "../../sevicios/RubroServicio"
 
 //Notificaciones al usuario
 import { toast } from 'react-toastify';
-import { Rubro } from "../tipos/Rubro";
+import { Rubro } from "../../tipos/Rubro";
 
 
 

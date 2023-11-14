@@ -1,9 +1,8 @@
 import React from "react";
-import Footer from "../../componentes/Footer";
-import Header from "../../componentes/Header";
-import BotonNuevoRubro from "../../componentes/BotonNuevoRubro";
 import { TipoRubro,EstadoRubro } from "../../tipos/Rubro";
-
+import BotonNuevoRubro from "../../componentes/ComponentesABMRubro/BotonNuevoRubro";
+import BorrarRubro from "../../componentes/ComponentesABMRubro/BorrarRubro";
+import TablaRubro from "../../componentes/ComponentesABMRubro/TablaRubro";
 interface RubroProps{
     id: number;
     nombreRubro: string;
@@ -12,18 +11,15 @@ interface RubroProps{
     ingredienteRubro: string;
 }
 
-const Rubro: React.FC<RubroProps> = ({nombreRubro,tipoRubro, estado,ingredienteRubro}) => {
+const Rubro: React.FC<RubroProps> = ({}) => {
     return(
         <>
-        <Header />
+    
         <BotonNuevoRubro/>
-            <div className="rubro-details">
-                <h2>{nombreRubro}</h2>
-                <p>Tipo: {tipoRubro}</p>
-                <p>Estado: {estado}</p>
-                <p>Ingrediente: {ingredienteRubro}</p>
-            </div>
-      <Footer />
+        <BorrarRubro onClick={function (): void {
+                throw new Error("Function not implemented.");
+            } }/>
+        <TablaRubro/>
 
         </>
     )
