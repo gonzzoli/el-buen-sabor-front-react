@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { EstadoRubro, Rubro, TipoRubro } from "../../tipos/Rubro";
 import { RubroService } from "../../sevicios/RubroServicio";
-
+import "../../estilos_generales.scss";
 import { Button, Table } from "react-bootstrap";
 import Loader from "./Loader/Spinner";
 

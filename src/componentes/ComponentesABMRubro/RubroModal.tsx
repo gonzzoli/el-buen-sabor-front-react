@@ -1,5 +1,6 @@
 
-import { Button, Form, Modal } from "react-bootstrap";
+import { Modal,Form,FormLabel,Button } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { ModalType } from "../../tipos/ModalType";
 
 //Dependencias para validar los formularios
@@ -76,7 +77,7 @@ const handleDelete = async () => {
             id: Yup.number().integer().min(0),
             nombreRubro: Yup.string().required('El nombre es requerido'),
             estado: Yup.string().required('El estado es requerido'),
-            ingredienteRelacionado: Yup.string().required('El ingrediente relacionado es requerido'),
+            ingredienteRubro: Yup.string().required('El ingrediente relacionado es requerido'),
        
         });
     };
@@ -155,7 +156,7 @@ const handleDelete = async () => {
                         <Form.Group controlId="formEstadoRubro">
                             <Form.Label>Estado:</Form.Label>
                             <Form.Control
-                                name="estadoRubro"
+                                name="estado"
                                 type="text"
                                 value={formik.values.estado || ''}
                                 onChange={formik.handleChange}
