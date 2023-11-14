@@ -10,6 +10,9 @@ import { ProductoService } from "../../sevicios/ProductoServicio";
 /* Notificaciones al usuario */
 import { toast } from "react-toastify";
 
+/* Estilos */ 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 type ModalProductoProps = {
     show: boolean;
     onHide: () => void;
@@ -38,7 +41,7 @@ const ModalProducto = ({show, onHide, title, modalType, producto, refreshData}: 
             onHide();
             refreshData(prevState => !prevState);
         } catch (error) {
-            console.error(error);
+            console.error('error en HandleSaveUpdate',error);
             toast.error("Ha ocurrido un error.");
         }
         
