@@ -3,7 +3,7 @@ import { EstadoRubro, Rubro, TipoRubro } from "../../tipos/Rubro";
 import { RubroService } from "../../sevicios/RubroServicio";
 import "../../estilos_generales.scss";
 import { Button, Table } from "react-bootstrap";
-import Loader from "./Loader/Spinner";
+//import Loader from "./Loader/Spinner";
 
 import {ModalType} from "../../tipos/ModalType";
 import { EditarRubro } from "../ComponentesABMRubro/EditarRubro";
@@ -17,7 +17,7 @@ const TablaRubro = () => {
     const [rubros, setRubros] = useState<Rubro[]>([]);
 
     //Variable que muestra el componente Loader hasta que se reciban los datos de la API
-    const [isLoading, setIsLoading] = useState(true);
+   // const [isLoading, setIsLoading] = useState(true);
 
     //Variable que va actualizar los datos de la tabla luego de cada operacion exitosa
     const [refreshData, setRefreshData] = useState(false);
@@ -29,7 +29,7 @@ const TablaRubro = () => {
         const fetchRubros = async () => {
             const rubros = await RubroService.getRubros();
             setRubros(rubros);
-            setIsLoading(false);
+           // setIsLoading(false);
         };
 
         fetchRubros();
@@ -78,7 +78,7 @@ const TablaRubro = () => {
                 Nuevo Rubro
             </Button>
 
-    {isLoading ? <Loader/>: (
+    {/*{isLoading ? <Loader/>: (*/}
            
         <Table>
             <thead>
@@ -104,7 +104,7 @@ const TablaRubro = () => {
 
         </Table>
 
-    )}
+    
 
     {showModal && (
         <RubroModal

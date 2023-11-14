@@ -1,5 +1,6 @@
 
-import { Modal,Form,FormLabel,Button } from "react-bootstrap";
+import { Modal,Form,Button } from "react-bootstrap";
+import "../../estilos_generales.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ModalType } from "../../tipos/ModalType";
 
