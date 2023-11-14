@@ -49,10 +49,13 @@ const TablaProductos = () => {
                 precio: 0,
                 receta: "",
                 tiempoEstimadoCocina: 0,
-                idRubro: 0,
+                idRubro: 0,                             //El rubro lo estoy subiendo antes por POSTMAN, habría que hacer un combobox
                 foto: "",
-                estado: EstadoProducto.inactivo,
-                ingredientes: []
+                estado: EstadoProducto.inactivo,        //Agregar el switch de estado
+                ingredienteDTOS: [{
+                    "ingredienteId": 1,                 //Estoy harcodeando los ingredientes pq todavia no esta el ABM de ingredientes dentro de Producto
+                    "cantidad": 3               
+                }]
             };
         };
 

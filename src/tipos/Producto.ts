@@ -10,5 +10,8 @@ export interface Producto {
     idRubro: number;
     foto: string;
     estado: EstadoProducto;
-    ingredientes: []
+    ingredienteDTOS: {
+        ingredienteId: number;
+        cantidad: number;
+    }[];
 }
