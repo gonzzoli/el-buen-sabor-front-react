@@ -7,7 +7,7 @@ const AppRoutes: React.FC = () => {
           {/*<Route path='/' element={<HomePage/>}> </Route>
           <Route path='/componentes' element={<Componentes/>}> </Route>
           */}
-          <Route path='/rubros' element={<Rubro id={0} nombreRubro={""} tipoRubro={TipoRubro.bebida} estado={EstadoRubro.activo}/>}> </Route>
+          <Route path='/rubros' element={<Rubro id={0} nombreRubro={""} tipoRubro={TipoRubro.bebida} estado={EstadoRubro.activo} ingredienteRubro={""}/>}> </Route>
     
       </Routes>
     )

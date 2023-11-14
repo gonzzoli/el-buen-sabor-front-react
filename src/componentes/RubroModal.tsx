@@ -73,11 +73,11 @@ const handleDelete = async (rub:Rubro) => {
         //YUP - Esquema de validación
     const validationSchema = () => {
         return Yup.object().shape({
-        id: Yup.number().integer().min(0),
-        nombre: Yup.string().required('El nombre es requerido'),
-        estado: Yup.string().required('El estado es requerido'),
-        ingredienteRelacionado: Yup.string().required('El ingrediente relacionado es requerido'),
-    
+            id: Yup.number().integer().min(0),
+            nombreRubro: Yup.string().required('El nombre es requerido'),
+            estado: Yup.string().required('El estado es requerido'),
+            ingredienteRelacionado: Yup.string().required('El ingrediente relacionado es requerido'),
+       
         });
     };
     
@@ -85,7 +85,7 @@ const handleDelete = async (rub:Rubro) => {
 //Formik -  Utiliza el esquema de validación de YUP y obtiene un formulario dinámico que
 // bloquea el formulario en caso de haber errores.
     const formik = useFormik({
-        initialValues: Rubro,
+        initialValues: rubro,
         validationSchema: validationSchema(),
         validateOnChange: true,
         validateOnBlur: true,
@@ -103,23 +103,18 @@ const handleDelete = async (rub:Rubro) => {
                 <Modal show={show} onHide={onHide} centered backdrop="static">
 
                 <Modal.Header closeButton>
-                    <Modal.Nombre>{nombre}</Modal.Nombre>
+                    <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
                     <p> ¿Está seguro que desea eliminar el rubro   
-                        <br /> <strong> {rub.nombre} </strong> ?
+                        <br /> <strong> {rubro.nombreRubro} </strong> ?
                     </p>
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={onHide}>
-                        Cancelar
-                    </Button>
-
-                    <Button variant="danger" onClick={handleDelete}>
-                        Borrar
-                    </Button>
+                <Button variant="secondary" onClick={onHide}> Cancelar </Button>
+                <Button variant="primary" type="submit" disabled={!formik.isValid}> Guardar </Button>
                 </Modal.Footer>
 
                 </Modal>
@@ -139,20 +134,19 @@ const handleDelete = async (rub:Rubro) => {
                     <Form onSubmit={formik.handleSubmit}>
                         
                     {"NOMBRE DEL RUBRO"}
-                        <Form.Group controlId="formNombreRubro">
-                            <Form.Label>Nombre Rubro: </Form.Label>
+                    <Form.Group controlId="formNombreRubro">
+                            <Form.Label>Nombre Rubro</Form.Label>
                             <Form.Control
-                                name="nombre"
+                                name="nombreRubro"
                                 type="text"
-                                value={formik.values.nombreRubro || ''}
+                                value={formik.values.nombreRubro.toString() || ''}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.nombreRubro &&
-                                formik.touched.nombreRubro)}
+                                isInvalid={Boolean(formik.errors.nombreRubro && formik.touched.nombreRubro)}
                             />
-                            <Form.Control.Feedback type="invalid">
+                            {/*<Form.Control.Feedback type="invalid">
                                 {formik.errors.nombreRubro}
-                             </Form.Control.Feedback>
+            </Form.Control.Feedback> */}
                         </Form.Group>
 
 
@@ -186,7 +180,7 @@ const handleDelete = async (rub:Rubro) => {
                                 formik.touched.ingredienteRubro)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {formik.errors.}
+                                {formik.errors.ingredienteRubro}
                              </Form.Control.Feedback>
                         </Form.Group>
                     
