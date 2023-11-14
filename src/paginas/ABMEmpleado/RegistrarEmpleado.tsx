@@ -4,11 +4,11 @@ import Spinner from "react-bootstrap/Spinner";
 
 
 // Tabla de empleados a realizar
-//const ProductsTable = React.lazy(() => import('./components/ProductsTable'));
+const TablaEmpleado = React.lazy(() => import('../../componentes/TablaEmpleado'));
 
 const Empleado: React.FC = () => {
   // Utils
- // const { data, error, loading } = useProducts();
+  const { data, error, loading } = useProducts();
 
   // Render
   if (error) {
