@@ -140,14 +140,14 @@ const handleDelete = async () => {
                             <Form.Control
                                 name="nombreRubro"
                                 type="text"
-                                value={formik.values.nombreRubro || ''}
+                                value={formik.values.nombreRubro.toString() || ''}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 isInvalid={Boolean(formik.errors.nombreRubro && formik.touched.nombreRubro)}
                             />
-                            <Form.Control.Feedback type="invalid">
+                            {/*<Form.Control.Feedback type="invalid">
                                 {formik.errors.nombreRubro}
-                            </Form.Control.Feedback> 
+            </Form.Control.Feedback> */}
                         </Form.Group>
 
 

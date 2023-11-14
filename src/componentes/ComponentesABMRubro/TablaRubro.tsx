@@ -73,7 +73,7 @@ const TablaRubro = () => {
     <div className="m-3">
 
         {/* Botón para que cuando el admin haga click llame a la función que declaramos */}
-            <Button onClick={() => handleClick("Nuevo Rubro",
+            <Button className= "boton-primario" onClick={() => handleClick("Nuevo Rubro",
                 initializeNewRubro(), ModalType.CREATE)}>
                 Nuevo Rubro
             </Button>
