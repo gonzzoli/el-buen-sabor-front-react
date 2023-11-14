@@ -1,6 +1,7 @@
 import { Rubro } from "../tipos/Rubro";
 
-const BASE_URL = 'https://fakestoreapi.com';
+const BASE_URL = 'http://localhost:8080' 
+
 
 export const RubroService = {
 

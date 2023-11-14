@@ -10,7 +10,8 @@ const Header: React.FC = () => {
         <FontAwesomeIcon icon={faBurger} />
         <h3>El buen sabor</h3>
       </div>
-      {/*<nav className="header-botones-links">
+      {/* TODO ESTO SE PODRÍA REEMPLAZAR POR LO DE ABAJO
+      <nav className="header-botones-links">
         <ul className="header-links">
           <li className="header-link">
             <a href="#">Inicio</a>

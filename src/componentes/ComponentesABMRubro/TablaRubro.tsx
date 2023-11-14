@@ -29,7 +29,7 @@ const TablaRubro = () => {
         const fetchRubros = async () => {
             const rubros = await RubroService.getRubros();
             setRubros(rubros);
-            //setIsLoading(false);
+            setIsLoading(false);
         };
 
         fetchRubros();
@@ -69,9 +69,10 @@ const TablaRubro = () => {
 
 
   return (
+    <>
     <div className="m-3">
 
-        {/* Botón para que cuando el usuario haga click llame a la función que declaramos */}
+        {/* Botón para que cuando el admin haga click llame a la función que declaramos */}
             <Button onClick={() => handleClick("Nuevo Rubro",
                 initializeNewRubro(), ModalType.CREATE)}>
                 Nuevo Rubro
@@ -87,20 +88,16 @@ const TablaRubro = () => {
                     <th> ESTADO </th>
                     <th> EDITAR </th>
                     <th> BORRAR </th>
-                
                 </tr>
             </thead>
             <tbody>
                 {rubros.map(rubro=> (
                     <tr key={rubro.id}>
-                        
                         <td> {rubro.nombreRubro} </td>
                         <td> {rubro.ingredienteRubro} </td>
                         <td> {rubro.estado} </td>
-
                         <td> <EditarRubro onClick={() => handleClick("Editar rubro", rubro, ModalType.UPDATE)}/> </td>
                         <td> <BorrarRubro onClick={() => handleClick("Borrar rubro", rubro, ModalType.DELETE)} /> </td>
-
                     </tr>
                 ))}
             </tbody>
@@ -118,14 +115,13 @@ const TablaRubro = () => {
         rubro={rubro}
         refreshData={setRefreshData}
         />
-        
-        
-        
-        
+
+   
     )}
 
     
     </div>
+    </>
   )
 }
 

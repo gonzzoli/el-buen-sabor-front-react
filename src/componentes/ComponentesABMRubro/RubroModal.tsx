@@ -55,9 +55,9 @@ const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroMo
 
 
 //Función handleDelete (DELETE)
-const handleDelete = async (rub:Rubro) => {
+const handleDelete = async () => {
     try {
-        await RubroService.deleteRubro(rub.id);
+        await RubroService.deleteRubro(rubro.id);
         toast.success("Rubro borrado", {
             position: "top-center",
         });
@@ -104,19 +104,20 @@ const handleDelete = async (rub:Rubro) => {
 
                 <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>
+                
+
+                    <Modal.Body>
+                        <p> ¿Está seguro que desea eliminar el rubro   
+                            <br /> <strong> {rubro.nombreRubro} </strong> ?
+                        </p>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={onHide}> Cancelar </Button>
+                        <Button variant="danger" onClick={handleDelete}> Eliminar </Button>
+                    </Modal.Footer>
+
                 </Modal.Header>
-
-                <Modal.Body>
-                    <p> ¿Está seguro que desea eliminar el rubro   
-                        <br /> <strong> {rubro.nombreRubro} </strong> ?
-                    </p>
-                </Modal.Body>
-
-                <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}> Cancelar </Button>
-                <Button variant="primary" type="submit" disabled={!formik.isValid}> Guardar </Button>
-                </Modal.Footer>
-
                 </Modal>
                 </>
             ) : (
@@ -130,27 +131,27 @@ const handleDelete = async (rub:Rubro) => {
 
                     <Modal.Body>
 
-                    {"Formulario"}
+                    {/*"Formulario"*/}
                     <Form onSubmit={formik.handleSubmit}>
                         
-                    {"NOMBRE DEL RUBRO"}
+                    {/*"NOMBRE DEL RUBRO"*/}
                     <Form.Group controlId="formNombreRubro">
                             <Form.Label>Nombre Rubro</Form.Label>
                             <Form.Control
                                 name="nombreRubro"
                                 type="text"
-                                value={formik.values.nombreRubro.toString() || ''}
+                                value={formik.values.nombreRubro || ''}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 isInvalid={Boolean(formik.errors.nombreRubro && formik.touched.nombreRubro)}
                             />
-                            {/*<Form.Control.Feedback type="invalid">
+                            <Form.Control.Feedback type="invalid">
                                 {formik.errors.nombreRubro}
-            </Form.Control.Feedback> */}
+                            </Form.Control.Feedback> 
                         </Form.Group>
 
 
-                    {"ESTADO"}                
+                    {/*"ESTADO"*/}                
                         <Form.Group controlId="formEstadoRubro">
                             <Form.Label>Estado:</Form.Label>
                             <Form.Control
@@ -167,9 +168,9 @@ const handleDelete = async (rub:Rubro) => {
                              </Form.Control.Feedback>
                         </Form.Group>
                     
-                    {"INGREDIENTE RELACIONADO"}                
+                    {/*"INGREDIENTE RELACIONADO"*/}                
                         <Form.Group controlId="formIngrediente">
-                            <Form.Label>ingrediente relacionado:</Form.Label>
+                            <Form.Label>Ingrediente relacionado:</Form.Label>
                             <Form.Control
                                 name="ingredienteRubro"
                                 type="text"
