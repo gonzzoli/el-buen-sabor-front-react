@@ -5,41 +5,6 @@ import * as Yup from "yup";
 import {useFormik} from "formik";
 import { EmpleadoService } from "../../sevicios/EmpleadoService";
 
- //Yup
- const validationSchema = () => {
-    return Yup.object().shape({
-    id: Yup.number().integer().min(0),
-nombre: Yup.string().required('El nombre es requerido'),
-apellido: Yup.string().required('El apellido es requerido'),
-email: Yup.string().required('El email es requeridao'),
-telefono: Yup.string().required('El telefono es requerido')
-    });
- };
-
-   //Formik
-   //CREATE - UPDATE
-   const handleSaveUpdate = async (empl: Empleado) => {
-    try {
-        const isNew = empl.id === 0;
-        if (isNew) {
-            await EmpleadoService.registrarEmpleado(empl);
-        } else {
-            await EmpleadoService.updateEmpleado(empl.id, empl);
-        }
-        onHide();
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-   const formik = useFormik({
-    initialValues: empl,
-    validationSchema: validationSchema(),
-    validateOnChange: true,
-    validateOnBlur: true,
-    onSubmit: (obj: Empleado) => handleSaveUpdate(obj),
-  });
-
 
 type ModalEmpleadoProps = {
     	show: boolean;
@@ -51,6 +16,42 @@ type ModalEmpleadoProps = {
 
 
   const ModalEmpleado = ({ show, onHide, title, modalType, empl }: ModalEmpleadoProps) => {
+     //CREATE - UPDATE
+   const handleSaveUpdate = async (empl: Empleado) => {
+            try {
+                const isNew = empl.id === 0;
+                if (isNew) {
+                    await EmpleadoService.registrarEmpleado(empl);
+                } else {
+                    await EmpleadoService.updateEmpleado(empl.id, empl);
+                }
+                onHide();
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        //Yup
+        const validationSchema = () => {
+            return Yup.object().shape({
+            id: Yup.number().integer().min(0),
+        nombre: Yup.string().required('El nombre es requerido'),
+        apellido: Yup.string().required('El apellido es requerido'),
+        email: Yup.string().required('El email es requeridao'),
+        telefono: Yup.string().required('El telefono es requerido')
+            });
+        };
+
+        //Formik
+        
+        const formik = useFormik({
+            initialValues: empl,
+            validationSchema: validationSchema(),
+            validateOnChange: true,
+            validateOnBlur: true,
+            onSubmit: (obj: Empleado) => handleSaveUpdate(obj),
+        });
+
+
     return (
         <>
             {modalType === ModalType.DELETE ? (
