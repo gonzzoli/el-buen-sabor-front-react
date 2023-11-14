@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "../../componentes/Footer";
 import Header from "../../componentes/Header";
 import BotonNuevoRubro from "../../componentes/BotonNuevoRubro";
-import { Rubro, TipoRubro,EstadoRubro } from "../../tipos/Rubro";
+import { TipoRubro,EstadoRubro } from "../../tipos/Rubro";
 
 interface RubroProps{
     id: number;
