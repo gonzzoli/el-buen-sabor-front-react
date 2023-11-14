@@ -1,4 +1,6 @@
 import { Cliente } from "../tipos/Cliente";
+import { ClienteDTOMA } from "../tipos/DTOClienteMA";
+import { ClienteDTOMC } from "../tipos/DTOClienteMC";
 
 const BASE_URL = 'api/v1/cliente' 
 
@@ -36,28 +38,28 @@ export const ClienteService = {
         
     },
 
-    modificardatos: async (id: number, cliente: Cliente): Promise<Cliente> => {
+    modificardatos: async (id: number, clienteDTO: ClienteDTOMC): Promise<Cliente> => {
         
         const response = await fetch(`${BASE_URL}/modificarDatos`, {
             method: "PUT",
             headers: {
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify(cliente)
+            body: JSON.stringify(clienteDTO)
         });
 
         const data = await response.json();
         return data;
     },
 
-    modificarCliente: async (id: number, cliente: Cliente): Promise<Cliente> => {
+    modificarCliente: async (id: number, clienteDTO: ClienteDTOMA): Promise<Cliente> => {
         
         const response = await fetch(`${BASE_URL}/modificarCliente`, {
             method: "PUT",
             headers: {
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify(cliente)
+            body: JSON.stringify(clienteDTO)
         });
 
         const data = await response.json();
