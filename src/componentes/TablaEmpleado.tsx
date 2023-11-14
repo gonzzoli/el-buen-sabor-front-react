@@ -1,16 +1,13 @@
+import { useEffect, useState } from "react";
 import { Empleado } from "../tipos/Empleado";
-import * as React from 'react';
-import DataLayer from "../lib/data-layer";
-import Alert from "react-bootstrap/Alert";
-import Table from 'react-bootstrap/Table';
-import Spinner from 'react-bootstrap/Spinner';
-import Button from 'react-bootstrap/Button';
+import { EmpleadoService } from "../sevicios/EmpleadoService";
+import Loader from "../componentes/Loader/Loader.tsx";
+import { Button, Table } from "react-bootstrap";
+import { ModalType } from "../tipos/ModalType.ts";
 
-type EmpleadoTableProps = {
-    empleados: Empleado[];
-  };
 
-  const emptyEmpleado: Empleado = {
+const initializeNewEmpleado = (): Empleado => {
+  return {
     id: 0,
     nombre: '',
     apellido: '',
@@ -18,141 +15,95 @@ type EmpleadoTableProps = {
     telefono: '',
     email: ''
   };
-  
-
-  ///TODAVIA ESTA EN PROCESO
-
-  
-  const TablaEmpleado: React.FC<EmpleadoTableProps> = ({ empleados }) => {
-    // State
-  const [error, setError] = React.useState<any>(null);
-  const [listedEmpleado, setListedEmpleado] = React.useState<Empleado[]>(empleados);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [selectedEmpleado, setSelectedEmpleado] = React.useState<Empleado | null>(null);
-  const [showDeleteModal, setShowDeleteModal] = React.useState<boolean>(false);
-  const [showSaveModal, setShowSaveModal] = React.useState<boolean>(false);
+};
 
 
-  //Handlers
-  const onCloseDeleteModal = React.useCallback(() => setShowDeleteModal(false), [setShowDeleteModal]);
-  const onCloseSaveModal = React.useCallback(() => setShowSaveModal(false), [setShowSaveModal]);
-  const onDelete = React.useCallback(() => {
-    if (selectedEmpleado) {
-      setShowDeleteModal(false);
-      setLoading(true);
-      DataLayer.delete.Empleado(selectedEmpleado.id!)
-        .then(() => setListedEmpleado((prevState: Empleado[]) => prevState.filter((item: Empleado) => item.id !== selectedEmpleado.id)))
-        .catch((error: any) => setError(error))
-        .finally(() => setLoading(false));
-    }
-  }, [selectedEmpleado, setShowDeleteModal, setListedEmpleado, setLoading]);
-  const onSave = React.useCallback((p: Empleado) => {
-    if (selectedEmpleado) {
-      setShowSaveModal(false);
-      setLoading(true);
-      if (p.id) {
-        DataLayer.update.Empleado(p)
-          .then((editedEmpleado: Empleado) => setListedEmpleado((prevState: Empleado[]) => prevState.map((item: Empleado) => item.id === editedEmpleado.id ? editedEmpleado : item)))
-          .catch((error: any) => setError(error))
-          .finally(() => setLoading(false));
-      } else {
-        // Delete id property since it is a create action
-        delete p.id;
+//Empleado seleccionado que se va a pasar como prop al Modal
+const [empleado, setEmpleado] = useState<Empleado>(initializeNewEmpleado);
 
-        DataLayer.create.Empleado(p)
-          .then((createdEmpleado: Empleado) => {
-            setListedEmpleado((prevState: Empleado[]) => [...prevState, createdEmpleado]);
-          })
-          .catch((error: any) => setError(error))
-          .finally(() => setLoading(false));
-      }
-    }
-  }, [selectedEmpleado, setShowSaveModal, setListedEmpleado, setLoading]);
-  const onShowDeleteModal = React.useCallback((p: Empleado) => {
-    setSelectedEmpleado(p);
-    setShowDeleteModal(true);
-  }, [setSelectedEmpleado, setShowDeleteModal]);
-  const onShowSaveModal = React.useCallback((p?: Empleado) => {
-    setSelectedEmpleado(p ?? emptyEmpleado);
-    setShowSaveModal(true);
-  }, [setSelectedEmpleado, setShowSaveModal])
+//Manejo de Modal
+const [showModal, setShowModal] = useState(false);
+const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
+const [title, setTitle] = useState("");
 
-  // Render
-  if (error) {
-    return (
-      <Alert variant="danger">
-        {error?.message || 'Something went wrong while fetching products.'}
-      </Alert>
-    );
-  }
 
-  return (
-    <React.Suspense fallback={<Spinner animation="border" />}>
-      {
-        loading
-          ? (
-            <div style={{ alignItems: 'center', display: 'flex', height: '100vh', justifyContent: 'center', width: '100wh' }}>
-              <Spinner animation="border" />
-            </div>
-          )
-          : (
-            <>
-              <Button onClick={() => onShowSaveModal()} style={{ float: 'right', margin: 10 }} variant="primary">Create Product</Button>
-              <Table striped bordered hover>
+//Logica de Modal
+const handleClick = (newTitle: string, empl: Empleado, modal: ModalType) => {
+  setTitle(newTitle);
+  setModalType(modal)
+  setEmpleado(empl);
+  setShowModal(true);
+};
+
+
+const TablaEmpleado = () => {
+
+
+    //Variable que va a contener los datos recibidos por la API
+    const [empleados, setEmpleados] = useState<Empleado[]>([]);
+
+
+//Variable que muestra el componente Loader hasta que se reciban los datos de la API
+    const [isLoading, setIsLoading] = useState(true);
+
+
+//Este hook se va a ejecutar cada vez que se renderize el componente
+    useEffect(() => {
+
+
+//Llamamos a la funcion para obtener todos los productos declarado en el service
+        const fetchEmpleados = async () => {
+            const empleados = await EmpleadoService.getEmpleados();
+            setEmpleados(empleados);	
+          setIsLoading(false);
+        };
+
+
+        fetchEmpleados();
+
+
+    }, []);
+
+
+//Test, este log esta modificado para que muestre los datos de una manera mas legible
+    console.log(JSON.stringify(empleados, null, 2));
+    
+    return(
+        <>
+        <Button onClick={() => handleClick("Nuevo Empleado", initializeNewEmpleado(), ModalType.CREATE)}>
+                Nuevo Producto
+            </Button>
+
+        {isLoading ? <Loader /> : (
+          
+            <Table hover>
                 <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Image</th>
-                    <th>Actions</th>
-                  </tr>
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>idUsuario</th>
+                    </tr>
                 </thead>
                 <tbody>
-                  {
-                    listedEmpleado.map((e: Empleado) => (
-                      <tr key={e.id}>
-                        <td width='2%'>{e.id}</td>
-                        <td width='23%'>{e.nombre}</td>
-                        <td width='45%'>{e.apellido}</td>
-                        <td width='10%'>{e.telefono}</td>
-                        <td width='5%'>{e.email}</td>
-                        <td width='5%'>{e.idUsuario}</td>
-                        <td width='10%'>
-                          <Button onClick={() => onShowSaveModal(e)} variant="link">Edit</Button>
-                          <Button onClick={() => onShowDeleteModal(e)} variant="link">Delete</Button>
-                        </td>
-                      </tr>
-                    ))
-                  }
+                    {empleados.map(empleado => (
+                        <tr key={empleado.id}>
+                            <td>{empleado.nombre}</td>
+                            <td>{empleado.apellido}</td>
+                            <td>{empleado.email}</td>
+                            <td>{empleado.telefono}</td>
+                            <td>{empleado.idUsuario}</td>
+                        </tr>
+                    ))}
                 </tbody>
-              </Table>
-            </>
-          )
-      }
+            </Table>
+        )}
+        </>
+    )
 
- {/* TODAVIA A IMPLEMENTAR , PRIMERO VOY A DEJAR TODO FUNCIONANDO */}
-      {/* {/* <DeleteProductModal
-        onDelete={onDelete}
-        onHide={onCloseDeleteModal}
-        product={selectedProduct}
-        show={showDeleteModal}
-      />
-      <SaveProductModal
-        onHide={onCloseSaveModal}
-        onSave={onSave}
-        product={selectedProduct}
-        show={showSaveModal}
-      /> */}
-  
-      
-  
-  </React.Suspense>
-  )}
-;
+}
+
 
 export default TablaEmpleado;
-
-  

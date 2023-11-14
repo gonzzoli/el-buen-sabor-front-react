@@ -1,5 +1,4 @@
 import {Route, Routes} from "react-router-dom";
-import Rubro from "../paginas/ABMrubro/Rubro"
 
 const AppRoutes: React.FC = () => {
     return (

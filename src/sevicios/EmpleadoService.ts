@@ -20,5 +20,31 @@ export const EmpleadoService = {
         const data = await response.json();
     
         return data;
-    }
+    },
+
+    getEmpleados: async (): Promise<Empleado[]> => {
+        const response = await fetch(`${BASE_URL}/empleado/`);
+        const data = await response.json();
+        return data;
+    },
+    getEmpleado: async (id: number): Promise<Empleado> => {
+        const response = await fetch(`${BASE_URL}/empleado/${id}`); //chequear rutas
+                const data = await response.json();
+                return data;
+            },
+
+    updateEmpleado: async (id: number, empleado: Empleado): Promise<Empleado> => {
+                const response = await fetch(`${BASE_URL}/empleado/${id}`, {  // cjequear rutas
+                            method: "PUT",
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(empleado)
+                        });
+                        const data = await response.json();
+                        return data;
+                    },
+                
+        
+
 }

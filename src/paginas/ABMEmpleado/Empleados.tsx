@@ -1,14 +1,15 @@
 import Alert from "react-bootstrap/Alert";
 import * as React from 'react';
 import Spinner from "react-bootstrap/Spinner";
+import useEmpleado from "./Hooks/useEmpleado";
 
 
 // Tabla de empleados a realizar
 const TablaEmpleado = React.lazy(() => import('../../componentes/TablaEmpleado'));
 
-const Empleado: React.FC = () => {
+const Empleados: React.FC = () => {
   // Utils
-  const { data, error, loading } = useProducts();
+  const { data, error, loading } = useEmpleado();
 
   // Render
   if (error) {
@@ -27,9 +28,9 @@ const Empleado: React.FC = () => {
     )
     : (
       <React.Suspense fallback={<Spinner animation="border" />}>
-        <ProductsTable products={data} />
+        <TablaEmpleado/>
       </React.Suspense>
     )
 };
 
-export default Admin;
+export default Empleados;
