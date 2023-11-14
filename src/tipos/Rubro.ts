@@ -9,6 +9,7 @@ export enum EstadoRubro{
 }
 
 export interface Rubro {
+        ingredienteRubro: string;
         id: number;
         nombreRubro: String;
         tipoRubro: TipoRubro;
