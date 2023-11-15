@@ -26,7 +26,7 @@ const Header: React.FC = () => {
             <p>Carrito</p>
           </button>
           <button className="boton-primario">
-            <p>Iniciar Sesion</p>
+            <a href="src/LoginFormulario.tsx">Iniciar Sesion</a>
           </button >
         </div>
       </nav>
