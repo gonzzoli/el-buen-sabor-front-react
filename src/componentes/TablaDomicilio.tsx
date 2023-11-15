@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { domicilio } from "../tipos/Producto";
-import { EstadoProducto } from "../tipos/EstadoProdoucto";
-import { ProductoService } from "../../sevicios/ProductoServicio";
-import { ModalType } from "../../tipos/ModalType";
-import ModalProducto from "../ModalProducto/ModalProducto";
+
+import { ModalType } from "../tipos/ModalType";
+
 import Loader from "../Loader/Loader";
 import EditButton from "../EditButton/EditButton";
 import DeleteButton from "../DeleteButton/DeleteButton";
