@@ -4,6 +4,7 @@ import { ModalType } from "../../tipos/ModalType";
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import { EmpleadoService } from "../../sevicios/EmpleadoService";
+import { toast } from 'react-toastify';
 
 
 type ModalEmpleadoProps = {
@@ -12,10 +13,11 @@ type ModalEmpleadoProps = {
     	title:string
         modalType: ModalType;
         empl: Empleado;
+        refreshData: React.Dispatch<React.SetStateAction<boolean>>;
   };
 
 
-  const ModalEmpleado = ({ show, onHide, title, modalType, empl }: ModalEmpleadoProps) => {
+  const ModalEmpleado = ({ show, onHide, title, modalType, empl, refreshData }: ModalEmpleadoProps) => {
      //CREATE - UPDATE
    const handleSaveUpdate = async (empl: Empleado) => {
             try {
@@ -25,11 +27,30 @@ type ModalEmpleadoProps = {
                 } else {
                     await EmpleadoService.updateEmpleado(empl.id, empl);
                 }
-                onHide();
+                toast.success(isNew ? "Producto Creado" : "Producto Actualizado", {
+                    position: "top-center",
+                });
+            onHide();
+            refreshData(prevState => !prevState);
             } catch (error) {
                 console.error(error);
+                toast.error('A ocurrido un error');
             }
         };
+        const handleDelete = async () => {
+            try {
+                await EmpleadoService.deleteEmpleado(empl.id);
+                toast.success("Producto Borrado", {
+                    position: "top-center",
+                  });    
+                onHide();
+                refreshData(prevState => !prevState);
+            } catch (error) {
+                console.error(error);
+                toast.error('A ocurrido un error');
+            }
+        }
+    
         //Yup
         const validationSchema = () => {
             return Yup.object().shape({
@@ -56,7 +77,23 @@ type ModalEmpleadoProps = {
         <>
             {modalType === ModalType.DELETE ? (
                 <>
-                    Por el momento lo dejamos vacío
+                   <Modal show={show} onHide={onHide} centered backdrop="static">
+                <Modal.Header closeButton>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>¿Está seguro que desea dar de baja el Empleado?<br/> <strong>{empl.nombre}</strong>?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={onHide}>
+                    Cancelar
+                    </Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                    Borrar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
                 </>
             ) : (
                 <>

@@ -4,7 +4,9 @@ import { EmpleadoService } from "../sevicios/EmpleadoService";
 import Loader from "../componentes/Loader/Loader.tsx";
 import { Button, Table } from "react-bootstrap";
 import { ModalType } from "../tipos/ModalType.ts";
-
+import ModalEmpleado from "./ModalEmpleado/ModalEmpleado.tsx";
+import EditButton from "./EditButton/EditButton.tsx";
+import DeleteButton from "./DeleteButton/DeleteButton.tsx";
 
 const initializeNewEmpleado = (): Empleado => {
   return {
@@ -17,7 +19,9 @@ const initializeNewEmpleado = (): Empleado => {
   };
 };
 
+const [refreshData, setRefreshData] = useState(false);
 
+    
 //Empleado seleccionado que se va a pasar como prop al Modal
 const [empleado, setEmpleado] = useState<Empleado>(initializeNewEmpleado);
 
@@ -62,48 +66,62 @@ const TablaEmpleado = () => {
         fetchEmpleados();
 
 
-    }, []);
+    }, [refreshData]);
 
 
 //Test, este log esta modificado para que muestre los datos de una manera mas legible
     console.log(JSON.stringify(empleados, null, 2));
-    
-    return(
+    return (
         <>
-        <Button onClick={() => handleClick("Nuevo Empleado", initializeNewEmpleado(), ModalType.CREATE)}>
+            <Button onClick={() => handleClick("Nuevo Empleado", initializeNewEmpleado(), ModalType.CREATE)}>
                 Nuevo Producto
             </Button>
-
-        {isLoading ? <Loader /> : (
-          
-            <Table hover>
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Telefono</th>
-                        <th>idUsuario</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {empleados.map(empleado => (
-                        <tr key={empleado.id}>
-                            <td>{empleado.nombre}</td>
-                            <td>{empleado.apellido}</td>
-                            <td>{empleado.email}</td>
-                            <td>{empleado.telefono}</td>
-                            <td>{empleado.idUsuario}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        )}
+    
+            {isLoading ? (
+                <Loader />
+            ) : (
+                <>
+                    <Table hover>
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>idUsuario</th>
+                                <th>Editar</th>
+                                <th>Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {empleados.map(empleado => (
+                                <tr key={empleado.id}>
+                                    <td>{empleado.nombre}</td>
+                                    <td>{empleado.apellido}</td>
+                                    <td>{empleado.email}</td>
+                                    <td>{empleado.telefono}</td>
+                                    <td>{empleado.idUsuario}</td>
+                                <td><EditButton onClick={() => handleClick("Editar Empleado", empleado, ModalType.UPDATE)}/></td>
+                                <td><DeleteButton onClick={() => handleClick("Borrar Empleado", empleado, ModalType.DELETE)}/></td>
+                            </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+    
+                    {showModal && (
+                        <ModalEmpleado
+                            show={showModal}
+                            onHide={() => setShowModal(false)}
+                            title={title}
+                            modalType={modalType}
+                            empl={empleado}
+                            refreshData={setRefreshData}
+                        />
+                    )}
+                </>
+            )}
         </>
-    )
-
+    );
 }
-
-
-export default TablaEmpleado;
+    export default TablaEmpleado;
