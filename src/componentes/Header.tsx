@@ -44,6 +44,9 @@ const Header: React.FC = () => {
             
             
         
+            <a href="/ingredientes">Ingredientes</a>
+          </li>
+        </ul>
         <div className="header-botones">
           <button onClick={carritoContext.handleMostrarCarrito} className="boton-secundario boton-carrito">
             <FontAwesomeIcon icon={faCartPlus} />

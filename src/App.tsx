@@ -17,6 +17,7 @@ import { Suspense } from "react"
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/ReactToastify.css'
 import Empleados from "./paginas/ABMEmpleado/Empleados";
+import ABMIngrediente from "./paginas/ABMingrediente/ABMIngrediente";
 
 /* Son de prueba */
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/productos" element={<ABMProducto/>}/>
         <Route path="/empleado/registrarEmpleado" element={<Empleados/>}/>
         <Route path="/rubros" element={<Rubro/>}/>
+        <Route path="/ingredientes" element={<ABMIngrediente/>}/>
       </Routes>
 
       {carritoContext.mostrarCarrito &&
