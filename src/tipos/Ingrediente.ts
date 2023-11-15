@@ -1,14 +1,14 @@
 export enum UnidadMedida{
     litros= 'LITROS',
-    unidadeS= 'UNIDADES',
+    unidades= 'UNIDADES',
 }
 
 export interface Ingrediente {
-    id?: number;
+    id: number;
     nombre: string;
     costo: number;
     stockActual: number;
     stockMinimo: number;
     foto: string;
-    unidadm: UnidadMedida;   
+    unidadMedida: UnidadMedida;   
 }
