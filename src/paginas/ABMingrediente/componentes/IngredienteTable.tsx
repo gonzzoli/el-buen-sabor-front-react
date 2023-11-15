@@ -10,17 +10,14 @@ const IngredienteTable = () => {
     //Variable que va a contener los datos recibidos por la API
     const [ingrediente, setIngrediente] = useState<Ingrediente[]>([]);
 
-
     //Variable que muestra el componente Loader hasta que se reciban los datos de la API
     const [isLoading, setIsLoading] = useState(true);
 
     /* Variable que va a actualizar los datos de la tabla luego de cada operación exitosa*/
     const [refreshData, setRefreshData] = useState(false);
 
-
     //Este hook se va a ejecutar cada vez que se renderize el componente
     useEffect(() => {
-
 
         //Llamamos a la funcion para obtener todos los ingredientes declarado en el service
         const fetchIngrediente = async () => {
@@ -28,7 +25,6 @@ const IngredienteTable = () => {
             setIngrediente(ingrediente);
             setIsLoading(false);
         };
-
 
         fetchIngrediente();
 
@@ -96,8 +92,8 @@ const IngredienteTable = () => {
                             <td>{ingrediente.stockMinimo}</td>
                             <td>{ingrediente.unidadMedida}</td>
                             <td><img src={ingrediente.foto} alt={ingrediente.nombre} style={{ width: '50px' }} /></td>
-                            <td><EditButton onClick={() => handleClick("Editar Producto", product, ModalType.UPDATE)} /></td>
-                            <td><DeleteButton onClick={() => handleClick("Borrar Producto", product, ModalType.DELETE)} /></td>
+                            <td><EditButton onClick={() => handleClick("Editar Ingrediente", ingrediente, ModalType.UPDATE)} /></td>
+                            <td><DeleteButton onClick={() => handleClick("Borrar INgrediente", ingrediente, ModalType.DELETE)} /></td>
                         </tr>
                     ))
                     }
