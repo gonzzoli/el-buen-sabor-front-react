@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import "./PaginaPrincipal.scss";
 import Hero from "../../componentes/Hero";
-import fotoHero from "../../archivos/hero-foto.jpg";
+import fotoHero from "../../archivos/hamburguesa-producto.jpg";
 import FiltrosProductos from "./FiltrosProductos";
 import ListaProductos from "./ListaProductos";
 
@@ -41,7 +41,7 @@ const PaginaPrincipal: React.FC = () => {
 
   return (
     <div className="principal">
-      <Hero texto="mansas burgers" rutaImagen={fotoHero} />
+      <Hero texto="El buen Sabor. Bien sabroso todo lo que gozo. El Buen Sabroso" rutaImagen={fotoHero} />
       <FiltrosProductos />
       {productos.length > 0 && (
         <ListaProductos rubroProductos={productos} />
