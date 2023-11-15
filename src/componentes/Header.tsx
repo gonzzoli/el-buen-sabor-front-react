@@ -1,7 +1,10 @@
 import { faCartPlus, faBurger } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { CarritoContext } from "../context/CarritoContext";
 
 const Header: React.FC = () => {
+  const carritoContext = useContext(CarritoContext)
   return (
     <header className="header">
       <div className="header-logo">
@@ -11,7 +14,7 @@ const Header: React.FC = () => {
       <nav className="header-botones-links">
         <ul className="header-links">
           <li className="header-link">
-            <a href="#">Inicio</a>
+            <a href="/">Inicio</a>
           </li>
           <li className="header-link">
             <a href="#">Pagina 1</a>
@@ -19,9 +22,15 @@ const Header: React.FC = () => {
           <li className="header-link">
             <a href="#">Pagina 2</a>
           </li>
+          <li className="header-link">
+            <a href="/productos">Productos</a>
+          </li>
+          <li className="header-link">
+            <a href="/empleado/RegistrarEmpleado">Empleados</a>
+          </li>
         </ul>
         <div className="header-botones">
-          <button className="boton-secundario boton-carrito">
+          <button onClick={carritoContext.handleMostrarCarrito} className="boton-secundario boton-carrito">
             <FontAwesomeIcon icon={faCartPlus} />
             <p>Carrito</p>
           </button>
