@@ -2,52 +2,32 @@ import Header from "./componentes/Header";
 import Footer from "./componentes/Footer";
 import "./estilos_generales.scss";
 import PaginaPrincipal from "./paginas/PaginaPrincipal/PaginaPrincipal";
-import ABMProducto from "./paginas/ABMProducto/ABMProducto";
-import NavBar from "./componentes/NavBar";
-import {ToastContainer} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import { Container, Spinner } from "react-bootstrap";
-import * as React from "react";
-import Loader from "./componentes/Loader/Loader";
-import AppRoutes from "./rutas/Rutas";
-import Empleados from "./paginas/ABMEmpleado/Empleados";
-import { BrowserRouter } from "react-router-dom";
-import Router from "./componentes/layout/Router";
-
-
+import { Route, Routes } from "react-router-dom";
+import FondoModal from "./componentes/FondoModal";
+import ModalCarrito from "./paginas/Carrito/ModalCarrito";
+import { useContext } from "react";
+import { CarritoContext } from "./context/CarritoContext";
 
 function App() {
+  const carritoContext = useContext(CarritoContext);
   return (
-      <>
-      <ToastContainer/>
-        <Router>
-          <Header />
-          <Container style={{minHeight: '100vh', minWidth: '100%', padding: '0'}}>
-            <React.Suspense fallback={<Loader />}>
-              <AppRoutes />
-            </React.Suspense>
-          </Container>
-          <Footer />
-        </Router>
-  
-      </>
-);
-    
-    // <>
-    // <NavBar/>
-    //   <Header />
-    //    <Routes>
-    //     <Route path="/" element={<PaginaPrincipal />} />
-    //     <Route path="/otraPagina" element={<h3>El elemento de su pagina</h3>} />
-    //     <Route path="*" element={<h2>No se encontro la pagina</h2>} />
-    //     <Route path=""/>
-    //     <Route path="/admin" element={<ABMProducto/>}/>
-    //     <Route path="/RegistrarEmpleado" element={<Empleados/>}></Route>
-    //   </Routes> 
-    //   <Footer />
-    // </>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<PaginaPrincipal />} />
+        <Route path="/otraPagina" element={<h3>El elemento de su pagina</h3>} />
+        <Route path="*" element={<h2>No se encontro la pagina</h2>} />
+      </Routes>
 
-   
+      {carritoContext.mostrarCarrito &&
+      <FondoModal>
+        <ModalCarrito />
+      </FondoModal>
+      }
+
+      <Footer />
+    </>
+  );
 }
 
 

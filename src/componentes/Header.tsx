@@ -1,7 +1,10 @@
 import { faCartPlus, faBurger } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { CarritoContext } from "../context/CarritoContext";
 
 const Header: React.FC = () => {
+  const carritoContext = useContext(CarritoContext)
   return (
     <header className="header">
       <div className="header-logo">
@@ -22,7 +25,7 @@ const Header: React.FC = () => {
           
         </ul>
         <div className="header-botones">
-          <button className="boton-secundario boton-carrito">
+          <button onClick={carritoContext.handleMostrarCarrito} className="boton-secundario boton-carrito">
             <FontAwesomeIcon icon={faCartPlus} />
             <p>Carrito</p>
           </button>
