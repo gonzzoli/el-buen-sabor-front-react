@@ -29,7 +29,7 @@ function App() {
         <Route path="*" element={<h2>No se encontro la pagina</h2>} />
         <Route path=""/>
         <Route path="/productos" element={<ABMProducto/>}/>
-        <Route path="/empleados" element={<Empleados/>}/>
+        <Route path="/empleado/registrarEmpleado" element={<Empleados/>}/>
       </Routes>
 
       {carritoContext.mostrarCarrito &&

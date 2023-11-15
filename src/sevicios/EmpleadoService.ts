@@ -10,7 +10,7 @@ export const EmpleadoService = {
 
     registrarEmpleado:async (empleado: Empleado) => {
 
-        const response = await fetch(`${BASE_URL}/empleado/RegistrarEmpleado`, {          //Puede que haya que cambiar la ruta
+        const response = await fetch(`${BASE_URL}/empleado/registrarEmpleado`, {          //Puede que haya que cambiar la ruta
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export const EmpleadoService = {
     },
 
     getEmpleados: async (): Promise<Empleado[]> => {
-        const response = await fetch(`${BASE_URL}/`);
+        const response = await fetch(`${BASE_URL}/empleado`);
         const data = await response.json();
         return data;
     },
@@ -34,7 +34,7 @@ export const EmpleadoService = {
             },
 
     updateEmpleado: async (id: number, empleado: Empleado): Promise<Empleado> => {
-                const response = await fetch(`${BASE_URL}/${id}`, {  // chequear rutas
+                const response = await fetch(`${BASE_URL}/empleado/${id}`, {  // chequear rutas
                             method: "PUT",
                             headers: {
                                 'Content-Type': 'application/json'

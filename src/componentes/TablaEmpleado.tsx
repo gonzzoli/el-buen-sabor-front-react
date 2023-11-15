@@ -10,12 +10,18 @@ import DeleteButton from "./DeleteButton/DeleteButton.tsx";
 
 const initializeNewEmpleado = (): Empleado => {
   return {
+
+    //Aca esta el error, no me deja darle el tipo null a las fechas ni a el booleano deleted  ni al usuario asignado
     id: 0,
+    //  fecha_alta: null,
+    // fecha_modificacion: null,
     nombre: '',
     apellido: '',
-    idUsuario: 0,
     telefono: '',
-    email: ''
+    email: '',
+//deleted : null
+    domicilios: [],
+    // usuario: null
   };
 };
 
@@ -74,7 +80,7 @@ const TablaEmpleado = () => {
     return (
         <>
             <Button onClick={() => handleClick("Nuevo Empleado", initializeNewEmpleado(), ModalType.CREATE)}>
-                Nuevo Producto
+                Nuevo Empleado
             </Button>
     
             {isLoading ? (
@@ -89,7 +95,7 @@ const TablaEmpleado = () => {
                                 <th>Apellido</th>
                                 <th>Email</th>
                                 <th>Telefono</th>
-                                <th>idUsuario</th>
+                                <th>Contrasena</th> 
                                 <th>Editar</th>
                                 <th>Borrar</th>
                             </tr>
@@ -100,8 +106,11 @@ const TablaEmpleado = () => {
                                     <td>{empleado.nombre}</td>
                                     <td>{empleado.apellido}</td>
                                     <td>{empleado.email}</td>
+                                    
                                     <td>{empleado.telefono}</td>
-                                    <td>{empleado.idUsuario}</td>
+                                    {/* Tengo que ver como hago para ocultar la contrasena o se mostraria encriptada o no se mostraria */}
+                                    <td>{empleado.}</td> 
+
                                 <td><EditButton onClick={() => handleClick("Editar Empleado", empleado, ModalType.UPDATE)}/></td>
                                 <td><DeleteButton onClick={() => handleClick("Borrar Empleado", empleado, ModalType.DELETE)}/></td>
                             </tr>
