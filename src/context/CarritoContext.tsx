@@ -18,6 +18,7 @@ type CarritoContextType = {
 export const CarritoContext = createContext<CarritoContextType>({
   productosCarrito: [],
   mostrarCarrito: false,
+  totalCarrito: 0,
   handleMostrarCarrito: () => {},
   agregarProducto: (producto: Producto) => {},
   eliminarProducto: (producto: Producto) => {},

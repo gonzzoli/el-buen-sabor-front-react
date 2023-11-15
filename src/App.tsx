@@ -17,6 +17,7 @@ import Empleados from "./paginas/ABMEmpleado/Empleados";
 
 /* Son de prueba */
 
+import Carrito from "./paginas/Carrito/Carrito";
 
 function App() {
   const carritoContext = useContext(CarritoContext);
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PaginaPrincipal />} />
         <Route path="/otraPagina" element={<h3>El elemento de su pagina</h3>} />
+        <Route path="/carrito" element={<Carrito />} />
         <Route path="*" element={<h2>No se encontro la pagina</h2>} />
         <Route path=""/>
         <Route path="/productos" element={<ABMProducto/>}/>
