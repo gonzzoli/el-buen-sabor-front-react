@@ -64,8 +64,8 @@ const BASE_URL = 'http://localhost:8080/api/v1';
     
         
     
-        deleteRubro: async (id:number): Promise<void> => {
-            await fetch(`${BASE_URL}/rubros/${id}`, {
+        deleteDomicilio: async (id:number): Promise<void> => {
+            await fetch(`${BASE_URL}/domicilio/${id}`, {
                 method: "DELETE"
             });
         }
