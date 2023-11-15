@@ -8,6 +8,8 @@ import EditButton from "../EditButton/EditButton";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import { Domicilio } from "../tipos/Domicilio";
 import { DomicilioService } from "../sevicios/DomicilioServicio";
+import ModalDomicilio from "./modalDomicilio";
+import { dom } from "@fortawesome/fontawesome-svg-core";
 
 const TablaProductos = () => {
 
@@ -31,7 +33,7 @@ const TablaProductos = () => {
                 setIsLoading(false);
             }
 
-            buscardomicilio();
+            buscarDomicilio();
         }, [refreshData] 
         );
 
@@ -59,7 +61,7 @@ const TablaProductos = () => {
         const [title, setTitle] = useState("");
 
         /* Lógica del Modal */
-        const handleClick = (newTitle:string, <dom:Domicilio></dom:Domicilio>, modal:ModalType) => {
+        const handleClick = (newTitle:string, dom:Domicilio, modal:ModalType) => {
             setTitle(newTitle);
             setModalType(modal);
             setDomicilio(dom);
@@ -88,7 +90,7 @@ const TablaProductos = () => {
                             domicilio.map (domicilio) => (
                                 <tr key={domicilio.id}>
                                     <td>{domicilio.id}</td>
-                                    <td>{domicilio.nombre}</td>
+                                    <td>{domicilio.calle}</td>
                                     <td>${domicilio.precio}</td>
                                     <td>{domicilio.descripcion}</td>
                                     <td>{domicilio.receta}</td>
@@ -104,12 +106,12 @@ const TablaProductos = () => {
                 ) 
             }
             {showModal && (
-                <ModalProducto
+                <ModalDomicilio
                 show={showModal}
                 onHide={() => setShowModal(false)}
                 title={title}
                 modalType={modalType}
-                producto={producto}
+                domicilio={dom}
                 refreshData={setRefreshData}
                 />
             )}
