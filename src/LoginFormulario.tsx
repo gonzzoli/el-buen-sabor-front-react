@@ -2,8 +2,6 @@ import{useFormik} from "formik";
 import { Container } from "react-bootstrap";
 import * as Yup from 'yup';
 import "./estilos_generales.scss";
-import { JSX } from "react/jsx-runtime";
-
 
 const validationSchema = Yup.object(
     {
