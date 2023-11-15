@@ -3,6 +3,7 @@ export enum ModalType{
     CREATE,
     UPDATEMA,
     UPDATEMC,
+    UPDATE,
     DELETE
     }
     
