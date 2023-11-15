@@ -35,13 +35,13 @@ type RubroModalProps = {
 const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroModalProps) => {
 
     //CREATE-UPDATE función handleSaveUpdate 
-    const handleSaveUpdate = async (rub:Rubro) => {
+    const handleSaveUpdate = async (rubro:Rubro) => {
     try {
-        const isNew = rub.id === 0;
+        const isNew = rubro.id === 0;
         if (isNew) {
-            await RubroService.createRubro(rub);
+            await RubroService.agregarRubro(rubro);
         } else {
-            await RubroService.updateRubro(rub.id, rub);
+            await RubroService.modificarRubro(rubro.id, rubro);
         }
         toast.success(isNew ? "Rubro Creado" : "Rubro Actualizado", {
             position: "top-center",
@@ -59,7 +59,7 @@ const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroMo
 //Función handleDelete (DELETE)
 const handleDelete = async () => {
     try {
-        await RubroService.deleteRubro(rubro.id);
+        await RubroService.eliminarRubro(rubro.id);
         toast.success("Rubro borrado", {
             position: "top-center",
         });
@@ -78,7 +78,7 @@ const handleDelete = async () => {
             id: Yup.number().integer().min(0),
             nombreRubro: Yup.string().required('El nombre es requerido'),
             estado: Yup.string().required('El estado es requerido'),
-            ingredienteRubro: Yup.string().required('El ingrediente relacionado es requerido'),
+            tipoRubro: Yup.string().required('El  tipo de rubro es requerido'),
        
         });
     };
@@ -170,20 +170,20 @@ const handleDelete = async () => {
                              </Form.Control.Feedback>
                         </Form.Group>
                     
-                    {/*"INGREDIENTE RELACIONADO"*/}                
-                        <Form.Group controlId="formIngrediente">
-                            <Form.Label>Ingrediente relacionado:</Form.Label>
+                    {/*"TIPO RUBRO"*/}                
+                        <Form.Group controlId="formTipoRubro">
+                            <Form.Label>Tipo Rubro:</Form.Label>
                             <Form.Control
-                                name="ingredienteRubro"
+                                name="tipoRubro"
                                 type="text"
-                                value={formik.values.ingredienteRubro || ''}
+                                value={formik.values.tipoRubro || ''}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.ingredienteRubro &&
-                                formik.touched.ingredienteRubro)}
+                                isInvalid={Boolean(formik.errors.tipoRubro &&
+                                formik.touched.tipoRubro)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {formik.errors.ingredienteRubro}
+                                {formik.errors.tipoRubro}
                              </Form.Control.Feedback>
                         </Form.Group>
                     

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { EstadoRubro, Rubro, TipoRubro } from "../../tipos/Rubro";
+import { EstadoRubro,TipoRubro, Rubro } from "../../tipos/Rubro";
 import { RubroService } from "../../sevicios/RubroServicio";
 import "../../estilos_generales.scss";
 import { Button, Table } from "react-bootstrap";
@@ -27,7 +27,7 @@ const TablaRubro = () => {
 
         //Llamamos a la función para obtener todos los rubros declarado en el service
         const fetchRubros = async () => {
-            const rubros = await RubroService.getRubros();
+            const rubros = await RubroService.buscarRubrosPorNombre();
             setRubros(rubros);
            // setIsLoading(false);
         };
@@ -44,10 +44,8 @@ const TablaRubro = () => {
         return {
             id: 0,
             nombreRubro: "",
-            tipoRubro: TipoRubro.cocina ,
             estado: EstadoRubro.activo,
-            ingredienteRubro: "",
-            
+            tipoRubro: TipoRubro.cocina,
             };
     };
 
@@ -73,31 +71,32 @@ const TablaRubro = () => {
     <div className="m-3">
 
         {/* Botón para que cuando el admin haga click llame a la función que declaramos */}
-            <Button className= "boton-primario" onClick={() => handleClick("Nuevo Rubro",
+            <Button className= "boton-primario mb-4" onClick={() => handleClick("Nuevo Rubro",
                 initializeNewRubro(), ModalType.CREATE)}>
                 Nuevo Rubro
             </Button>
+            
 
     {/*{isLoading ? <Loader/>: (*/}
            
-        <Table>
+        <Table hover>
             <thead>
-                <tr>
-                    <th> RUBRO </th>
-                    <th> INGREDIENTE RELACIONADO </th>
-                    <th> ESTADO </th>
-                    <th> EDITAR </th>
-                    <th> BORRAR </th>
+                <tr className="tabla-titulo-columna" >
+                    <th className="tabla-titulo-columna"> RUBRO </th>
+                    <th className="tabla-titulo-columna"> TIPO RUBRO </th>
+                    <th className="tabla-titulo-columna"> ESTADO </th>
+                    <th className="tabla-titulo-columna"> EDITAR </th>
+                    <th className="tabla-titulo-columna"> BORRAR </th>
                 </tr>
             </thead>
             <tbody>
                 {rubros.map(rubro=> (
                     <tr key={rubro.id}>
-                        <td> {rubro.nombreRubro} </td>
-                        <td> {rubro.ingredienteRubro} </td>
-                        <td> {rubro.estado} </td>
-                        <td> <EditarRubro onClick={() => handleClick("Editar rubro", rubro, ModalType.UPDATE)}/> </td>
-                        <td> <BorrarRubro onClick={() => handleClick("Borrar rubro", rubro, ModalType.DELETE)} /> </td>
+                        <td className="celda"> {rubro.nombreRubro} </td>
+                        <td className="celda"> {rubro.tipoRubro} </td>
+                        <td className="celda"> {rubro.estado} </td>
+                        <td className="celda"> <EditarRubro onClick={() => handleClick("Editar rubro", rubro, ModalType.UPDATE)}/> </td>
+                        <td className="celda"> <BorrarRubro onClick={() => handleClick("Borrar rubro", rubro, ModalType.DELETE)} /> </td>
                     </tr>
                 ))}
             </tbody>
