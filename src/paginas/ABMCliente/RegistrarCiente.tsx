@@ -125,7 +125,7 @@ const validationSchema = () => {
                     name="email"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.telefono}
+                    value={formik.values.email}
                     />
                     {formik.touched.email && formik.errors.email ? (
                         <div className="text-danger"> Error en email {/*formik.errors.usuario*/}</div>
