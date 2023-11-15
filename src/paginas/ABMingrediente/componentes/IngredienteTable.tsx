@@ -21,6 +21,10 @@ const initializeNewIngrediente = (): Ingrediente => {
     };
 };
 
+
+
+const IngredienteTable = () => {
+    
 /* Variable que va a actualizar los datos de la tabla luego de cada operación exitosa*/
 const [refreshData, setRefreshData] = useState(false);
 
@@ -40,9 +44,6 @@ const handleClick = (newTittle: string, ingr: Ingrediente, modal: ModalType) => 
     setIngrediente(ingr);
     setShowModal(true);
 };
-
-
-const IngredienteTable = () => {
 
     //Variable que va a contener los datos recibidos por la API
     const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
@@ -91,7 +92,7 @@ const IngredienteTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {ingrediente.map(ingrediente => (
+                        {ingredientes.map(ingrediente => (
                             <tr key={ingrediente.id}>
                                 <td>{ingrediente.nombre}</td>
                                 <td>{ingrediente.costo}</td>
