@@ -9,12 +9,11 @@ import DeleteButton from "../DeleteButton/DeleteButton";
 import { Domicilio } from "../tipos/Domicilio";
 import { DomicilioService } from "../sevicios/DomicilioServicio";
 import ModalDomicilio from "./modalDomicilio";
-import { dom } from "@fortawesome/fontawesome-svg-core";
 
-const TablaProductos = () => {
+const TablaDomicilio = () => {
 
         /* Variable que va a contener los datos recibidos por la API*/
-        const [domicilio, setDomicilio] = useState<Domicilio[]>([]);
+        const [domicilios, setDomicilios] = useState<Domicilio[]>([]);
   
         /* Variable que muestra el Loader(spinner) hasta que se reciban los datos provenientes de la API */
         const [isLoading, setIsLoading] = useState(true);
@@ -28,8 +27,8 @@ const TablaProductos = () => {
             
             /* Llamada a la función para obtener todos los productos declarados en el ProductoService */
             const buscarDomicilio = async () => {
-                const productos = await DomicilioService.verDomicilio();
-                setDomicilio(domicilio);
+                const domicilios = await DomicilioService.getDomicilios();
+                setDomicilios(domicilios);
                 setIsLoading(false);
             }
 
@@ -38,12 +37,12 @@ const TablaProductos = () => {
         );
 
         /* Test, este log está modificado para que muestre los datos de una manera más legible (se muestra en la consola en formato JSON, sirve para verificar) */
-        console.log(JSON.stringify(domicilio, null, 2));
+        console.log(JSON.stringify(domicilios, null, 2));
 
         /* Const para inicializar un producto por defecto y evitar el "undefined" */
         //Creamos un producto nuevo para depositar los datos a cargar aquí
         
-        const initializableProductoNuevo = (): Domicilio => {
+        const initializableDomicilioNuevo = (): Domicilio => {
             return {
                 id: 0,
                 calle: "",
@@ -87,20 +86,19 @@ const TablaProductos = () => {
                     </thead>
                     <tbody>
                         {
-                            domicilio.map (domicilio) => (
+                            domicilios.map (domicilio => (
                                 <tr key={domicilio.id}>
                                     <td>{domicilio.id}</td>
                                     <td>{domicilio.calle}</td>
-                                    <td>${domicilio.precio}</td>
-                                    <td>{domicilio.descripcion}</td>
-                                    <td>{domicilio.receta}</td>
-                                    <td>{domicilio.idRubro}</td>
-                                    <td>{domicilio.estado}</td>
-                                    <td><img src={domicilio.foto} alt={domicilio.nombre} style={{width: '150px'}}/></td>
-                                    <td> <EditButton onClick={() => handleClick("Editar Producto", domicilio, ModalType.UPDATE)}/> </td>
-                                    <td> <DeleteButton onClick={() => handleClick("Borrar Producto", domicilio, ModalType.DELETE)}/> </td>
+                                    <td>{domicilio.numero}</td>
+                                    <td>{domicilio.localidad}</td>
+
+
+                                    <td> <EditButton onClick={() => handleClick("Editar Domicilio", domicilio, ModalType.UPDATE)}/> </td>
+                                    <td> <DeleteButton onClick={() => handleClick("Borrar Domicilio", domicilio, ModalType.DELETE)}/> </td>
                                 </tr>
                             ))
+                        }
                     </tbody>
                     </Table>
                 ) 
@@ -111,11 +109,11 @@ const TablaProductos = () => {
                 onHide={() => setShowModal(false)}
                 title={title}
                 modalType={modalType}
-                domicilio={dom}
+                domicilio={domicilio}
                 refreshData={setRefreshData}
                 />
             )}
         </>
     )
 }
-export default TablaProductos 
+export default TablaDomicilio
