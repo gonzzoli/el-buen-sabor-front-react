@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import { useNavigate } from 'react-router-dom'
 import { useContext } from "react";
 import { CarritoContext } from "../context/CarritoContext";
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   const Navigate = useNavigate();
@@ -14,39 +15,28 @@ const Header: React.FC = () => {
         <FontAwesomeIcon icon={faBurger} />
         <h3>El buen sabor</h3>
       </div>
-      {/* TODO ESTO SE PODRÍA REEMPLAZAR POR LO DE ABAJO
       <nav className="header-botones-links">
         <ul className="header-links">
           <li className="header-link">
-            <a href="/">Inicio</a>
+            <Link to="/">Inicio</Link>
           </li>
           <li className="header-link">
-            <a href="#">Pagina 1</a>
+          <Link to="/cliente">Mostrar clientes</Link>
           </li>
           <li className="header-link">
-            <a href="/cliente">MostarClientes</a>
+          <Link to="/productos">Productos</Link>
           </li>
           <li className="header-link">
-            <a href="/productos">Productos</a>
+          <Link to="/empleado/RegistrarEmpleado">Empleado</Link>
           </li>
           <li className="header-link">
-            <a href="/empleado/RegistrarEmpleado">Empleados</a>
+            <Link to="/rubros">Rubros</Link>
           </li>
           <li className="header-link">
-            <a href="http://localhost:5173/rubros">Rubros</a>
-          </li>
-        </ul>*/}
-
-        <Nav className="me-auto">
-           
-            <Nav.Link onClick={() => Navigate('/')}>PaginaPrincipal</Nav.Link>
-            <Nav.Link onClick={() => Navigate('/rubros')}>Rubros</Nav.Link>
-            
-            
-        
-            <a href="/ingredientes">Ingredientes</a>
+            <Link to="/ingredientes">Ingredientes</Link>
           </li>
         </ul>
+        </nav>
         <div className="header-botones">
           <button onClick={carritoContext.handleMostrarCarrito} className="boton-secundario boton-carrito">
             <FontAwesomeIcon icon={faCartPlus} />
@@ -56,7 +46,7 @@ const Header: React.FC = () => {
             <a href="/login">Iniciar Sesion</a>
           </button >
         </div>
-        </Nav>
+
     </header>
   );
 };
