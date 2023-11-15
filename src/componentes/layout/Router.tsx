@@ -12,7 +12,7 @@ const Router: React.FC = () => (
   <Routes>
     
     <Route element={<PaginaPrincipal />} path="/" />
-    <Route element={<RegistrarEmpleado/>} path="/Empleados"/>
+    <Route element={<RegistrarEmpleado/>} path="/empleado/RegistrarEmpleado"/>
 
   </Routes>
 );

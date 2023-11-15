@@ -13,6 +13,7 @@ import { Suspense } from "react"
 
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/ReactToastify.css'
+import Empleados from "./paginas/ABMEmpleado/Empleados";
 
 /* Son de prueba */
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="*" element={<h2>No se encontro la pagina</h2>} />
         <Route path=""/>
         <Route path="/productos" element={<ABMProducto/>}/>
+        <Route path="/empleados" element={<Empleados/>}/>
       </Routes>
 
       {carritoContext.mostrarCarrito &&

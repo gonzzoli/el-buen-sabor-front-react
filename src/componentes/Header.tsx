@@ -14,7 +14,7 @@ const Header: React.FC = () => {
       <nav className="header-botones-links">
         <ul className="header-links">
           <li className="header-link">
-            <a href="#">Inicio</a>
+            <a href="/">Inicio</a>
           </li>
           <li className="header-link">
             <a href="#">Pagina 1</a>
@@ -24,6 +24,9 @@ const Header: React.FC = () => {
           </li>
           <li className="header-link">
             <a href="/productos">Productos</a>
+          </li>
+          <li className="header-link">
+            <a href="/empleado/RegistrarEmpleado">Empleados</a>
           </li>
         </ul>
         <div className="header-botones">

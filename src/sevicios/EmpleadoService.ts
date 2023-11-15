@@ -1,6 +1,6 @@
 import { Empleado } from "../tipos/Empleado";
 
-const BASE_URL = 'https://buensabor-api.onrender.com/api/v1/empleado' 
+const BASE_URL = 'https://buensabor-api.onrender.com/api/v1' 
 
 /*
 Usar la URL de RENDER o sino también probar por localhost:8080, cualquiera de las dos debería funcionar
@@ -10,7 +10,7 @@ export const EmpleadoService = {
 
     registrarEmpleado:async (empleado: Empleado) => {
 
-        const response = await fetch(`${BASE_URL}/registrarEmpleado`, {          //Puede que haya que cambiar la ruta
+        const response = await fetch(`${BASE_URL}/empleado/RegistrarEmpleado`, {          //Puede que haya que cambiar la ruta
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
