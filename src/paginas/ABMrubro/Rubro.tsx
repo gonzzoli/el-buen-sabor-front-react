@@ -1,5 +1,3 @@
-
-
 import TablaRubro from "../../componentes/ComponentesABMRubro/TablaRubro";
 import FiltrosProductos from "../PaginaPrincipal/FiltrosProductos";
 

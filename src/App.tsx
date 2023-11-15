@@ -37,7 +37,6 @@ function App() {
         <Route path="/cliente" element={<ClienteAMB/>}/>
         <Route path="/login" element={<Load/>}/>
         <Route path="/Registro" element={<Registro/>}/>
-        <Route path=""/>
         <Route path="/productos" element={<ABMProducto/>}/>
         <Route path="/empleado/registrarEmpleado" element={<Empleados/>}/>
         <Route path="/rubros" element={<Rubro/>}/>

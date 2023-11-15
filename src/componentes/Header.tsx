@@ -1,7 +1,8 @@
 import { faCartPlus, faBurger } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Nav from 'react-bootstrap/Nav';
-import { useNavigate } from 'react-router-dom'import { useContext } from "react";
+import { useNavigate } from 'react-router-dom'
+import { useContext } from "react";
 import { CarritoContext } from "../context/CarritoContext";
 
 const Header: React.FC = () => {
