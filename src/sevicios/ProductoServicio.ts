@@ -1,6 +1,8 @@
 import { Producto } from "../tipos/Producto";
 
-const BASE_URL = 'http://localhost:8080' 
+
+const BASE_URL = 'https://buensabor-api.onrender.com'
+// const BASE_URL = 'http://localhost:8080' 
 
 /*
 Usar la URL de RENDER o sino también probar por localhost:8080, cualquiera de las dos debería funcionar
