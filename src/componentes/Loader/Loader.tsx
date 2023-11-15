@@ -4,10 +4,9 @@ import './Loader.css'
 const Loader = () => {
   return (
     <div className="loader">
+    <Spinner animation="border" variant="info" className="loader-spinner">
 
-    <Spinner animation="border" role="status" className="loader-spinner">
     </Spinner>
-
     </div>
   )
 }
