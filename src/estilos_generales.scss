@@ -265,9 +265,11 @@ header {
 footer {
   height: 132px;
   background: $color-primario;
+  bottom: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
+
   p {
     font-family: "Reenie Beanie", "Inter", "sans-serif";
   }

@@ -22,7 +22,9 @@ const Header: React.FC = () => {
           <li className="header-link">
             <a href="#">Pagina 2</a>
           </li>
-          
+          <li className="header-link">
+            <a href="/productos">Productos</a>
+          </li>
         </ul>
         <div className="header-botones">
           <button onClick={carritoContext.handleMostrarCarrito} className="boton-secundario boton-carrito">

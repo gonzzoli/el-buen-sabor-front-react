@@ -10,6 +10,9 @@ import { ProductoService } from "../../sevicios/ProductoServicio";
 /* Notificaciones al usuario */
 import { toast } from "react-toastify";
 
+/* Estilos */ 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 type ModalProductoProps = {
     show: boolean;
     onHide: () => void;
@@ -30,7 +33,7 @@ const ModalProducto = ({show, onHide, title, modalType, producto, refreshData}: 
             if (isNew) {
                 await ProductoService.agregarProducto(prod);
             } else {
-                await ProductoService.modificarProducto(prod.id, prod);
+                await ProductoService.modificarProducto(prod.id, prod);                     //Hay un problema que es que pierde el id de Rubro cuando se modifica
             }
             toast.success(isNew ? "Producto Creado" : "Producto Actualizado", {
                 position: "top-center",
@@ -38,7 +41,7 @@ const ModalProducto = ({show, onHide, title, modalType, producto, refreshData}: 
             onHide();
             refreshData(prevState => !prevState);
         } catch (error) {
-            console.error(error);
+            console.error('error en HandleSaveUpdate',error);
             toast.error("Ha ocurrido un error.");
         }
         
@@ -64,11 +67,11 @@ const ModalProducto = ({show, onHide, title, modalType, producto, refreshData}: 
     const validationSchema = () => {
         return Yup.object().shape({
             id: Yup.number().integer().min(0),
-            nombre: Yup.string().required('El título es requerido'),
+            nombre: Yup.string().required('El nombre es requerido'),
             precio: Yup.number().required('El precio es requerido'),
             descripcion: Yup.string().required('La descripción es requerida'),
             idRubro: Yup.number().required('El rubro es requerido'),
-        // foto: Yup.string().required('La URL de la imagen es requerida'),
+            foto: Yup.string().required('La URL de la imagen es requerida'),
             receta: Yup.string().required('La receta es requerida'),
             // con el boolean en teoria no hace falta hacer un required
         });
@@ -211,6 +214,10 @@ const ModalProducto = ({show, onHide, title, modalType, producto, refreshData}: 
                         {/* Estado */}
                         <Form.Group controlId="formEstado">
                             <Form.Label>Estado</Form.Label>
+                            <div className="form-check form-switch">
+                            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
+                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault"></label>
+                            </div>
                         </Form.Group>
 
                         <Modal.Footer className="mt-4">

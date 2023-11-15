@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMailForward } from "@fortawesome/free-solid-svg-icons/faMailForward";
+import "../estilos_generales.scss";
 
 const Footer: React.FC = () => {
   return (

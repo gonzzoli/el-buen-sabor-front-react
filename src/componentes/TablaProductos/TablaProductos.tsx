@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { Producto } from "../../tipos/Producto";
+import { EstadoProducto } from "../../tipos/EstadoProducto";
 import { ProductoService } from "../../sevicios/ProductoServicio";
 import { ModalType } from "../../tipos/ModalType";
 import ModalProducto from "../ModalProducto/ModalProducto";
@@ -38,7 +39,8 @@ const TablaProductos = () => {
         console.log(JSON.stringify(productos, null, 2));
 
         /* Const para inicializar un producto por defecto y evitar el "undefined" */
-        //Creamos un producto nuevo
+        //Creamos un producto nuevo para depositar los datos a cargar aquí
+        
         const initializableProductoNuevo = (): Producto => {
             return {
                 id: 0,
@@ -46,9 +48,14 @@ const TablaProductos = () => {
                 descripcion: "",
                 precio: 0,
                 receta: "",
-                idRubro: 0,
+                tiempoEstimadoCocina: 0,
+                idRubro: 0,                             //El rubro lo estoy subiendo antes por POSTMAN, habría que hacer un combobox
                 foto: "",
-                estado: true
+                estado: EstadoProducto.inactivo,        //Agregar el switch de estado
+                ingredienteDTOS: [{
+                    "ingredienteId": 1,                 //Estoy harcodeando los ingredientes pq todavia no esta el ABM de ingredientes dentro de Producto
+                    "cantidad": 3               
+                }]
             };
         };
 
@@ -83,6 +90,7 @@ const TablaProductos = () => {
                             <th> Descripción </th>
                             <th> Receta </th>
                             <th> ID Rubro </th>
+                            <th> Estado </th>
                             <th> Imagen </th>
                             <th> Editar </th>
                             <th> Eliminar </th>
@@ -98,7 +106,7 @@ const TablaProductos = () => {
                                     <td>{producto.descripcion}</td>
                                     <td>{producto.receta}</td>
                                     <td>{producto.idRubro}</td>
-                                    {/* Acá debe ir el estado */}
+                                    <td>{producto.estado}</td>
                                     <td><img src={producto.foto} alt={producto.nombre} style={{width: '150px'}}/></td>
                                     <td> <EditButton onClick={() => handleClick("Editar Producto", producto, ModalType.UPDATE)}/> </td>
                                     <td> <DeleteButton onClick={() => handleClick("Borrar Producto", producto, ModalType.DELETE)}/> </td>
