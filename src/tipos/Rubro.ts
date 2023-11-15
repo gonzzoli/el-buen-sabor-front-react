@@ -1,17 +1,19 @@
 //enumeraciones
-export enum TipoRubro{
-    bebida= 'BEBIDA',
-    cocina='COCINA',
-}
+
 export enum EstadoRubro{
     activo='ACTIVO',
     inactivo='INACTIVO',
 }
+export enum TipoRubro{
+    cocina="COCINA",
+    bebida="BEBIDA",
+}
 
 export interface Rubro {
+        
         id: number;
         nombreRubro: String;
-        tipoRubro: TipoRubro;
         estado: EstadoRubro;
+        tipoRubro: TipoRubro;
     
 }

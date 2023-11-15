@@ -1,36 +1,18 @@
-import React from "react";
-import Footer from "../../componentes/Footer";
-import Header from "../../componentes/Header";
-import BotonNuevoRubro from "../../componentes/BotonNuevoRubro";
 
-enum TipoRubro{
-    bebida= 'BEBIDA',
-    cocina='COCINA',
-}
-enum EstadoRubro{
-    activo='ACTIVO',
-    inactivo='INACTIVO',
-}
 
-interface RubroProps{
-    id: number;
-    nombreRubro: string;
-    tipoRubro: TipoRubro;
-    estado: EstadoRubro;
-}
+import TablaRubro from "../../componentes/ComponentesABMRubro/TablaRubro";
+import FiltrosProductos from "../PaginaPrincipal/FiltrosProductos";
 
-const Rubro: React.FC<RubroProps> = ({nombreRubro,tipoRubro, estado,}) => {
+
+
+const Rubro = () => {
+    
     return(
         <>
-        <Header />
-        <BotonNuevoRubro/>
-            <div className="rubro-details">
-                <h2>{nombreRubro}</h2>
-                <p>Tipo: {tipoRubro}</p>
-                <p>Estado: {estado}</p>
-            </div>
-      <Footer />
-
+         <div style={{ display: "flex", justifyContent: "space-between", margin: "40px" }}>
+         <TablaRubro/>
+        <FiltrosProductos/>
+        </div>
         </>
     )
 }

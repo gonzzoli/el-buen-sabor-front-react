@@ -1,4 +1,4 @@
-export enum ModalType {
+export enum ModalType{
     NONE,
     CREATE,
     UPDATE,

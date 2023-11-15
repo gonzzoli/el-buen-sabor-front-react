@@ -18,6 +18,8 @@ import Empleados from "./paginas/ABMEmpleado/Empleados";
 /* Son de prueba */
 
 import Carrito from "./paginas/Carrito/Carrito";
+import Rubro from "./paginas/ABMrubro/Rubro";
+
 
 function App() {
   const carritoContext = useContext(CarritoContext);
@@ -32,6 +34,7 @@ function App() {
         <Route path=""/>
         <Route path="/productos" element={<ABMProducto/>}/>
         <Route path="/empleado/registrarEmpleado" element={<Empleados/>}/>
+        <Route path="/rubros" element={<Rubro/>}/>
       </Routes>
 
       {carritoContext.mostrarCarrito &&
