@@ -1,15 +1,19 @@
 import { Cliente } from "../../tipos/Cliente";
 import { Container } from "react-bootstrap";
-import "./estilos_generales.scss";
+//import "../../estilos_generales.scss";
 //Dependencias para validar los formularios
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ClienteService } from "../../sevicios/ClienteServicio";
 //Notificaciones al usuario
 import { toast } from 'react-toastify';
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
-//Variable que muestra el componente Loader hasta que se reciban los datos de la API
+
+
+const Registro: React.FC =()=> {
+
+    //Variable que muestra el componente Loader hasta que se reciban los datos de la API
 const [isLoading, setIsLoading] = useState(true);
 //Variable que va actualizar los datos de la tabla luego de cada operacion exitosa
      const [refreshData, setRefreshData] = useState(false);
@@ -42,8 +46,6 @@ const validationSchema = () => {
             toast.error('Ha ocurrido un error');
         }
     };
-
-const Registro: React.FC =()=> {
 //Lo que necesita el formulario
     const formik = useFormik({
         initialValues:{
