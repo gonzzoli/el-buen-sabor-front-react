@@ -2,6 +2,8 @@ import{useFormik} from "formik";
 import { Container } from "react-bootstrap";
 import * as Yup from 'yup';
 import "./estilos_generales.scss";
+import Registro from "./paginas/ABMCliente/RegistrarCiente";
+import { Route, Routes } from "react-router-dom";
 
 const validationSchema = Yup.object(
     {
@@ -27,7 +29,7 @@ const App: React.FC = () =>  {
 
     });
 
-
+    
     return (
         <Container className="d-flex justify-content-center aling-items-center">
             <div className="border rounded-3 p-5 mt-5">
@@ -67,15 +69,19 @@ const App: React.FC = () =>  {
 
                     </div>
                     <div className="text-end">
-                        <button type="submit" >
+                        <button type="submit" className="boton-primario">
                             Enviar
                         </button>
-                        <button type="submit" >
-                            Crear Cuenta
-                        </button>
+                         
                     </div>
                 </form>
+                <div  className="mb-3 mt-3">
+                <button className="boton-primario">
+                            <a href="/Registro"> Crear Cuenta</a>
+                        </button > 
+                </div>
             </div>
+            
         </Container>
     );
 };

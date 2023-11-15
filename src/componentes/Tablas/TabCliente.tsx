@@ -49,7 +49,6 @@ const TablaCliente = () => {
         apellido: "",
         telefono: "",
         email: "",
-        usuario: "",
         password:"",
         rol:"Cliente"
         };

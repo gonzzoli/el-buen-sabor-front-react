@@ -17,7 +17,7 @@ const Header: React.FC = () => {
             <a href="#">Pagina 1</a>
           </li>
           <li className="header-link">
-            <a href="src/paginas/ABMCliente/Cliente.tsx">MostarClientes</a>
+            <a href="/cliente">MostarClientes</a>
           </li>
         </ul>
         <div className="header-botones">
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
             <p>Carrito</p>
           </button>
           <button className="boton-primario">
-            <a href="src/LoginFormulario.tsx">Iniciar Sesion</a>
+            <a href="/login">Iniciar Sesion</a>
           </button >
         </div>
       </nav>
