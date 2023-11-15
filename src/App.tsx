@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import FondoModal from "./componentes/FondoModal";
 import ModalCarrito from "./paginas/Carrito/ModalCarrito";
 import { useContext } from "react";
+import { CarritoContext } from "./context/CarritoContext";
 
 function App() {
   const carritoContext = useContext(CarritoContext);

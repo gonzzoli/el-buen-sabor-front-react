@@ -126,12 +126,12 @@ header {
   // sobreescribir en su propio css, no cambiar esto
   width: 75%;
   max-width: 750px;
+  min-height: 200px;
   max-height: 75%;
   border-radius: 10px;
   background: white;
   padding: 20px;
   position: fixed;
-  display: none;
   // cambiar despues con js display: block;
   top: 50%;
   left: 50%;

@@ -5,10 +5,10 @@ type ProductoCarrito = {
     cantidad: number
 }
 
-const ProductoCarrito = ({productoCarrito}) => {
+const ProductoCarrito = (productoCarrito: ProductoCarrito) => {
     const {producto, cantidad} = productoCarrito
     return (
-        <div>
+        <div className="producto-carrito">
             <div>
                 <h4>{producto.nombre}</h4>
                 <p>Cantidad: {cantidad}</p>
@@ -17,7 +17,7 @@ const ProductoCarrito = ({productoCarrito}) => {
                 <p>Precio unitario: ${producto.precio}</p>
                 <h5>Subtotal: ${producto.precio * cantidad}</h5>
             </div>
-            <div>
+            <div className="producto-carrito-derecha">
                 <button className="boton-primario">+ Agregar</button>
                 <button className="boton-secundario">- Quitar</button>
             </div>

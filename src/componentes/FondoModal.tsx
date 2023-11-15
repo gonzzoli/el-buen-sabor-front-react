@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react"
 
 const FondoModal = ({children}: PropsWithChildren) => {
     return (
-        <div className="fondo-modal">
+        <div className="fondo_oscuro">
             {children}
         </div>
     )

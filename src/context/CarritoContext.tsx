@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useState } from "react";
+import { PropsWithChildren, ReactNode, createContext, useState } from "react";
 import { Producto } from "../tipos/Producto";
 
 type ProductoCarrito = {
@@ -8,27 +8,33 @@ type ProductoCarrito = {
 
 type CarritoContextType = {
   productosCarrito: ProductoCarrito[];
+  mostrarCarrito: boolean;
+  totalCarrito: number;
+  handleMostrarCarrito: () => void;
   agregarProducto: (producto: Producto) => void;
   eliminarProducto: (producto: Producto) => void;
 };
 
 export const CarritoContext = createContext<CarritoContextType>({
   productosCarrito: [],
+  mostrarCarrito: false,
+  handleMostrarCarrito: () => {},
   agregarProducto: (producto: Producto) => {},
   eliminarProducto: (producto: Producto) => {},
 });
 
-export const CarritoProvider: React.FC = ({
-  children,
-}: PropsWithChildren<{}>) => {
+export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
   const [productosCarrito, setProductosCarrito] = useState<ProductoCarrito[]>(
     []
   );
+  const [mostrarCarrito, setMostrarCarrito] = useState(false);
+  let totalCarrito = 0;
 
   const agregarProducto = (productoNuevo: Producto) => {
     const estabaAgregado = productosCarrito.find(
       (producto) => producto.producto.id === productoNuevo.id
     );
+    totalCarrito += productoNuevo.precio;
     if (!estabaAgregado)
       setProductosCarrito([
         ...productosCarrito,
@@ -48,6 +54,7 @@ export const CarritoProvider: React.FC = ({
   };
 
   const eliminarProducto = (productoEliminar: Producto) => {
+    totalCarrito -= productoEliminar.precio;
     setProductosCarrito((productos) => {
       const productoEnCarrito = productos.find(
         (productoCarrito) => productoCarrito.producto.id == productoEliminar.id
@@ -70,27 +77,22 @@ export const CarritoProvider: React.FC = ({
     });
   };
 
+  const handleMostrarCarrito = () => {
+    setMostrarCarrito((prevState) => !prevState);
+  };
+
   return (
     <CarritoContext.Provider
-      value={{ productosCarrito, agregarProducto, eliminarProducto }}
+      value={{
+        productosCarrito,
+        mostrarCarrito,
+        totalCarrito,
+        agregarProducto,
+        eliminarProducto,
+        handleMostrarCarrito,
+      }}
     >
       {children}
     </CarritoContext.Provider>
   );
 };
-import { createContext } from "react";
-import { Producto } from "../tipos/Producto";
-
-type ProductoCarrito = {
-    producto: Producto[],
-    cantidad: number
-}
-
-type CarritoContextProps = {
-    productosCarrito: ProductoCarrito[],
-    totalCarrito: number,
-    agregarProducto: (producto: Producto) => void,
-    eliminarProducto: (idProducto: number) => void
-}
-
-const CarritoContext = createContext<CarritoContextProps | null>(null)

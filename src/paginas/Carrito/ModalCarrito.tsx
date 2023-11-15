@@ -2,25 +2,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { useContext } from "react"
 import ProductoCarrito from "./ProductoCarrito";
+import { CarritoContext } from "../../context/CarritoContext";
+import { Link } from "react-router-dom";
+import './modalCarrito.scss'
 
 const ModalCarrito = () => {
     const carritoContext = useContext(CarritoContext);
 
     return (
-        <div>
-            <button>
+        <div className="ventana-emergente ventana-carrito">
+            <Link to="/home" className="boton-secundario boton-volver">
                 <FontAwesomeIcon icon={faArrowLeft} />
                 Volver
-            </button>
-            <h2>Tu Pedido</h2>
-            <div>
+            </Link>
+            <h2 className="titulo-carrito">Tu Pedido</h2>
+            <div className="carrito-lista-productos">
                 {
-                    carritoContext.productosCarrito.map(productoCarrito => <ProductoCarrito productoCarrito={productoCarrito} />)
+                    carritoContext.productosCarrito.map(productoCarrito => <ProductoCarrito {...productoCarrito} />)
                 }
             </div>
-            <div>
+            <div className="ventana-carrito-abajo">
                 <p>Total: ${carritoContext.totalCarrito}</p>
-                <button className="boton-primario">Confirmar</button>
+                <Link to="/carrito" onClick={carritoContext.handleMostrarCarrito} className="boton-primario">Confirmar</Link>
             </div>
         </div>
     )
