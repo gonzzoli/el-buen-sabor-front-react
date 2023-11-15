@@ -15,7 +15,7 @@ export const ProductoService = {
 
     agregarProducto:async (producto: Producto) => {
 
-        const response = await fetch(`${BASE_URL}/api/v1/productos/agregarProducto`, {          //Puede que haya que cambiar la ruta, igual desde el POSTMAN funciona
+        const response = await fetch(`${BASE_URL}/api/v1/productos/agregarProducto`, {          //Puede que haya que cambiar la ruta (Funciona)
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export const ProductoService = {
     },
 
     eliminarProducto:async (id:number): Promise<void> => {
-        await fetch(`${BASE_URL}/api/v1/productos/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
+        await fetch(`${BASE_URL}/api/v1/productos/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona, igual hay problemas con el id de Rubro)
             method: "DELETE"
         });
     },
