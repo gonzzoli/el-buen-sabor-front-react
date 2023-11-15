@@ -19,6 +19,8 @@ import ABMIngrediente from "./paginas/ABMingrediente/ABMIngrediente";
 
 import Carrito from "./paginas/Carrito/Carrito";
 import Rubro from "./paginas/ABMrubro/Rubro";
+import Domicilio from "./paginas/ABMdomicilio/Domicilio";
+
 
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
         <Route path="/empleado/registrarEmpleado" element={<Empleados/>}/>
         <Route path="/rubros" element={<Rubro/>}/>
         <Route path="/ingredientes" element={<ABMIngrediente/>}/>
+        <Route path="/Domicilio" element={<Domicilio/>} />
+
       </Routes>
 
       {carritoContext.mostrarCarrito &&
