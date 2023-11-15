@@ -10,5 +10,5 @@ export interface Ingrediente {
     stockActual: number;
     stockMinimo: number;
     foto: string;
-    unidadMedida: UnidadMedida;   
+    unidadMedida: UnidadMedida | null;   
 }

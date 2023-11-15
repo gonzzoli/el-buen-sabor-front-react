@@ -104,9 +104,9 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingr, refreshData }:
                             <Form onSubmit={formik.handleSubmit}>
                                 {/*Debajo de la etiqueta Form, vamos a armar un <Form.Group> por cada uno de los campos para dar de alta o modificar un producto. */}
                                 <Form.Group controlId="formTitulo">
-                                    <Form.Label>Titulo</Form.Label>
+                                    <Form.Label>Nombre</Form.Label>
                                     <Form.Control
-                                        name="title"
+                                        name="nombre"
                                         type="text"
                                         value={formik.values.nombre || ''}
                                         onChange={formik.handleChange}
@@ -166,8 +166,8 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingr, refreshData }:
                                 <Form.Group controlId="formFoto">
                                     <Form.Label>Foto</Form.Label>
                                     <Form.Control
-                                        name="Foto"
-                                        type="string"
+                                        name="foto"
+                                        type="text"
                                         value={formik.values.foto || ''}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
@@ -179,11 +179,11 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingr, refreshData }:
                                 </Form.Group>
 
 
-                                <Form.Group controlId="fotmUnidadMedida">
+                                <Form.Group controlId="formUnidadMedida">
                                     <Form.Label>UnidadMedida</Form.Label>
                                     <Form.Control
                                         name="UnidadMedida"
-                                        type="string"
+                                        type="text"
                                         value={formik.values.unidadMedida || ''}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
