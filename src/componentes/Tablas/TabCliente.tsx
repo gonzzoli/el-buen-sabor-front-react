@@ -19,7 +19,7 @@ const TablaCliente = () => {
 
 
 //Variable que muestra el componente Loader hasta que se reciban los datos de la API
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 //Variable que va actualizar los datos de la tabla luego de cada operacion exitosa
      const [refreshData, setRefreshData] = useState(false);
 
