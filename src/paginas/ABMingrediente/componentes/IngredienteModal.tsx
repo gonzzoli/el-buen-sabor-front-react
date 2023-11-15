@@ -166,8 +166,8 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingr, refreshData }:
                                 <Form.Group controlId="formFoto">
                                     <Form.Label>Foto</Form.Label>
                                     <Form.Control
-                                        name="stockActual"
-                                        type="number"
+                                        name="Foto"
+                                        type="string"
                                         value={formik.values.foto || ''}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
@@ -183,7 +183,7 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingr, refreshData }:
                                     <Form.Label>UnidadMedida</Form.Label>
                                     <Form.Control
                                         name="UnidadMedida"
-                                        type="UnidadMedida"
+                                        type="string"
                                         value={formik.values.unidadMedida || ''}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
