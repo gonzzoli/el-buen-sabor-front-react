@@ -4,8 +4,18 @@ import { useContext, useState } from "react";
 import { CarritoContext } from "../../context/CarritoContext";
 import ProductoCarrito from "./ProductoCarrito";
 import "./carrito.scss";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+
+enum MetodoPago {MERCADO_PAGO , EFECTIVO}
+enum MetodoEntrega {DELIVERY , RETIRA_EN_LOCAL}
+
+type Pedido = {
+  metodoPago: MetodoPago,
+  metodoEntrega: MetodoEntrega,
+  direccionEnvio: string,
+  nombreApellido: string,
+  numeroTelefono: string,
+  productos: ProductoCarrito[]
+}
 
 const formikInitialValues = {
   metodoPago: "",
@@ -17,13 +27,21 @@ const formikInitialValues = {
 
 const Carrito = () => {
   const carritoContext = useContext(CarritoContext);
-  const [metodoPago, setMetodoPago] = useState("");
-  const [metodoEntrega, setMetodoEntrega] = useState("");
+  const [metodoPago, setMetodoPago] = useState<MetodoPago>(MetodoPago.EFECTIVO);
+  const [metodoEntrega, setMetodoEntrega] = useState<MetodoEntrega>(MetodoEntrega.DELIVERY);
   const [direccionEnvio, setDireccionEnvio] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
+  const [nombreApellido, setNombreApellido] = useState("")
 
   const confirmarPedido = async () => {
-    const pedido = {};
+    const pedido: Pedido = {
+      productos: carritoContext.productosCarrito,
+      metodoPago,
+      metodoEntrega,
+      numeroTelefono,
+      nombreApellido,
+      direccionEnvio
+    };
     const response = await fetch(import.meta.env.VITE_URL_API + "/pedidos", {
       method: "POST",
       body: JSON.stringify(pedido),
@@ -54,11 +72,11 @@ const Carrito = () => {
   // });
 
   const onChangeMetodoPago = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMetodoPago(e.target.value);
+    setMetodoPago(e.target.value as MetodoPago);
   };
 
   const onChangeMetodoEntrega = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMetodoEntrega(e.target.value);
+    setMetodoEntrega(e.target.value as MetodoEntrega);
   };
 
   return (
@@ -77,9 +95,9 @@ const Carrito = () => {
             type="radio"
             name="metodo-entrega"
             id="metodo-entrega"
-            checked={metodoEntrega == "RETIRA_EN_LOCAL"}
+            checked={metodoEntrega == MetodoEntrega.RETIRA_EN_LOCAL}
             onChange={onChangeMetodoEntrega}
-            value="RETIRA_EN_LOCAL"
+            value={MetodoEntrega.RETIRA_EN_LOCAL}
           />
           <label htmlFor="metodo-entrega">Retira en local</label>
         </div>
@@ -88,14 +106,14 @@ const Carrito = () => {
             type="radio"
             name="metodo-entrega"
             id="metodo-entrega"
-            checked={metodoEntrega == "DELIVERY"}
+            checked={metodoEntrega == MetodoEntrega.DELIVERY}
             onChange={onChangeMetodoEntrega}
-            value="DELIVERY"
+            value={MetodoEntrega.DELIVERY}
           />
           <label htmlFor="metodo-entrega">Delivery</label>
         </div>
 
-        {metodoEntrega == "RETIRA_EN_LOCAL" && (
+        {metodoEntrega == MetodoEntrega.RETIRA_EN_LOCAL && (
           <>
             <h3>Metodo de pago</h3>
             <div style={{ display: "flex", gap: "5px" }}>
@@ -103,9 +121,9 @@ const Carrito = () => {
                 type="radio"
                 name="metodo-pago"
                 id="metodo-pago"
-                checked={metodoPago == "EFECTIVO"}
+                checked={metodoPago == MetodoPago.EFECTIVO}
                 onChange={onChangeMetodoPago}
-                value="EFECTIVO"
+                value={MetodoPago.EFECTIVO}
               />
               <label htmlFor="metodo-pago">Efectivo</label>
             </div>
@@ -115,9 +133,9 @@ const Carrito = () => {
                 type="radio"
                 name="metodo-pago"
                 id="metodo-pago"
-                checked={metodoPago == "MERCADO_PAGO"}
+                checked={metodoPago == MetodoPago.MERCADO_PAGO}
                 onChange={onChangeMetodoPago}
-                value="MERCADO_PAGO"
+                value={MetodoPago.MERCADO_PAGO}
               />
               <label htmlFor="metodo-pago">Mercado Pago</label>
             </div>
@@ -126,13 +144,30 @@ const Carrito = () => {
       </div>
       <div>
         <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
-        <label htmlFor="metodo-pago">Nombre y Apellido</label>
+        <label htmlFor="nombre-apellido">Nombre y Apellido</label>
           <input
             type="text"
             name="nombre-apellido"
             id="nombre-apellido"
           />
+        </div>
 
+        <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
+        <label htmlFor="direccion">Direccion</label>
+          <input
+            type="text"
+            name="direccion"
+            id="direccion"
+          />
+        </div>
+
+        <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
+        <label htmlFor="numero-telefono">Numero de telefono</label>
+          <input
+            type="number"
+            name="numero-telefono"
+            id="numero-telefono"
+          />
         </div>
       </div>
 
