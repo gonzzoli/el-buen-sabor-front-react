@@ -7,15 +7,6 @@ import { Domicilio } from '../../tipos/Domicilio';
 import { DomicilioService } from '../../sevicios/DomicilioServicio';
 import Formulariomod from '../../componentes/formularioMod';
 
-/*interface DomicilioProps{
-    id: number;
-    calle:string,
-    numero: number,
-    localidad:string,
-}*/
-//const Domicilio: React.FC<DomicilioProps> = ({calle,numero, localidad,}) => {
-   
-    
 
 //formulario de cargar nuevo domicilio
 function ModalComponent() {
@@ -74,7 +65,7 @@ const Domicilio = () => {
         localidad:'Godoy Cruz',
     },
     {
-        id:1,
+        id:3,
         calle:'Reconquista',
         numero: 170,
         localidad:'Godoy Cruz',
@@ -124,6 +115,8 @@ const [modalVisible, handleShow] = useState(false);
         ))}
       </tbody>
             </Table>
+             {/* Renderiza el modal solo si modalVisible es true */}
+      {modalVisible && <ModalComponent />}
             </div>
 
   );
