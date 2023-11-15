@@ -3,6 +3,5 @@ export interface Domicilio{
     numero: string,
     localidad: string,
     cliente: string,// falta definir cliente
-    empleado: 
     
 }
