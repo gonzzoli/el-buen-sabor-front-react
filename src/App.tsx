@@ -7,6 +7,7 @@ import FondoModal from "./componentes/FondoModal";
 import ModalCarrito from "./paginas/Carrito/ModalCarrito";
 import { useContext } from "react";
 import { CarritoContext } from "./context/CarritoContext";
+import Carrito from "./paginas/Carrito/Carrito";
 
 function App() {
   const carritoContext = useContext(CarritoContext);
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PaginaPrincipal />} />
         <Route path="/otraPagina" element={<h3>El elemento de su pagina</h3>} />
+        <Route path="/carrito" element={<Carrito />} />
         <Route path="*" element={<h2>No se encontro la pagina</h2>} />
       </Routes>
 
