@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Ingrediente } from "../../../tipos/Ingrediente";
+import { Ingrediente, UnidadMedida } from "../../../tipos/Ingrediente";
 import { IngredienteServicio } from "../../../sevicios/IngredienteServicio"
-//import Loader from "../Loader/Loader";
+import Loader from "../../../componentes/Loader/Loader.tsx";
 import { Button, Table } from "react-bootstrap";
 import { ModalType } from "../../../tipos/ModalType";
 import IngredienteModal from "./IngredienteModal";
-//import EditButton from "./EditButton/EditButton.tsx";
-//import DeleteButton from "./DeleteButton/DeleteButton.tsx";
+import EditButton from "../../../componentes/EditButton/EditButton.tsx";
+import DeleteButton from "../../../componentes/DeleteButton/DeleteButton.tsx";
 import React from "react";
 
 const initializeNewIngrediente = (): Ingrediente => {
@@ -17,7 +17,7 @@ const initializeNewIngrediente = (): Ingrediente => {
         stockActual: 0,
         stockMinimo: 0,
         foto: "",
-        // unidadMedida: +++++++++++++++
+        unidadMedida: UnidadMedida.unidades,
     };
 };
 
@@ -31,23 +31,21 @@ const [ingrediente, setIngrediente] = useState<Ingrediente>(initializeNewIngredi
 //Manejo de Modal
 const [showModal, setShowModal] = useState(false);
 const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
-const [tittle, setNombre] = useState("");
+const [title, setNombre] = useState("");
 
 //Logica de Modal
-const handleClick = (newTittle: string, ingrediente: Ingrediente, modal: ModalType) => {
+const handleClick = (newTittle: string, ingr: Ingrediente, modal: ModalType) => {
     setNombre(newTittle);
     setModalType(modal)
-    setIngrediente(ingrediente);
+    setIngrediente(ingr);
     setShowModal(true);
 };
-
-
 
 
 const IngredienteTable = () => {
 
     //Variable que va a contener los datos recibidos por la API
-    const [ingrediente, setIngrediente] = useState<Ingrediente[]>([]);
+    const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
 
     //Variable que muestra el componente Loader hasta que se reciban los datos de la API
     const [isLoading, setIsLoading] = useState(true);
@@ -57,19 +55,19 @@ const IngredienteTable = () => {
     useEffect(() => {
 
         //Llamamos a la funcion para obtener todos los ingredientes declarado en el service
-        const fetchIngrediente = async () => {
-            const ingrediente = await IngredienteService.getIngrediente();
-            setIngrediente(ingrediente);
+        const fetchIngredientes = async () => {
+            const ingredientes = await IngredienteServicio.getIngredientes();
+            setIngredientes(ingredientes);
             setIsLoading(false);
         };
 
-        fetchIngrediente();
+        fetchIngredientes();
 
     }, [refreshData]
     );
 
     //Test, este log esta modificado para que muestre los datos de una manera mas legible
-    console.log(JSON.stringify(ingrediente, null, 2));
+    console.log(JSON.stringify(ingredientes, null, 2));
     return (
         <>
             <Button onClick={() => handleClick("Nuevo Ingrediente", initializeNewIngrediente(), ModalType.CREATE)}>

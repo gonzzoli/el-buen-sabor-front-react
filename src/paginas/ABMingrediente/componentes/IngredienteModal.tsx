@@ -1,7 +1,7 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { Ingrediente } from "../../../tipos/Ingrediente";
 import { ModalType } from "../../../tipos/ModalType";
-import { IngredienteService } from "../../../sevicios/IngredienteServicio";
+import { IngredienteServicio } from "../../../sevicios/IngredienteServicio";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from 'react-toastify';
@@ -12,41 +12,39 @@ type IngredienteModalProps = {
     onHide: () => void;
     title: string
     modalType: ModalType;
-    ingrediente: Ingrediente;
+    ingr: Ingrediente;
     refreshData: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const IngredienteModal = ({ show, onHide, title, modalType, ingrediente, refreshData }: IngredienteModalProps) => {
 
+const IngredienteModal = ({ show, onHide, title, modalType, ingr, refreshData }: IngredienteModalProps) => {
     //CREATE - UPDATE
     const handleSaveUpdate = async (ingr: Ingrediente) => {
         try {
             const isNew = ingr.id === 0;
             if (isNew) {
-                await IngredienteService.createProduct(ingr);
-
-
+                await IngredienteServicio.createIngrediente(ingr);
             } else {
-                await IngredienteService.updateProduct(ingr.id, ingr);
+                await IngredienteServicio.updateIngrediente(ingr.id, ingr);
             }
             toast.success(isNew ? "Ingrediente Creado" : "Ingrediente Actualizado", {
                 position: "top-center",
             });
             onHide();
+            refreshData(prevState => !prevState);
         } catch (error) {
             console.error(error);
             toast.error('A ocurrido un Error');
         }
     };
-
-    //DELETE
-    const handleDelete = async (ingr: Ingrediente) => {
+    const handleDelete = async () => {
         try {
-            await IngredienteService.deleteIngrediente(ingr.id);
+            await IngredienteServicio.deleteIngrediente(ingr.id);
             toast.success("Ingrediente Borrado", {
                 position: "top-center",
             });
             onHide();
+            refreshData(prevState => !prevState);
         } catch (error) {
             console.error(error);
             toast.error('A ocurrido un Error');
@@ -66,30 +64,25 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingrediente, refresh
         });
     };
 
-
     //Formik
     const formik = useFormik({
-        initialValues: ingrediente,
+        initialValues: ingr,
         validationSchema: validationSchema(),
         validateOnChange: true,
         validateOnBlur: true,
         onSubmit: (obj: Ingrediente) => handleSaveUpdate(obj),
     });
 
-    {
-
-
-        return (
-            <>
-                {modalType === ModalType.DELETE ? (
+    return (
+        <>
+            {modalType === ModalType.DELETE ? (
                 <>
                     <Modal show={show} onHide={onHide} centered backdrop="static">
                         <Modal.Header closeButton>
                             <Modal.Title>{title}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <p>¿Está seguro que desea eliminar el Ingrediente?<br />
-                                <strong>{ingrediente.nombre}</strong>?</p>
+                            <p>¿Está seguro que desea eliminar el Ingrediente?<br /><strong>{ingr.nombre}</strong>?</p>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={onHide}>
@@ -101,7 +94,7 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingrediente, refresh
                         </Modal.Footer>
                     </Modal>
                 </>
-                ) : (
+            ) : (
                 <>
                     <Modal show={show} onHide={onHide} centered backdrop="static" className="modal-xl">
                         <Modal.Header closeButton>
@@ -215,10 +208,10 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingrediente, refresh
                         </Modal.Body>
                     </Modal>
                 </>
-                )
-                }
-            </>
-        )
-    }
+            )
+            }
+        </>
+    );
+};
 
-    export default IngredienteModal;
+export default IngredienteModal;
