@@ -1,4 +1,4 @@
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, ModalBody } from "react-bootstrap";
 import { Empleado } from "../../tipos/Empleado";
 import { ModalType } from "../../tipos/ModalType";
 import * as Yup from "yup";
@@ -174,8 +174,8 @@ type ModalEmpleadoProps = {
                 </>
             )}
         </>
-    );
-};
+  )}
+   
 
 
 

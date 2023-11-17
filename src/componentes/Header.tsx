@@ -5,15 +5,15 @@ import { useNavigate } from 'react-router-dom'
 import { useContext } from "react";
 import { CarritoContext } from "../context/CarritoContext";
 import { Link } from "react-router-dom";
-
+import imgsrc from '../archivos/logo.png';
+import Image from 'react-bootstrap/Image'
 const Header: React.FC = () => {
   const Navigate = useNavigate();
   const carritoContext = useContext(CarritoContext)
   return (
     <header className="header">
       <div className="header-logo">
-        <FontAwesomeIcon icon={faBurger} />
-        <h3>El buen sabor</h3>
+      <Image src={imgsrc} fluid alt="logo" />
       </div>
       <nav className="header-botones-links">
         <ul className="header-links">
