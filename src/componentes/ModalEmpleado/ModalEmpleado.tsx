@@ -27,7 +27,7 @@ type ModalEmpleadoProps = {
                 } else {
                     await EmpleadoService.updateEmpleado(empl.id, empl);
                 }
-                toast.success(isNew ? "Producto Creado" : "Producto Actualizado", {
+                toast.success(isNew ? "Empleado Creado" : "Empleado Actualizado", {
                     position: "top-center",
                 });
             onHide();
@@ -40,7 +40,7 @@ type ModalEmpleadoProps = {
         const handleDelete = async () => {
             try {
                 await EmpleadoService.deleteEmpleado(empl.id);
-                toast.success("Producto Borrado", {
+                toast.success("Empleado Borrado", {
                     position: "top-center",
                   });    
                 onHide();
@@ -58,7 +58,7 @@ type ModalEmpleadoProps = {
         nombre: Yup.string().required('El nombre es requerido'),
         apellido: Yup.string().required('El apellido es requerido'),
         email: Yup.string().required('El email es requeridao'),
-        telefono: Yup.string().required('El telefono es requerido')
+        telefono: Yup.number().required('El telefono es requerido')
             });
         };
 
@@ -104,10 +104,10 @@ type ModalEmpleadoProps = {
                         <Modal.Body>
                             <Form onSubmit={formik.handleSubmit}>
                                 {/* Debajo de la etiqueta Form, vamos a armar un <Form.Group> por cada uno de los campos para dar de alta o modificar un producto. */}
-                                <Form.Group controlId="formTitulo">
-                                    <Form.Label>Titulo</Form.Label>
+                                <Form.Group controlId="formNombreEmpleado">
+                                    <Form.Label>Nombre Empleado</Form.Label>
                                     <Form.Control
-                                        name="Nombre"
+                                        name="nombre"
                                         type="text"
                                         value={formik.values.nombre || ''}
                                         onChange={formik.handleChange}
@@ -118,10 +118,10 @@ type ModalEmpleadoProps = {
                                         {formik.errors.nombre}
                                     </Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Group controlId="formTitulo">
+                                <Form.Group controlId="formApellido">
                                     <Form.Label>Apellido</Form.Label>
                                     <Form.Control
-                                        name="Apellido"
+                                        name="apellido"
                                         type="text"
                                         value={formik.values.apellido || ''}
                                         onChange={formik.handleChange}
@@ -135,7 +135,7 @@ type ModalEmpleadoProps = {
                                 <Form.Group controlId="formEmail">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
-                                        name="Email"
+                                        name="email"
                                         type="string"  //chequear si puede ser type email
                                         value={formik.values.email || ''}
                                         onChange={formik.handleChange}
@@ -149,7 +149,7 @@ type ModalEmpleadoProps = {
                                 <Form.Group controlId="formTelefono">
                                     <Form.Label>Telefono</Form.Label>
                                     <Form.Control
-                                        name="Telefono"
+                                        name="telefono"
                                         type="number"
                                         value={formik.values.telefono || ''}
                                         onChange={formik.handleChange}

@@ -7,7 +7,7 @@ export interface Empleado {
    apellido: string,
    telefono: string,
    email: string,
-   domicilios: Domicilio[],
+   domicilios: (Domicilio| null),
    usuario: (Usuario | null),
 }
 

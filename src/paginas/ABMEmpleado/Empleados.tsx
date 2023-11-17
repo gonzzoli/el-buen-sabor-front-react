@@ -1,36 +1,40 @@
-import Alert from "react-bootstrap/Alert";
-import * as React from 'react';
-import Spinner from "react-bootstrap/Spinner";
-import useEmpleado from "./Hooks/useEmpleado";
+import TablaEmpleado from "../../componentes/TablaEmpleado";
 
 
-// Tabla de empleados a realizar
-const TablaEmpleado = React.lazy(() => import('../../componentes/TablaEmpleado'));
+// // Tabla de empleados a realizar
+// const TablaEmpleado = React.lazy(() => import('../../componentes/TablaEmpleado'));
 
-const Empleados: React.FC = () => {
-  // Utils
-  const { data, error, loading } = useEmpleado();
+const Empleados = () => {
+  return(
+    <>
+    <TablaEmpleado/>
+    </>
+  )
+}
+export default Empleados
 
-  // Render
-  if (error) {
-    return (
-      <Alert variant="danger">
-        {error?.message || 'Something went wrong while fetching products.'}
-      </Alert>
-    );
-  }
+//   // Utils
+//   const { data, error, loading } = useEmpleado();
 
-  return loading
-    ? (
-      <div style={{ alignItems: 'center', display: 'flex', height: '100vh', justifyContent: 'center', width: '100wh' }}>
-        <Spinner animation="border" />
-      </div>
-    )
-    : (
-      <React.Suspense fallback={<Spinner animation="border" />}>
-        <TablaEmpleado/>
-      </React.Suspense>
-    )
-};
+//   // Render
+//   if (error) {
+//     return (
+//       <Alert variant="danger">
+//         {error?.message || 'Something went wrong while fetching products.'}
+//       </Alert>
+//     );
+//   }
 
-export default Empleados;
+//   return loading
+//     ? (
+//       <div style={{ alignItems: 'center', display: 'flex', height: '100vh', justifyContent: 'center', width: '100wh' }}>
+//         <Spinner animation="border" />
+//       </div>
+//     )
+//     : (
+//       <React.Suspense fallback={<Spinner animation="border" />}>
+//         <TablaEmpleado/>
+//       </React.Suspense>
+//     )
+// };
+
