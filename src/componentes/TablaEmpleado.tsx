@@ -8,43 +8,43 @@ import ModalEmpleado from "./ModalEmpleado/ModalEmpleado.tsx";
 import EditButton from "./EditButton/EditButton.tsx";
 import DeleteButton from "./DeleteButton/DeleteButton.tsx";
 
-const initializeNewEmpleado = (): Empleado => {
-  return {
-
-    //Aca esta el error, no me deja darle el tipo null a las fechas ni a el booleano deleted  ni al usuario asignado
-    id: 0,
-    nombre: '',
-    apellido: '',
-    telefono: '',
-    email: '',
-    domicilios: [],
-    usuario: null
-  };
-};
-
-const [refreshData, setRefreshData] = useState(false);
-
-    
-//Empleado seleccionado que se va a pasar como prop al Modal
-const [empleado, setEmpleado] = useState<Empleado>(initializeNewEmpleado);
-
-//Manejo de Modal
-const [showModal, setShowModal] = useState(false);
-const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
-const [title, setTitle] = useState("");
-
-
-//Logica de Modal
-const handleClick = (newTitle: string, empl: Empleado, modal: ModalType) => {
-  setTitle(newTitle);
-  setModalType(modal)
-  setEmpleado(empl);
-  setShowModal(true);
-};
 
 
 const TablaEmpleado = () => {
-
+    const initializeNewEmpleado = (): Empleado => {
+        return {
+      
+          //Aca esta el error, no me deja darle el tipo null a las fechas ni a el booleano deleted  ni al usuario asignado
+          id: 0,
+          nombre: '',
+          apellido: '',
+          telefono: '',
+          email: '',
+          domicilios: null,
+          usuario: null
+        };
+      };
+      
+           
+          
+      //Empleado seleccionado que se va a pasar como prop al Modal
+      const [empleado, setEmpleado] = useState<Empleado>(initializeNewEmpleado);
+      
+      //Manejo de Modal
+      const [showModal, setShowModal] = useState(false);
+      const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
+      const [title, setTitle] = useState("");
+      
+      const [refreshData, setRefreshData] = useState(false);
+      
+      //Logica de Modal
+      const handleClick = (newTitle: string, empl: Empleado, modal: ModalType) => {
+        setTitle(newTitle);
+        setModalType(modal)
+        setEmpleado(empl);
+        setShowModal(true);
+      };
+      
 
     //Variable que va a contener los datos recibidos por la API
     const [empleados, setEmpleados] = useState<Empleado[]>([]);
@@ -74,6 +74,7 @@ const TablaEmpleado = () => {
 
 //Test, este log esta modificado para que muestre los datos de una manera mas legible
     console.log(JSON.stringify(empleados, null, 2));
+    
     return (
         <>
             <Button onClick={() => handleClick("Nuevo Empleado", initializeNewEmpleado(), ModalType.CREATE)}>
@@ -92,8 +93,8 @@ const TablaEmpleado = () => {
                                 <th>Apellido</th>
                                 <th>Email</th>
                                 <th>Telefono</th>
-                                <th>Domicilio</th>
-                                <th>Usuario</th>
+                                {/* <th>Domicilio</th>
+                                <th>Usuario</th> */}
                                 <th>Editar</th>
                                 <th>Borrar</th>
                             </tr>
@@ -101,15 +102,14 @@ const TablaEmpleado = () => {
                         <tbody>
                             {empleados.map(empleado => (
                                 <tr key={empleado.id}>
+                                    <td>{empleado.id}</td>
                                     <td>{empleado.nombre}</td>
                                     <td>{empleado.apellido}</td>
                                     <td>{empleado.email}</td>
                                     <td>{empleado.telefono}</td>
-                                    
-                                    
-                                  
-                                    {/* Tengo que ver como hago para ocultar la contrasena o se mostraria encriptada o no se mostraria */}
-                                  
+                                    {/* <td>{empleado.domicilios}</td>
+                                    <td>{empleado.usuario}</td> */}
+                                                                                                                                 
 
                                 <td><EditButton onClick={() => handleClick("Editar Empleado", empleado, ModalType.UPDATE)}/></td>
                                 <td><DeleteButton onClick={() => handleClick("Borrar Empleado", empleado, ModalType.DELETE)}/></td>
