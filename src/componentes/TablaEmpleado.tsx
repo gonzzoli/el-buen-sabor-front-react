@@ -13,13 +13,10 @@ const initializeNewEmpleado = (): Empleado => {
 
     //Aca esta el error, no me deja darle el tipo null a las fechas ni a el booleano deleted  ni al usuario asignado
     id: 0,
-    fecha_alta: null,
-    fecha_modificacion: null,
     nombre: '',
     apellido: '',
     telefono: '',
     email: '',
-    deleted : null,
     domicilios: [],
     usuario: null
   };
@@ -95,7 +92,8 @@ const TablaEmpleado = () => {
                                 <th>Apellido</th>
                                 <th>Email</th>
                                 <th>Telefono</th>
-                            
+                                <th>Domicilio</th>
+                                <th>Usuario</th>
                                 <th>Editar</th>
                                 <th>Borrar</th>
                             </tr>
@@ -106,8 +104,10 @@ const TablaEmpleado = () => {
                                     <td>{empleado.nombre}</td>
                                     <td>{empleado.apellido}</td>
                                     <td>{empleado.email}</td>
-                                    
                                     <td>{empleado.telefono}</td>
+                                    
+                                    
+                                  
                                     {/* Tengo que ver como hago para ocultar la contrasena o se mostraria encriptada o no se mostraria */}
                                   
 
