@@ -145,7 +145,7 @@ const ModalDomicilio = ({show, onHide, title, modalType, domicilio, refreshData}
                         <Form.Group controlId="formLocalidad">
                             <Form.Label>localidad</Form.Label>
                             <Form.Control
-                                name="precio"
+                                name="localidad"
                                 type="text"
                                 value={formik.values.localidad || ''}
                                 onChange={formik.handleChange}

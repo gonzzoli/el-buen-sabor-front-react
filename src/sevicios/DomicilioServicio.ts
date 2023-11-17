@@ -22,7 +22,7 @@ const BASE_URL = 'http://localhost:8080/api/v1';
         
         getDomicilio: async (id:number): Promise<Domicilio> => {
             
-            const response = await fetch (`${BASE_URL}/domicilios/${id}`,{
+            const response = await fetch (`${BASE_URL}/domicilios/mostrarDomicilioscliente/${id}`,{
             method: 'GET',
             redirect: 'follow'});
             const data = await response.json();
