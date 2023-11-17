@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 /* Estilos */ 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { DomicilioService } from "../sevicios/DomicilioServicio";
-import Domicilio from "../paginas/ABMdomicilio/Domicilio";
 import { dom } from "@fortawesome/fontawesome-svg-core";
+import { Domicilio } from "../tipos/Domicilio";
 
 type ModalDomicilioProps = {
     show: boolean;
@@ -65,13 +65,9 @@ const ModalDomicilio = ({show, onHide, title, modalType, domicilio, refreshData}
     const validationSchema = () => {
         return Yup.object().shape({
             id: Yup.number().integer().min(0),
-            nombre: Yup.string().required('El nombre es requerido'),
-            precio: Yup.number().required('El precio es requerido'),
-            descripcion: Yup.string().required('La descripción es requerida'),
-            idRubro: Yup.number().required('El rubro es requerido'),
-            foto: Yup.string().required('La URL de la imagen es requerida'),
-            receta: Yup.string().required('La receta es requerida'),
-            // con el boolean en teoria no hace falta hacer un required
+            calle: Yup.string().required('El nombre de la calle es requerido'),
+            numero: Yup.number().required('El numero es requerido'),
+            //localiad: Yup.string().required('La localiad es requerida'),
         });
     };
     /* Formik, utiliza el esquema de validación para crear un formulario dinámico y que lo bloquee en caso de errores */
@@ -113,7 +109,7 @@ const ModalDomicilio = ({show, onHide, title, modalType, domicilio, refreshData}
                         
                         {/* From.Group por cada campo para dar de Alta o Modificar un Producto */}
                         
-                        {/* Nombre Producto */}
+                        {/* Nombre de la calle */}
                         <Form.Group controlId="formCalle">
                             <Form.Label>calle</Form.Label>
                             <Form.Control
@@ -129,7 +125,7 @@ const ModalDomicilio = ({show, onHide, title, modalType, domicilio, refreshData}
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        {/* Descripción */}
+                        {/* Numero */}
                         <Form.Group controlId="formNumero">
                             <Form.Label>numero</Form.Label>
                             <Form.Control
@@ -145,12 +141,12 @@ const ModalDomicilio = ({show, onHide, title, modalType, domicilio, refreshData}
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        {/* Precio */}
+                        {/* Localidad */}
                         <Form.Group controlId="formLocalidad">
                             <Form.Label>localidad</Form.Label>
                             <Form.Control
                                 name="precio"
-                                type="number"
+                                type="text"
                                 value={formik.values.localidad || ''}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}

@@ -14,10 +14,7 @@ const BASE_URL = 'http://localhost:8080/api/v1';
     
         getDomicilios: async (): Promise<Domicilio[]> => {
     
-            const response = await fetch(`${BASE_URL}/mostrarDomicilioscliente`,{
-                method: 'GET',
-                redirect: 'follow'
-              });
+            const response = await fetch(`${BASE_URL}/domicilios/mostrarDomicilioscliente`);
             const data = await response.json();
             return data;
         },
@@ -25,7 +22,7 @@ const BASE_URL = 'http://localhost:8080/api/v1';
         
         getDomicilio: async (id:number): Promise<Domicilio> => {
             
-            const response = await fetch (`${BASE_URL}/domicilio/${id}`,{
+            const response = await fetch (`${BASE_URL}/domicilios/${id}`,{
             method: 'GET',
             redirect: 'follow'});
             const data = await response.json();
@@ -35,7 +32,7 @@ const BASE_URL = 'http://localhost:8080/api/v1';
     
         createDomicilio:async (domicilio: Domicilio):Promise<Domicilio> => {
             console.log('createDomicilio',domicilio)
-            const response = await fetch(`${BASE_URL}/domicilio`, {
+            const response = await fetch(`${BASE_URL}/domicilios`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -65,7 +62,7 @@ const BASE_URL = 'http://localhost:8080/api/v1';
         
     
         deleteDomicilio: async (id:number): Promise<void> => {
-            await fetch(`${BASE_URL}/domicilio/${id}`, {
+            await fetch(`${BASE_URL}/domicilios/${id}`, {
                 method: "DELETE"
             });
         }
