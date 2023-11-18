@@ -2,8 +2,6 @@ import { useFormik } from "formik";
 import { Container } from "react-bootstrap";
 import * as Yup from "yup";
 import "./estilos_generales.scss";
-import Registro from "./paginas/ABMCliente/RegistrarCiente";
-import { Route, Routes } from "react-router-dom";
 import { useContext } from "react";
 import { SessionContext } from "./context/SessionContext";
 
@@ -27,10 +25,8 @@ const App: React.FC = () => {
 
     //Lo que pasa cuando se envía el formulario
     onSubmit: async (values) => {
-        console.log("entrando")
       try {
-        const autenticado = await sessionContext.login(values);
-        console.log(values, autenticado);
+        await sessionContext.login(values);
       } catch (error) {
         console.log(error);
       }
