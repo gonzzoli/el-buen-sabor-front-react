@@ -1,6 +1,6 @@
-import { PropsWithChildren, ReactNode, createContext, useState } from "react";
+import { PropsWithChildren, ReactNode, useEffect, createContext, useState } from "react";
 interface Producto {
-  id: number;
+  idProducto: number;
   nombre: string;
   descripcion: string;
   precio: number;
@@ -40,6 +40,7 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
   const [totalCarrito, setTotalCarrito] = useState(0)
 
   const agregarProducto = (productoNuevo: Producto) => {
+    console.log(productosCarrito)
     const estabaAgregado = productosCarrito.find(
       (producto) => producto.producto.id === productoNuevo.id
     );
@@ -63,6 +64,10 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
       });
     });
   };
+
+  useEffect(() => {
+    console.log(productosCarrito)
+  }, [productosCarrito])
 
   const eliminarProducto = (productoEliminar: Producto) => {
     setTotalCarrito(prevTotal => prevTotal - productoEliminar.precio)

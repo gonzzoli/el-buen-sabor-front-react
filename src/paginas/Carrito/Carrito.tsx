@@ -4,23 +4,31 @@ import { useContext, useState } from "react";
 import { CarritoContext } from "../../context/CarritoContext";
 import ProductoCarrito from "./ProductoCarrito";
 import "./carrito.scss";
+import { useNavigate } from "react-router-dom";
+import { SessionContext } from "../../context/SessionContext";
 
 enum MetodoPago {
-  MERCADO_PAGO,
-  EFECTIVO,
-}
-enum MetodoEntrega {
-  DELIVERY,
-  RETIRA_EN_LOCAL,
+  MERCADO_PAGO = "MERCADO_PAGO",
+  EFECTIVO = "EFECTIVO",
 }
 
+enum MetodoEnvio {
+  DELIVERY = "DELIVERY",
+  RETIRA = "RETIRA",
+}
+
+type ProductoPedido = {
+  cantidad: number;
+  idProducto: number;
+};
+
 type Pedido = {
-  metodoPago: MetodoPago;
-  metodoEntrega: MetodoEntrega;
-  direccionEnvio: string;
-  nombreApellido: string;
-  numeroTelefono: string;
-  productos: ProductoCarrito[];
+  tipoPago: MetodoPago;
+  tipoEnvio: MetodoEnvio;
+  //direccionEnvio: string;
+  //nombreApellido: string;
+  //numeroTelefono: string;
+  detallesPedido: ProductoPedido[];
 };
 
 const formikInitialValues = {
@@ -33,40 +41,47 @@ const formikInitialValues = {
 
 const Carrito = () => {
   const carritoContext = useContext(CarritoContext);
+  const sessionContext = useContext(SessionContext)
   const [metodoPago, setMetodoPago] = useState<MetodoPago>(MetodoPago.EFECTIVO);
-  const [metodoEntrega, setMetodoEntrega] = useState<MetodoEntrega>(
-    MetodoEntrega.DELIVERY
+  const [metodoEnvio, setMetodoEnvio] = useState<MetodoEnvio>(
+    MetodoEnvio.DELIVERY
   );
-  const [direccionEnvio, setDireccionEnvio] = useState("");
-  const [numeroTelefono, setNumeroTelefono] = useState("");
-  const [nombreApellido, setNombreApellido] = useState("");
+  // const [direccionEnvio, setDireccionEnvio] = useState("");
+  // const [numeroTelefono, setNumeroTelefono] = useState("");
+  // const [nombreApellido, setNombreApellido] = useState("");
+  const navigate = useNavigate();
 
   const confirmarPedido = async () => {
+    const detallesPedido: ProductoPedido[] =
+      carritoContext.productosCarrito.map((productoCarrito) => {
+        return {
+          cantidad: productoCarrito.cantidad,
+          idProducto: productoCarrito.producto.idProducto,
+        };
+      });
     const pedido: Pedido = {
-      productos: carritoContext.productosCarrito,
-      metodoPago,
-      metodoEntrega,
-      numeroTelefono,
-      nombreApellido,
-      direccionEnvio,
+      detallesPedido,
+      tipoPago: metodoPago,
+      tipoEnvio: metodoEnvio,
+      // numeroTelefono,
+      // nombreApellido,
+      // direccionEnvio,
     };
-    const response = await fetch(import.meta.env.VITE_URL_API + "/pedidos", {
-      method: "POST",
-      body: JSON.stringify(pedido),
-    });
-
-    console.log(response);
-  };
-
-  const confirmarPedido2 = async () => {
-    console.log({
-      metodoEntrega,
-      metodoPago,
-      direccionEnvio,
-      productos: carritoContext.productosCarrito,
-      numeroTelefono,
-      nombreApellido,
-    });
+    console.log(JSON.stringify(pedido))
+    try {
+      const response = await fetch(import.meta.env.VITE_URL_API + "/pedidos/crearPedido", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${sessionContext.jwtToken}`
+        },
+        body: JSON.stringify(pedido),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // const validationSchema = () => {
@@ -94,105 +109,137 @@ const Carrito = () => {
     setMetodoPago(e.target.value as MetodoPago);
   };
 
-  const onChangeMetodoEntrega = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMetodoEntrega(e.target.value as MetodoEntrega);
+  const onChangeMetodoEnvio = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMetodoEnvio(e.target.value as MetodoEnvio);
   };
 
   return (
-    <div>
-      <button className="boton-secundario">
-        <FontAwesomeIcon icon={faArrowLeft} />
-        Volver
-      </button>
-      <h2>Ya casi terminamos!</h2>
-
+    <section className="principal">
+      <div className="arriba">
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+          className="boton-secundario boton-volver"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+          Volver
+        </button>
+        <h1 className="titulo-1 titulo-carrito">Ya casi terminamos!</h1>
+        <span></span>
+      </div>
       {/*Hacer con formik despues */}
-      <div>
-        <h3>Metodo de entrega</h3>
-        <div style={{ display: "flex", gap: "5px" }}>
-          <input
-            type="radio"
-            name="metodo-entrega"
-            id="metodo-entrega"
-            checked={metodoEntrega == MetodoEntrega.RETIRA_EN_LOCAL}
-            onChange={onChangeMetodoEntrega}
-            value={MetodoEntrega.RETIRA_EN_LOCAL}
-          />
-          <label htmlFor="metodo-entrega">Retira en local</label>
-        </div>
-        <div style={{ display: "flex", gap: "5px" }}>
-          <input
-            type="radio"
-            name="metodo-entrega"
-            id="metodo-entrega"
-            checked={metodoEntrega == MetodoEntrega.DELIVERY}
-            onChange={onChangeMetodoEntrega}
-            value={MetodoEntrega.DELIVERY}
-          />
-          <label htmlFor="metodo-entrega">Delivery</label>
-        </div>
-
-        {metodoEntrega == MetodoEntrega.RETIRA_EN_LOCAL && (
-          <>
-            <h3>Metodo de pago</h3>
-            <div style={{ display: "flex", gap: "5px" }}>
+      <div className="contenido">
+        <div className="informacion-pago">
+          <div className="modo-entrega seleccion-radio">
+            <h4 className="titulo-4">Metodo de entrega</h4>
+            <div className="opciones">
+              {" "}
               <input
                 type="radio"
-                name="metodo-pago"
-                id="metodo-pago"
-                checked={metodoPago == MetodoPago.EFECTIVO}
-                onChange={onChangeMetodoPago}
-                value={MetodoPago.EFECTIVO}
+                name="metodo-entrega"
+                id="metodo-entrega"
+                checked={metodoEnvio == MetodoEnvio.RETIRA}
+                onChange={onChangeMetodoEnvio}
+                value={MetodoEnvio.RETIRA}
               />
-              <label htmlFor="metodo-pago">Efectivo</label>
-            </div>
-
-            <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
+              <label htmlFor="metodo-entrega">Retira en local</label>
               <input
                 type="radio"
-                name="metodo-pago"
-                id="metodo-pago"
-                checked={metodoPago == MetodoPago.MERCADO_PAGO}
-                onChange={onChangeMetodoPago}
-                value={MetodoPago.MERCADO_PAGO}
+                name="metodo-entrega"
+                id="metodo-entrega"
+                checked={metodoEnvio == MetodoEnvio.DELIVERY}
+                onChange={onChangeMetodoEnvio}
+                value={MetodoEnvio.DELIVERY}
               />
-              <label htmlFor="metodo-pago">Mercado Pago</label>
+              <label htmlFor="metodo-entrega">Delivery</label>
             </div>
-          </>
-        )}
+          </div>
+
+          {metodoEnvio == MetodoEnvio.RETIRA && (
+            <div className="metodo-pago seleccion-radio">
+              <h4 className="titulo-4">Método de pago</h4>
+              <div className="opciones">
+                <input
+                  type="radio"
+                  name="metodo-pago"
+                  id="metodo-pago"
+                  checked={metodoPago == MetodoPago.EFECTIVO}
+                  onChange={onChangeMetodoPago}
+                  value={MetodoPago.EFECTIVO}
+                />
+                <label htmlFor="metodo-pago">Efectivo</label>
+
+                <input
+                  type="radio"
+                  name="metodo-pago"
+                  id="metodo-pago"
+                  checked={metodoPago == MetodoPago.MERCADO_PAGO}
+                  onChange={onChangeMetodoPago}
+                  value={MetodoPago.MERCADO_PAGO}
+                />
+                <label htmlFor="metodo-pago">Mercado Pago</label>
+              </div>
+            </div>
+          )}
+          <div className="datos-cliente">
+            <h3 className="titulo-3">Tus datos</h3>
+            <div className="contenedor-inputs">
+              <div className="form-texto">
+                <label htmlFor="nombre-apellido">Nombre y Apellido</label>
+                <input
+                  type="text"
+                  name="nombre-apellido"
+                  id="nombre-apellido"
+                  className="texto-input"
+                />
+              </div>
+              <div className="form-texto">
+                <label htmlFor="direccion">Direccion</label>
+                <input
+                  type="text"
+                  name="direccion"
+                  id="direccion"
+                  className="texto-input"
+                />
+              </div>
+              <div className="form-texto">
+                <label htmlFor="numero-telefono">Numero de telefono</label>
+                <input
+                  type="number"
+                  name="numero-telefono"
+                  id="numero-telefono"
+                  className="texto-input"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="pedido">
+          <div className="ventana-emergente ventana-carrito">
+            <h2 className="titulo-2 titulo-carrito">Tu pedido</h2>
+            <div className="carrito-lista-productos">
+              {carritoContext.productosCarrito.map((productoCarrito, index) => (
+                <ProductoCarrito key={index} {...productoCarrito} />
+              ))}
+            </div>
+            <p>Tiempo de entrega estimado: MM minutos</p>
+            <p className="titulo-4 precio-total">
+              Total: ${carritoContext.totalCarrito}
+            </p>
+          </div>
+        </div>
       </div>
-      <div>
-        <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
-          <label htmlFor="nombre-apellido">Nombre y Apellido</label>
-          <input type="text" name="nombre-apellido" id="nombre-apellido" />
-        </div>
-
-        <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
-          <label htmlFor="direccion">Direccion</label>
-          <input type="text" name="direccion" id="direccion" />
-        </div>
-
-        <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
-          <label htmlFor="numero-telefono">Numero de telefono</label>
-          <input type="number" name="numero-telefono" id="numero-telefono" />
-        </div>
-      </div>
-
-      <div>
-        <h1>Tu pedido</h1>
-        <div>
-          {carritoContext.productosCarrito.map((productoCarrito) => (
-            <ProductoCarrito {...productoCarrito} />
-          ))}
-          <p>Tiempo de entrega estimado: MM minutos</p>
-          <h3>Total: ${carritoContext.totalCarrito}</h3>
-        </div>
-
-        <button onClick={confirmarPedido2} className="boton-primario">
+      <div className="boton-confirmar-contenedor">
+        <button
+          onClick={confirmarPedido}
+          className="boton-primario boton-confirmar"
+        >
           Confirmar pedido
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

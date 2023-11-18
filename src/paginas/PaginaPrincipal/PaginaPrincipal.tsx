@@ -6,13 +6,13 @@ import FiltrosProductos from "./FiltrosProductos";
 import ListaProductos from "./ListaProductos";
 
 interface Producto {
-  id: number
+  idProducto: number;
   nombre: string;
   descripcion: string;
   precio: number;
   tiempoEstimadoCocina: number;
-  // verDetalles: () => void;
-  // agregarCarrito: () => void;
+  // verDetalles: () => void
+  // agregarCarrito: () => void
 }
 
 interface RubroProducto {

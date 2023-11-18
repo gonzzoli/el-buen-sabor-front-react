@@ -1,9 +1,12 @@
 import { useFormik } from "formik";
-import { Container } from "react-bootstrap";
+import { Container, ToastContainer } from "react-bootstrap";
 import * as Yup from "yup";
 import "./estilos_generales.scss";
+import 'react-toastify/dist/ReactToastify.css';
 import { useContext } from "react";
 import { SessionContext } from "./context/SessionContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const validationSchema = Yup.object({
   username: Yup.string().required("El usuario es requerido"),
@@ -14,6 +17,7 @@ const validationSchema = Yup.object({
 
 const App: React.FC = () => {
   const sessionContext = useContext(SessionContext);
+  const navigate = useNavigate()
   //Lo que necesita el formulario
   const formik = useFormik({
     initialValues: {
@@ -26,9 +30,10 @@ const App: React.FC = () => {
     //Lo que pasa cuando se envía el formulario
     onSubmit: async (values) => {
       try {
-        await sessionContext.login(values);
-      } catch (error) {
-        console.log(error);
+        const autenticado = await sessionContext.login(values);
+        if(autenticado) navigate("/")
+      } catch (error: unknown) {
+        console.log("No pudo autenticarse")
       }
     },
   });
