@@ -1,5 +1,13 @@
 import { PropsWithChildren, ReactNode, createContext, useState } from "react";
-import { Producto } from "../tipos/Producto";
+interface Producto {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  tiempoEstimadoCocina: number;
+  // verDetalles: () => void
+  // agregarCarrito: () => void
+}
 
 type ProductoCarrito = {
   producto: Producto;
@@ -36,11 +44,13 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
       (producto) => producto.producto.id === productoNuevo.id
     );
     totalCarrito += productoNuevo.precio;
-    if (!estabaAgregado)
+    if (!estabaAgregado) {
       setProductosCarrito([
         ...productosCarrito,
         { producto: productoNuevo, cantidad: 1 },
       ]);
+      return;
+    }
 
     setProductosCarrito((productos) => {
       return productos.map((productoCarrito) => {
