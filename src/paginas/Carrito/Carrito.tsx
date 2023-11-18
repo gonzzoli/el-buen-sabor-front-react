@@ -5,17 +5,23 @@ import { CarritoContext } from "../../context/CarritoContext";
 import ProductoCarrito from "./ProductoCarrito";
 import "./carrito.scss";
 
-enum MetodoPago {MERCADO_PAGO , EFECTIVO}
-enum MetodoEntrega {DELIVERY , RETIRA_EN_LOCAL}
+enum MetodoPago {
+  MERCADO_PAGO,
+  EFECTIVO,
+}
+enum MetodoEntrega {
+  DELIVERY,
+  RETIRA_EN_LOCAL,
+}
 
 type Pedido = {
-  metodoPago: MetodoPago,
-  metodoEntrega: MetodoEntrega,
-  direccionEnvio: string,
-  nombreApellido: string,
-  numeroTelefono: string,
-  productos: ProductoCarrito[]
-}
+  metodoPago: MetodoPago;
+  metodoEntrega: MetodoEntrega;
+  direccionEnvio: string;
+  nombreApellido: string;
+  numeroTelefono: string;
+  productos: ProductoCarrito[];
+};
 
 const formikInitialValues = {
   metodoPago: "",
@@ -28,10 +34,12 @@ const formikInitialValues = {
 const Carrito = () => {
   const carritoContext = useContext(CarritoContext);
   const [metodoPago, setMetodoPago] = useState<MetodoPago>(MetodoPago.EFECTIVO);
-  const [metodoEntrega, setMetodoEntrega] = useState<MetodoEntrega>(MetodoEntrega.DELIVERY);
+  const [metodoEntrega, setMetodoEntrega] = useState<MetodoEntrega>(
+    MetodoEntrega.DELIVERY
+  );
   const [direccionEnvio, setDireccionEnvio] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
-  const [nombreApellido, setNombreApellido] = useState("")
+  const [nombreApellido, setNombreApellido] = useState("");
 
   const confirmarPedido = async () => {
     const pedido: Pedido = {
@@ -40,7 +48,7 @@ const Carrito = () => {
       metodoEntrega,
       numeroTelefono,
       nombreApellido,
-      direccionEnvio
+      direccionEnvio,
     };
     const response = await fetch(import.meta.env.VITE_URL_API + "/pedidos", {
       method: "POST",
@@ -48,6 +56,17 @@ const Carrito = () => {
     });
 
     console.log(response);
+  };
+
+  const confirmarPedido2 = async () => {
+    console.log({
+      metodoEntrega,
+      metodoPago,
+      direccionEnvio,
+      productos: carritoContext.productosCarrito,
+      numeroTelefono,
+      nombreApellido,
+    });
   };
 
   // const validationSchema = () => {
@@ -144,30 +163,18 @@ const Carrito = () => {
       </div>
       <div>
         <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
-        <label htmlFor="nombre-apellido">Nombre y Apellido</label>
-          <input
-            type="text"
-            name="nombre-apellido"
-            id="nombre-apellido"
-          />
+          <label htmlFor="nombre-apellido">Nombre y Apellido</label>
+          <input type="text" name="nombre-apellido" id="nombre-apellido" />
         </div>
 
         <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
-        <label htmlFor="direccion">Direccion</label>
-          <input
-            type="text"
-            name="direccion"
-            id="direccion"
-          />
+          <label htmlFor="direccion">Direccion</label>
+          <input type="text" name="direccion" id="direccion" />
         </div>
 
         <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
-        <label htmlFor="numero-telefono">Numero de telefono</label>
-          <input
-            type="number"
-            name="numero-telefono"
-            id="numero-telefono"
-          />
+          <label htmlFor="numero-telefono">Numero de telefono</label>
+          <input type="number" name="numero-telefono" id="numero-telefono" />
         </div>
       </div>
 
@@ -181,7 +188,7 @@ const Carrito = () => {
           <h3>Total: ${carritoContext.totalCarrito}</h3>
         </div>
 
-        <button onClick={confirmarPedido} className="boton-primario">
+        <button onClick={confirmarPedido2} className="boton-primario">
           Confirmar pedido
         </button>
       </div>

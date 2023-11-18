@@ -37,13 +37,13 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
     []
   );
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
-  let totalCarrito = 0;
+  const [totalCarrito, setTotalCarrito] = useState(0)
 
   const agregarProducto = (productoNuevo: Producto) => {
     const estabaAgregado = productosCarrito.find(
       (producto) => producto.producto.id === productoNuevo.id
     );
-    totalCarrito += productoNuevo.precio;
+    setTotalCarrito(prevTotal => prevTotal + productoNuevo.precio)
     if (!estabaAgregado) {
       setProductosCarrito([
         ...productosCarrito,
@@ -65,7 +65,7 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const eliminarProducto = (productoEliminar: Producto) => {
-    totalCarrito -= productoEliminar.precio;
+    setTotalCarrito(prevTotal => prevTotal - productoEliminar.precio)
     setProductosCarrito((productos) => {
       const productoEnCarrito = productos.find(
         (productoCarrito) => productoCarrito.producto.id == productoEliminar.id
