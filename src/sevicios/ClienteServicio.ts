@@ -24,15 +24,13 @@ export const ClienteService = {
     },
 
     saveCliente:async (cliente:Cliente):Promise<Cliente> => {
-
-        const response = await fetch(`${BASE_URL}`, {
+        const response = await fetch(`${import.meta.env.VITE_AUTH_URL}/registerCliente`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(cliente)
         });
-
         const data = await response.json();
         return data;
         
