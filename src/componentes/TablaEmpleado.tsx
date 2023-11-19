@@ -7,6 +7,7 @@ import { ModalType } from "../tipos/ModalType.ts";
 import ModalEmpleado from "./ModalEmpleado/ModalEmpleado.tsx";
 import EditButton from "./EditButton/EditButton.tsx";
 import DeleteButton from "./DeleteButton/DeleteButton.tsx";
+import { Rol } from "../tipos/Rol.ts";
 
 
 
@@ -21,7 +22,8 @@ const TablaEmpleado = () => {
           telefono: '',
           email: '',
           domicilios: null,
-          usuario: null
+          password: '',
+          rol: Rol.Cajero
         };
       };
       
