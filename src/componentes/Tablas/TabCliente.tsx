@@ -113,12 +113,12 @@ const TablaCliente = () => {
         )}
 
 
-    {/* Botón para que cuando el usuario haga click llame a la función que declaramos */}
+    {/* Botón para que cuando el usuario haga click llame a la función que declaramos 
     <Button onClick={() => handleClick("Nuevo Cliente",
         initializeNewCliente(), ModalType.CREATE)}>
         Nuevo Cliente
     </Button>
-    
+    */}
 </div>
 
     </>

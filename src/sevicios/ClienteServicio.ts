@@ -2,14 +2,15 @@ import { Cliente } from "../tipos/Cliente";
 import { ClienteDTOMA } from "../tipos/DTOClienteMA";
 import { ClienteDTOMC } from "../tipos/DTOClienteMC";
 
-const BASE_URL = 'api/v1/cliente' 
+//const BASE_URL = 'https://buensabor-api.onrender.com'
+ const BASE_URL = 'http://localhost:8080' 
 
 export const ClienteService = {
 
     
     mostrarClientes: async (): Promise<Cliente[]> => {
        
-        const response = await fetch(`${BASE_URL}/mostrarclientes`);
+        const response = await fetch(`${BASE_URL}/api/v1/cliente/mostrarclientes`);
         const data = await response.json();
         return data;
     },
@@ -17,7 +18,7 @@ export const ClienteService = {
     
     datosCliente: async (id:number): Promise<Cliente> => {
 
-        const response = await fetch (`${BASE_URL}/verDatos/${id}`);
+        const response = await fetch (`${BASE_URL}/api/v1/cliente/verDatos/${id}`);
         const data = await response.json();
         return data;
         
@@ -38,7 +39,7 @@ export const ClienteService = {
 
     modificardatos: async (id: number, clienteDTO: ClienteDTOMC): Promise<Cliente> => {
         
-        const response = await fetch(`${BASE_URL}/modificarDatos`, {
+        const response = await fetch(`${BASE_URL}/api/v1/cliente/modificarDatos`, {
             method: "PUT",
             headers: {
                 'Content-Type':'application/json'
@@ -50,9 +51,9 @@ export const ClienteService = {
         return data;
     },
 
-    modificarCliente: async (id: number, clienteDTO: ClienteDTOMA): Promise<Cliente> => {
+    modificarCliente: async (clienteDTO: ClienteDTOMA): Promise<Cliente> => {
         
-        const response = await fetch(`${BASE_URL}/modificarCliente`, {
+        const response = await fetch(`${BASE_URL}/api/v1/cliente/modificarCliente`, {
             method: "PUT",
             headers: {
                 'Content-Type':'application/json'
