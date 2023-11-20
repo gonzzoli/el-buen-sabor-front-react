@@ -1,3 +1,6 @@
+import { ProductoCocina } from "./ProductoCocinaDTO";
+
+
 export enum EstadoPedido{
     aConfirmar='A CONFIRMAR',
     aPreparar='A PREPARAR',
@@ -10,4 +13,5 @@ export interface pedidoCocina {
     id:number;
     fecha: Date;
     estadoPedido: EstadoPedido;
+    productosCocina: ProductoCocina[];
 }

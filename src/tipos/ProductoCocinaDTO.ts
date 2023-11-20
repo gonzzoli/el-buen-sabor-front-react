@@ -5,6 +5,10 @@ export interface ProductoCocina{
     nombre:string;
     descripcion: string;
     foto:string;
-    //ingrediente
+    ingredienteDTOS: {
+        ingredienteId: number;
+        cantidad: number;
+    }[];    
+    denominacion:string;
     receta:string;
 }
