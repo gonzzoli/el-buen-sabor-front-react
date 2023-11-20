@@ -32,7 +32,6 @@ const TablaRubro = () => {
             setRubros(rubros);
            // setIsLoading(false);
         };
-
         fetchRubros();
     }, [refreshData]);
 

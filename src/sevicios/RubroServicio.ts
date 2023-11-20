@@ -1,16 +1,17 @@
 import { Rubro } from "../tipos/Rubro";
-const BASE_URL = 'http://localhost:8080';
+
 export const RubroService = {
     
     /* Metodos ABM */
 
     agregarRubro:async (rubro: Rubro, token:string) => {
         //aca
-        const response = await fetch(`${BASE_URL}/api/v1/rubros/agregarRubro`, {          
+        const response = await fetch(import.meta.env.LOCAL_URL+"/rubros/agregarRubro", {          
             method: "POST",
             headers: {
-                "Authorization": "Bearer "+token,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer "+token
+                
             },
             body: JSON.stringify(rubro)
         });
@@ -20,13 +21,13 @@ export const RubroService = {
     },
 
     eliminarRubro:async (id:number): Promise<void> => {
-        await fetch(`${BASE_URL}/api/v1/rubros/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
+        await fetch(import.meta.env.LOCAL_URL+`/rubros/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
             method: "DELETE"
         });
     },
 
     modificarRubro:async (id:number, rubro: Rubro, token:string): Promise<Rubro> => {
-        const response = await fetch(`${BASE_URL}/api/v1/rubros/modificarRubro/${id}` , {           //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona)
+        const response = await fetch(import.meta.env.LOCAL_URL+`/rubros/modificarRubro/${id}` , {           //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona)
             method: "PUT",
             headers: {
                 "Authorization": "Bearer "+token,
@@ -39,25 +40,14 @@ export const RubroService = {
     },
 //cambiarle el nombre
     buscarRubrosPorNombre:async (token:string): Promise<Rubro[]> => {
-        const response = await fetch(`${BASE_URL}/api/v1/rubros`, {          
-        
+        const response = await fetch(import.meta.env.LOCAL_URL+`/rubros`, {          
             headers: {
                 "Authorization": "Bearer "+token,
-                
-            },
-            
+            }, 
         });
         const data = await response.json();
         return data;
     }
-
-   // mostrarRubro: async (id:number): Promise<void> => {
-    //    const response = await fetch(`${BASE_URL}/api/v1/rubros/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
-          //  method: "GET"
-     //   });
-       // const rubro = await response.json();
-        //console.log("Rubro obtenido:", rubro);
-   // }
 
 
 
