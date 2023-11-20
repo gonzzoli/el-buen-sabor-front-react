@@ -1,0 +1,20 @@
+.nuevoEmpl-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el contenido a la derecha */
+    margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+  }
+
+  .Table-container{
+    margin: 10px;
+
+  }
+  .botonPrimario{
+    background-color: #7d0300;
+  }
+  .botonPrimario:hover{
+    background-color: #b21c1d;
+  }
+
+  .modal-container{
+    position: center;
+  }

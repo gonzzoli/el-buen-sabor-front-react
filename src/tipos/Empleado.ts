@@ -1,4 +1,5 @@
 import { Domicilio } from "./Domicilio"
+import { Rol } from "./Rol";
 import { Usuario } from "./Usuario";
 
 export interface Empleado {
@@ -7,7 +8,8 @@ export interface Empleado {
    apellido: string,
    telefono: string,
    email: string,
-   domicilios: (Domicilio| null),
-   usuario: (Usuario | null),
+   domicilio: (Domicilio| null),
+   password: string,
+   rol: Rol
 }
 
