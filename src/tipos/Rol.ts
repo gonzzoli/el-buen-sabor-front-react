@@ -1,5 +1,6 @@
 export enum Rol{
     CAJERO,
     CLIENTE,
-    ADMINISTRADOR
+    ADMINISTRADOR,
+    EMPLEADO
 }

@@ -135,7 +135,7 @@ type ModalEmpleadoProps = {
                 {modalType === ModalType.UPDATE && (
                 <>
                 
-                    <Modal  show={show} onHide={onHide} centered backdrop="static" className="modal-xl modal-container">
+                    <Modal  show={show} onHide={onHide} centered backdrop="static" className="modal modal-container">
                         <Modal.Header closeButton>
                             <Modal.Title>{title}</Modal.Title>
                         </Modal.Header>
@@ -214,7 +214,7 @@ type ModalEmpleadoProps = {
             {modalType === ModalType.CREATE && (
                 <>
                 
-                <Modal   show={show} onHide={onHide} centered backdrop="static" className="modal-xl modal-container">
+                <Modal   show={show} onHide={onHide} centered backdrop="static" className="modal modal-container">
                     <Modal.Header closeButton>
                         <Modal.Title>{title}</Modal.Title>
                     </Modal.Header>
