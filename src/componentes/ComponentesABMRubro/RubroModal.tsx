@@ -43,8 +43,12 @@ const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroMo
         const isNew = rubro.id === 0;
         if (isNew) {
             //aca
+<<<<<<< HEAD
             await RubroService.agregarRubro(rubro,sessionContext.jwtToken);
 
+=======
+            await RubroService.agregarRubro(rubro);
+>>>>>>> 399da792f01996198179001e0d35d2ad7bafc21e
         } else {
             await RubroService.modificarRubro(rubro.id, rubro, sessionContext.jwtToken);
         }
