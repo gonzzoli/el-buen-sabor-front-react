@@ -7,9 +7,11 @@ import { CarritoContext } from "../context/CarritoContext";
 import { Link } from "react-router-dom";
 import imgsrc from '../archivos/logo.png';
 import Image from 'react-bootstrap/Image'
+import { SessionContext } from "../context/SessionContext";
 const Header: React.FC = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const carritoContext = useContext(CarritoContext)
+  const sessionContext = useContext(SessionContext)
   return (
     <header className="header">
       <div className="header-logo">
@@ -43,7 +45,7 @@ const Header: React.FC = () => {
             <p>Carrito</p>
           </button>
           <button className="boton-primario">
-            <a href="/login">Iniciar Sesion</a>
+            <a href="/login">{sessionContext.isLogged ? "Perfil" : "Iniciar Sesion"}</a>
           </button >
         </div>
 

@@ -1,5 +1,13 @@
-import { PropsWithChildren, ReactNode, createContext, useState } from "react";
-import { Producto } from "../tipos/Producto";
+import { PropsWithChildren, ReactNode, useEffect, createContext, useState } from "react";
+interface Producto {
+  idProducto: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  tiempoEstimadoCocina: number;
+  // verDetalles: () => void
+  // agregarCarrito: () => void
+}
 
 type ProductoCarrito = {
   producto: Producto;
@@ -29,18 +37,21 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
     []
   );
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
-  let totalCarrito = 0;
+  const [totalCarrito, setTotalCarrito] = useState(0)
 
   const agregarProducto = (productoNuevo: Producto) => {
+    console.log(productosCarrito)
     const estabaAgregado = productosCarrito.find(
       (producto) => producto.producto.id === productoNuevo.id
     );
-    totalCarrito += productoNuevo.precio;
-    if (!estabaAgregado)
+    setTotalCarrito(prevTotal => prevTotal + productoNuevo.precio)
+    if (!estabaAgregado) {
       setProductosCarrito([
         ...productosCarrito,
         { producto: productoNuevo, cantidad: 1 },
       ]);
+      return;
+    }
 
     setProductosCarrito((productos) => {
       return productos.map((productoCarrito) => {
@@ -54,8 +65,12 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
+  useEffect(() => {
+    console.log(productosCarrito)
+  }, [productosCarrito])
+
   const eliminarProducto = (productoEliminar: Producto) => {
-    totalCarrito -= productoEliminar.precio;
+    setTotalCarrito(prevTotal => prevTotal - productoEliminar.precio)
     setProductosCarrito((productos) => {
       const productoEnCarrito = productos.find(
         (productoCarrito) => productoCarrito.producto.id == productoEliminar.id

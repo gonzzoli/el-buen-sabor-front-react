@@ -6,13 +6,13 @@ import FiltrosProductos from "./FiltrosProductos";
 import ListaProductos from "./ListaProductos";
 
 interface Producto {
-  id: number
+  idProducto: number;
   nombre: string;
   descripcion: string;
   precio: number;
   tiempoEstimadoCocina: number;
-  verDetalles: () => void;
-  agregarCarrito: () => void;
+  // verDetalles: () => void
+  // agregarCarrito: () => void
 }
 
 interface RubroProducto {
@@ -30,7 +30,6 @@ const PaginaPrincipal: React.FC = () => {
       const respuesta = await fetch(
         `${import.meta.env.VITE_URL_API}/productos/paginaPrincipal`
       );
-      console.log(respuesta);
       const datos = await respuesta.json();
       console.log(datos);
       setProductos(datos);

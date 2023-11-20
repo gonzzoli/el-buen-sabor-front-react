@@ -11,7 +11,7 @@ const ModalCarrito = () => {
 
     return (
         <div className="ventana-emergente ventana-carrito">
-            <Link to="/home" className="boton-secundario boton-volver">
+            <Link to="/" onClick={carritoContext.handleMostrarCarrito} className="boton-secundario boton-volver">
                 <FontAwesomeIcon icon={faArrowLeft} />
                 Volver
             </Link>

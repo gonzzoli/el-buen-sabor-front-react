@@ -7,7 +7,10 @@ import { ModalType } from "../tipos/ModalType.ts";
 import ModalEmpleado from "./ModalEmpleado/ModalEmpleado.tsx";
 import EditButton from "./EditButton/EditButton.tsx";
 import DeleteButton from "./DeleteButton/DeleteButton.tsx";
-
+import { Rol } from "../tipos/Rol.ts";
+import "../estilos_generales.scss";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "../componentes/Tablas/TableStyles.css"
 
 
 const TablaEmpleado = () => {
@@ -21,7 +24,8 @@ const TablaEmpleado = () => {
           telefono: '',
           email: '',
           domicilios: null,
-          usuario: null
+          password: '',
+          rol: Rol.Cajero
         };
       };
       
@@ -77,15 +81,13 @@ const TablaEmpleado = () => {
     
     return (
         <>
-            <Button onClick={() => handleClick("Nuevo Empleado", initializeNewEmpleado(), ModalType.CREATE)}>
-                Nuevo Empleado
-            </Button>
+           
     
             {isLoading ? (
                 <Loader />
             ) : (
                 <>
-                    <Table hover>
+                    <Table hover className="table table-bordered table-striped Table-container">
                         <thead>
                             <tr>
                                 <th>id</th>
@@ -130,6 +132,11 @@ const TablaEmpleado = () => {
                     )}
                 </>
             )}
+            <div className="nuevoEmpl-container">
+             <Button className="botonPrimario"onClick={() => handleClick("Nuevo Empleado", initializeNewEmpleado(), ModalType.CREATE)}>
+                Nuevo Empleado
+            </Button>
+            </div>
         </>
     );
 }

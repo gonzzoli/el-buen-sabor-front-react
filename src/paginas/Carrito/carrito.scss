@@ -1,0 +1,101 @@
+@use '../PaginaPrincipal/PaginaPrincipal.scss' as *;
+@use '../../estilos_generales.scss' as *;
+
+.principal {
+    padding: 20px;
+    .arriba {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        .boton-volver {
+            padding: 10px 15px;
+        }
+        .titulo-carrito {
+            text-align: center;
+        }
+    }
+    
+    .contenido {
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+        .informacion-pago {
+            width: 50%;
+            min-width: 500px;
+            .seleccion-radio {
+                margin-bottom: 20px;
+                h4 {
+                    margin-bottom: 10px;
+                }
+                .opciones {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 10px;
+                }
+            }
+            .datos-cliente {
+                margin-top: 40px;
+                h3 {
+                    margin-bottom: 10px;
+                }
+                .contenedor-inputs {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 5%;
+                    .form-texto {
+                        width: 40%;
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+        }
+        .pedido {
+            width: 50%;
+            height: 100%;
+            .ventana-carrito {
+                display: block;
+                height: 100%;
+                width: 100%;
+                position: static;
+                transform: none;
+                .precio-total {
+                    margin-top: 10px;
+                    text-align: center;
+                    font-weight: 500;
+                }
+            }
+        }
+        @media screen and (max-width: $min-width-small) {
+            flex-direction: column;
+            align-items: center;
+            gap: 70px;
+            .informacion-pago {
+                order: 1;
+                margin-bottom: 20px;
+                width: 100%;
+                min-width: 0px;
+                .datos-cliente {
+                    .contenedor-inputs {
+                        flex-direction: column;
+                        align-items: start;
+                        .form-texto {
+                            min-width: 200px;
+                        }
+                    }
+                }
+            }
+            .pedido {
+                width: 100%;
+            }
+        }
+    }
+
+    .boton-confirmar-contenedor {
+        display: flex;
+        justify-content: center;
+    }
+}

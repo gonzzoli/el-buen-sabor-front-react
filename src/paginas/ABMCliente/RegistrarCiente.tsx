@@ -20,7 +20,7 @@ const [isLoading, setIsLoading] = useState(true);
 
 const validationSchema = () => {
     return Yup.object().shape({
-    id: Yup.number().integer().min(0),
+    username: Yup.string().required('El usuario es requerido'),
     nombre: Yup.string().required('El nombre es requerido'),
     apellido: Yup.string().required('El apellido es requerido'),
     telefono: Yup.string().required('El telefono es requerido'),
@@ -32,13 +32,8 @@ const validationSchema = () => {
     //CREATE-UPDATE función handleSaveUpdate 
     const handleSave = async (cliente: Cliente) => {
         try {
-            const isNew = cliente.id === 0;
-            if (isNew) {
-                await ClienteService.saveCliente(cliente);
-            }
-            toast.success(isNew ? "Producto Creado" : "No valido", {
-                position: "top-center",
-            });
+            await ClienteService.saveCliente(cliente);
+            toast.success("Cliente Creado")
            /* onHide () => void;
             refreshData(prevState => !prevState);*/
         } catch (error) {
@@ -49,8 +44,7 @@ const validationSchema = () => {
 //Lo que necesita el formulario
     const formik = useFormik({
         initialValues:{
-            id: 0,
-            rol: "cliente",
+            username: '',
             nombre: '',
             apellido: '',
             email:'',
@@ -68,9 +62,24 @@ const validationSchema = () => {
     return (
         <Container className="d-flex justify-content-center aling-items-center">
             <div className="border rounded-3 p-5 mt-5">
-                <h1>Formilario de ingreso</h1>
+                <h1>Formulario de ingreso</h1>
 
                 <form onSubmit={formik.handleSubmit}>
+                <div className="mb-3 mt-3">
+                        <label htmlFor="nombre" className="form-label">Usuario</label>
+                        <input
+                        type="text"
+                        className="form-control"
+                        id="username"
+                        name="username"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.username}
+                        />
+                        {formik.touched.username && formik.errors.username ? (
+                            <div className="text-danger"> Error en usuario {/*formik.errors.usuario*/}</div>
+                        ) : null}
+                    </div>
                     <div className="mb-3 mt-3">
                         <label htmlFor="nombre" className="form-label">Nombre</label>
                         <input
