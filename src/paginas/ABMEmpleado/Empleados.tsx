@@ -1,14 +1,14 @@
 import TablaEmpleado from "../../componentes/TablaEmpleado";
-
+import "../../estilos_generales.scss";
 
 // // Tabla de empleados a realizar
 // const TablaEmpleado = React.lazy(() => import('../../componentes/TablaEmpleado'));
 
 const Empleados = () => {
   return(
-    <>
+    <div className="m-3">
     <TablaEmpleado/>
-    </>
+    </div>
   )
 }
 export default Empleados

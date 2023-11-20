@@ -278,6 +278,7 @@ footer {
     p {
       color: white;
       font-size: 32px;
+      font-family: "Reenie Beanie", "Inter", "sans-serif";
     }
     .iconos-redes {
       display: flex;
@@ -296,6 +297,7 @@ footer {
     color: white;
     font-size: 48px;
   }
+
   @media screen and (max-width: $min-width-small) {
     .redes-sociales {
       p {
@@ -309,5 +311,16 @@ footer {
       color: white;
       font-size: 32px;
     }
+
+  }
+
+  .m-3{
+    width: 100%; /* O el ancho deseado */
+  border-collapse: collapse;
+  margin: 10px; /* Ajusta el valor según sea necesario para el espaciado deseado */
+  }
+
+  .nuevoEmpl{
+    justify-content: right;
   }
 }

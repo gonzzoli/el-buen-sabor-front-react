@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import {useFormik} from "formik";
 import { EmpleadoService } from "../../sevicios/EmpleadoService";
 import { toast } from 'react-toastify';
-
+import "../../componentes/Tablas/TableStyles.css"
 
 type ModalEmpleadoProps = {
     	show: boolean;
@@ -88,7 +88,7 @@ type ModalEmpleadoProps = {
         <>
             {modalType === ModalType.DELETE && (
                 <>
-                   <Modal show={show} onHide={onHide} centered backdrop="static">
+                   <Modal className="modal-container" show={show} onHide={onHide} centered backdrop="static">
                 <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
@@ -110,7 +110,7 @@ type ModalEmpleadoProps = {
                 {modalType === ModalType.UPDATE && (
                 <>
                 
-                    <Modal show={show} onHide={onHide} centered backdrop="static" className="modal-xl">
+                    <Modal  show={show} onHide={onHide} centered backdrop="static" className="modal-xl modal-container">
                         <Modal.Header closeButton>
                             <Modal.Title>{title}</Modal.Title>
                         </Modal.Header>
@@ -189,7 +189,7 @@ type ModalEmpleadoProps = {
             {modalType === ModalType.CREATE && (
                 <>
                 
-                <Modal show={show} onHide={onHide} centered backdrop="static" className="modal-xl">
+                <Modal   show={show} onHide={onHide} centered backdrop="static" className="modal-xl modal-container">
                     <Modal.Header closeButton>
                         <Modal.Title>{title}</Modal.Title>
                     </Modal.Header>
