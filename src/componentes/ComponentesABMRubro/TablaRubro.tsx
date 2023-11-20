@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { EstadoRubro,TipoRubro, Rubro } from "../../tipos/Rubro";
 import { RubroService } from "../../sevicios/RubroServicio";
 import "../../estilos_generales.scss";
@@ -9,13 +9,14 @@ import {ModalType} from "../../tipos/ModalType";
 import { EditarRubro } from "../ComponentesABMRubro/EditarRubro";
 import { BorrarRubro } from "../ComponentesABMRubro/BorrarRubro";
 import RubroModal from "./RubroModal";
+import { SessionContext } from "../../context/SessionContext";
 
 
 const TablaRubro = () => {
 
     //Variable que va a contener los datos recibidos por la API
     const [rubros, setRubros] = useState<Rubro[]>([]);
-
+    const sessionContext = useContext(SessionContext);
     //Variable que muestra el componente Loader hasta que se reciban los datos de la API
    // const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +28,7 @@ const TablaRubro = () => {
 
         //Llamamos a la función para obtener todos los rubros declarado en el service
         const fetchRubros = async () => {
-            const rubros = await RubroService.buscarRubrosPorNombre();
+            const rubros = await RubroService.buscarRubrosPorNombre(sessionContext.jwtToken);
             setRubros(rubros);
            // setIsLoading(false);
         };

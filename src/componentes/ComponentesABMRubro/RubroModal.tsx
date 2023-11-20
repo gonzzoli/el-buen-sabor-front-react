@@ -14,6 +14,8 @@ import { RubroService} from "../../sevicios/RubroServicio"
 import { toast } from 'react-toastify';
 import { Rubro } from "../../tipos/Rubro";
 
+import { SessionContext } from "../../context/SessionContext";
+import { useContext} from "react";
 
 
 
@@ -34,15 +36,17 @@ type RubroModalProps = {
 
 const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroModalProps) => {
 
+    const sessionContext = useContext(SessionContext);
     //CREATE-UPDATE función handleSaveUpdate 
     const handleSaveUpdate = async (rubro:Rubro) => {
     try {
         const isNew = rubro.id === 0;
         if (isNew) {
             //aca
-            await RubroService.agregarRubro(rubro);
+            await RubroService.agregarRubro(rubro,sessionContext.jwtToken);
+
         } else {
-            await RubroService.modificarRubro(rubro.id, rubro);
+            await RubroService.modificarRubro(rubro.id, rubro, sessionContext.jwtToken);
         }
         toast.success(isNew ? "Rubro Creado" : "Rubro Actualizado", {
             position: "top-center",
