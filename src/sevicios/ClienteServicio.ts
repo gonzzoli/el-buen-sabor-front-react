@@ -8,9 +8,15 @@ import { ClienteDTOMC } from "../tipos/DTOClienteMC";
 export const ClienteService = {
 
     
-    mostrarClientes: async (): Promise<Cliente[]> => {
+    mostrarClientes: async (token: string): Promise<Cliente[]> => {
        
-        const response = await fetch(`${BASE_URL}/api/v1/cliente/mostrarclientes`);
+        const response = await fetch(`${BASE_URL}/api/v1/clientes/mostrarclientes`, {
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer'+ token,
+        }
+    });
+        
         const data = await response.json();
         return data;
     },
@@ -18,7 +24,7 @@ export const ClienteService = {
     
     datosCliente: async (id:number): Promise<Cliente> => {
 
-        const response = await fetch (`${BASE_URL}/api/v1/cliente/verDatos/${id}`);
+        const response = await fetch (`${BASE_URL}/api/v1/clientes/verDatos/${id}`);
         const data = await response.json();
         return data;
         
@@ -37,11 +43,12 @@ export const ClienteService = {
         
     },
 
-    modificardatos: async (id: number, clienteDTO: ClienteDTOMC): Promise<Cliente> => {
+    modificardatos: async (token: string, id: number, clienteDTO: ClienteDTOMC): Promise<Cliente> => {
         
-        const response = await fetch(`${BASE_URL}/api/v1/cliente/modificarDatos`, {
+        const response = await fetch(`${BASE_URL}/api/v1/clientes/modificarDatos`, {
             method: "PUT",
             headers: {
+                'Authorization': 'Bearer'+ token,
                 'Content-Type':'application/json'
             },
             body: JSON.stringify(clienteDTO)
@@ -51,11 +58,12 @@ export const ClienteService = {
         return data;
     },
 
-    modificarCliente: async (clienteDTO: ClienteDTOMA): Promise<Cliente> => {
+    modificarCliente: async (clienteDTO: ClienteDTOMA, token: string): Promise<Cliente> => {
         
-        const response = await fetch(`${BASE_URL}/api/v1/cliente/modificarCliente`, {
+        const response = await fetch(`${BASE_URL}/api/v1/clientes/modificarCliente`, {
             method: "PUT",
             headers: {
+                'Authorization': 'Bearer'+ token,
                 'Content-Type':'application/json'
             },
             body: JSON.stringify(clienteDTO)
@@ -68,7 +76,7 @@ export const ClienteService = {
     
 
     deleteCliente: async (id:number): Promise<void> => {
-        await fetch(`${BASE_URL}/${id}`, {
+        await fetch(`${BASE_URL}/api/v1/clientes/${id}`, {
             method: "DELETE"
         });
     }

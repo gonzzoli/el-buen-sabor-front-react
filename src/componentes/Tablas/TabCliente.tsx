@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ClienteDTOMA } from  "../../tipos/DTOClienteMA";
 import { ClienteDTOMC } from  "../../tipos/DTOClienteMC";
 import { Cliente } from  "../../tipos/Cliente";
@@ -6,9 +6,10 @@ import { ClienteService } from "../../sevicios/ClienteServicio";
 import Loader from "../Loader/Loader";
 import ClienteModal from "../Funcion/ClienteModal";
 import { ModalType } from "../../tipos/ModalType";
-import EditButton from "../Botones/DeleteButton";
-import DeleteButton from "../Botones/DeleteButton";
+import EditButton from "../EditButton";
+import DeleteButton from "../DeleteButton";
 import { Button, Table } from "react-bootstrap";
+import { SessionContext } from "../../context/SessionContext";
 
 
 
@@ -16,8 +17,8 @@ const TablaCliente = () => {
 
     //Variable que va a contener los datos recibidos por la API
     const [clientes, setClientes] = useState<Cliente[]>([]);
-
-
+    const sessionContext = useContext(SessionContext);
+    //const sessionContext = useContext(SessionContext);
 //Variable que muestra el componente Loader hasta que se reciban los datos de la API
     const [isLoading, setIsLoading] = useState(true);
 //Variable que va actualizar los datos de la tabla luego de cada operacion exitosa
@@ -28,7 +29,7 @@ const TablaCliente = () => {
     useEffect(() => {
         //Llamamos a la funcion para obtener todos los clientes declarado en el service
         const buscarClientes = async () => {
-            const clientes = await ClienteService.mostrarClientes();
+            const clientes = await ClienteService.mostrarClientes(sessionContext.jwtToken);
             setClientes(clientes);	
             setIsLoading(false);
         };
@@ -42,19 +43,19 @@ const TablaCliente = () => {
     console.log(JSON.stringify(clientes, null, 2));
 
      //Se inicializa un producto vacio cuando vayamos a crear uno nuevo, para evitar "undefined"
-   const initializeNewCliente = (): Cliente => {
+   const initializeNewCliente = (): ClienteDTOMA => {
        return {
         id: 0,
-        usuario: "",
+       // usuario: "",
         nombre: "",
         apellido: "",
         telefono: "",
         email: "",
-        password:"",
+      //  password:"",
         rol:"Cliente"
         };
     };
-    const [cliente, setCliente] = useState<Cliente> (initializeNewCliente);
+    const [cliente, setCliente] = useState<ClienteDTOMA> (initializeNewCliente);
     //Manejo de Modal
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
@@ -62,7 +63,7 @@ const TablaCliente = () => {
 
 
     //Logica de Modal
-    const handleClick = (newTitle: string, cliente: Cliente , modal: ModalType) => {
+    const handleClick = (newTitle: string, cliente: ClienteDTOMA , modal: ModalType) => {
         setTitle(newTitle);
         setModalType(modal)
         setCliente(cliente);

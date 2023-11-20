@@ -3,6 +3,7 @@ import { ClienteDTOMA } from "../../tipos/DTOClienteMA";
 import { ClienteDTOMC } from "../../tipos/DTOClienteMC";
 import { Button, Form, Modal } from "react-bootstrap";
 import { ModalType } from "../../tipos/ModalType";
+import {useContext} from "react";
 
 //Dependencias para validar los formularios
 import * as Yup from "yup";
@@ -12,6 +13,7 @@ import { ClienteService } from "../../sevicios/ClienteServicio";
 
 //Notificaciones al usuario
 import { toast } from 'react-toastify';
+import { SessionContext } from "../../context/SessionContext";
 
 
 
@@ -22,7 +24,7 @@ type ClienteModalProps = {
     onHide: () => void;
     title: string;
     modalType: ModalType;
-    cliente: Cliente;
+    cliente: ClienteDTOMA;
     refreshData: React.Dispatch<React.SetStateAction<boolean>>;
     
 };
@@ -33,9 +35,11 @@ type ClienteModalProps = {
 
 const ClienteModal = ({show, onHide, title, cliente, modalType, refreshData}:ClienteModalProps) => {
 
+    const sessionContext = useContext(SessionContext);
     //CREATE-UPDATE función handleSaveUpdate 
     const handleSave = async (cliente: Cliente) => {
-    try {
+
+        try {
         const isNew = cliente.id === 0;
         if (isNew) {
             await ClienteService.saveCliente(cliente);
@@ -56,7 +60,7 @@ const ClienteModal = ({show, onHide, title, cliente, modalType, refreshData}:Cli
    const handleUpdate = async (cliente: ClienteDTOMA) => {
             try {
                  
-            await ClienteService.modificarCliente(cliente);
+            await ClienteService.modificarCliente(cliente, sessionContext.jwtToken);
                 
                 toast.success("Empleado Actualizado", {
                     position: "top-center"});
@@ -91,19 +95,26 @@ const handleDelete = async () => {
         apellido: Yup.string().required('El apellido es requerido'),
         telefono: Yup.string().required('El telefono es requerido'),
         email: Yup.string().email().required('El email es requerido'),
-        password: Yup.string().min(8).required('La contraseña es requerida'),
+       // password: Yup.string().min(8).required('La contraseña es requerida'),
         });
     };
     
 
 //Formik -  Utiliza el esquema de validación de YUP y obtiene un formulario dinámico que
 // bloquea el formulario en caso de haber errores.
-    const formik = useFormik({
+    {/*const formik = useFormik({
         initialValues: cliente,
         validationSchema: validationSchema(),
         validateOnChange: true,
         validateOnBlur: true,
         onSubmit: (obj: Cliente) => handleSave(obj),
+     });*/}
+     const formikupdate = useFormik({
+        initialValues: cliente,
+        validationSchema: validationSchema(),
+        validateOnChange: true,
+        validateOnBlur: true,
+        onSubmit: (obj: ClienteDTOMA) => handleUpdate(obj),
      });
 
 
@@ -150,93 +161,93 @@ const handleDelete = async () => {
 
                     <Modal.Body>
 
-                    {"Formulario"}
-                    <Form onSubmit={formik.handleSubmit}>
+                    {/*"Formulario"*/}
+                    <Form onSubmit={formikupdate.handleSubmit}>
                         
-                    {"Nombre"}
+                    {/*"Nombre"*/}
                         <Form.Group controlId="formNombre">
                             <Form.Label>Nombre</Form.Label>
                             <Form.Control
                                 name="nombre"
                                 type="text"
-                                value={formik.values.nombre}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.nombre &&
-                                formik.touched.nombre)}
+                                value={formikupdate.values.nombre}
+                                onChange={formikupdate.handleChange}
+                                onBlur={formikupdate.handleBlur}
+                                isInvalid={Boolean(formikupdate.errors.nombre &&
+                                formikupdate.touched.nombre)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {formik.errors.nombre}
+                                {formikupdate.errors.nombre}
                              </Form.Control.Feedback>
                         </Form.Group>
 
-                    {"Apellido"}
+                    {/*"Apellido"*/}
                         <Form.Group controlId="formApellido">
                             <Form.Label>Apellido</Form.Label>
                             <Form.Control
                                 name="apellido"
                                 type="text"
-                                value={formik.values.apellido || ''}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.apellido &&
-                                formik.touched.apellido)}
+                                value={formikupdate.values.apellido || ''}
+                                onChange={formikupdate.handleChange}
+                                onBlur={formikupdate.handleBlur}
+                                isInvalid={Boolean(formikupdate.errors.apellido &&
+                                formikupdate.touched.apellido)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {formik.errors.apellido}
+                                {formikupdate.errors.apellido}
                              </Form.Control.Feedback>
                         </Form.Group>
 
-                    {"Telefono"}
+                    {/*"Telefono"*/}
                         <Form.Group controlId="formTelefono">
                             <Form.Label>Telefono</Form.Label>
                             <Form.Control
                                 name="telefono"
                                 type="text"
-                                value={formik.values.telefono}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.telefono &&
-                                formik.touched.telefono)}
+                                value={formikupdate.values.telefono}
+                                onChange={formikupdate.handleChange}
+                                onBlur={formikupdate.handleBlur}
+                                isInvalid={Boolean(formikupdate.errors.telefono &&
+                                formikupdate.touched.telefono)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {formik.errors.telefono}
+                                {formikupdate.errors.telefono}
                              </Form.Control.Feedback>
                         </Form.Group>
 
-                    {"Email"}                
+                    {/*"Email"*/}                
                         <Form.Group controlId="formEmail">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                                 name="email"
                                 type="text"
-                                value={formik.values.email || ''}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.email &&
-                                formik.touched.email)}
+                                value={formikupdate.values.email || ''}
+                                onChange={formikupdate.handleChange}
+                                onBlur={formikupdate.handleBlur}
+                                isInvalid={Boolean(formikupdate.errors.email &&
+                                formikupdate.touched.email)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {formik.errors.email}
+                                {formikupdate.errors.email}
                              </Form.Control.Feedback>
                         </Form.Group>
                     
-                    {"Contraseña"}                
+                    {/*{"Contraseña"}                
                         <Form.Group controlId="formPassword">
                             <Form.Label>Contraseña</Form.Label>
                             <Form.Control
                                 name="password"
                                 type="text"
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.password &&
-                                formik.touched.password)}
+                                value={formikupdate.values.password}
+                                onChange={formikupdate.handleChange}
+                                onBlur={formikupdate.handleBlur}
+                                isInvalid={Boolean(formikupdate.errors.password &&
+                                formikupdate.touched.password)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {formik.errors.password}
+                                {formikupdate.errors.password}
                              </Form.Control.Feedback>
-                        </Form.Group>
+                                </Form.Group>*/}
                 
 
                             <Modal.Footer className="mt-4">
@@ -244,7 +255,7 @@ const handleDelete = async () => {
                                 <Button variant="secondary" onClick={onHide}>
                                     Cancelar
                                 </Button>
-                                <Button variant="primary" type="submit" disabled={!formik.isValid}>
+                                <Button variant="primary" type="submit" disabled={!formikupdate.isValid}>
                                     Guardar
                                 </Button>
 
@@ -256,7 +267,7 @@ const handleDelete = async () => {
 
                 </Modal>
                 </>
-            )} {modalType === ModalType.CREATE && (
+            )} {/*{modalType === ModalType.CREATE && (
                 <>
                 
                 <Modal show={show} onHide={onHide} centered backdrop="static" className="modal-xl">
@@ -372,8 +383,8 @@ const handleDelete = async () => {
                     </Modal.Body>
 
                 </Modal>
-                </>
-            )}
+                                
+            )}</>*/}
 </>
   );
   }

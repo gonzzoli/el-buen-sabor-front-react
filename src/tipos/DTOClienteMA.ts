@@ -1,5 +1,5 @@
 export interface ClienteDTOMA {
-    id?: number;
+    id: number;
     nombre: string;
     apellido: string;
     telefono: string;
