@@ -12,7 +12,7 @@ export enum TipoRubro{
 export interface Rubro {
         
         id: number;
-        nombreRubro: String;
+        nombre: String;
         estado: EstadoRubro;
         tipoRubro: TipoRubro;
     

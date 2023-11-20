@@ -1,14 +1,15 @@
 import { Rubro } from "../tipos/Rubro";
-const BASE_URL = 'https://ebsreact-persist.onrender.com';
+const BASE_URL = 'http://localhost:8080';
 export const RubroService = {
     
     /* Metodos ABM */
 
-    agregarRubro:async (rubro: Rubro) => {
-
-        const response = await fetch(`${BASE_URL}/api/v1/rubros/agregarRubro`, {          //Puede que haya que cambiar la ruta, igual desde el POSTMAN funciona
+    agregarRubro:async (rubro: Rubro, token:string) => {
+        //aca
+        const response = await fetch(`${BASE_URL}/api/v1/rubros/agregarRubro`, {          
             method: "POST",
             headers: {
+                "Authorization": "Bearer "+token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(rubro)
@@ -24,10 +25,11 @@ export const RubroService = {
         });
     },
 
-    modificarRubro:async (id:number, rubro: Rubro): Promise<Rubro> => {
-        const response = await fetch(`${BASE_URL}/api/v1/rubros/${id}` , {           //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona)
+    modificarRubro:async (id:number, rubro: Rubro, token:string): Promise<Rubro> => {
+        const response = await fetch(`${BASE_URL}/api/v1/rubros/modificarRubro/${id}` , {           //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona)
             method: "PUT",
             headers: {
+                "Authorization": "Bearer "+token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(rubro)
@@ -35,13 +37,29 @@ export const RubroService = {
         const data = await response.json();
         return data;
     },
-
-    buscarRubrosPorNombre:async (): Promise<Rubro[]> => {
-        const response = await fetch(`${BASE_URL}/api/v1/rubros/Nombre`);
-        const data = await response.json();
+//cambiarle el nombre
+    buscarRubrosPorNombre:async (token:string): Promise<Rubro[]> => {
+        const response = await fetch(`${BASE_URL}/api/v1/rubros`, {          
         
+            headers: {
+                "Authorization": "Bearer "+token,
+                
+            },
+            
+        });
+        const data = await response.json();
         return data;
     }
+
+   // mostrarRubro: async (id:number): Promise<void> => {
+    //    const response = await fetch(`${BASE_URL}/api/v1/rubros/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
+          //  method: "GET"
+     //   });
+       // const rubro = await response.json();
+        //console.log("Rubro obtenido:", rubro);
+   // }
+
+
 
     
 

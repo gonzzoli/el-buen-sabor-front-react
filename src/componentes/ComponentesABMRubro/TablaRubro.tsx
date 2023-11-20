@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { EstadoRubro,TipoRubro, Rubro } from "../../tipos/Rubro";
 import { RubroService } from "../../sevicios/RubroServicio";
 import "../../estilos_generales.scss";
@@ -9,13 +9,14 @@ import {ModalType} from "../../tipos/ModalType";
 import { EditarRubro } from "../ComponentesABMRubro/EditarRubro";
 import { BorrarRubro } from "../ComponentesABMRubro/BorrarRubro";
 import RubroModal from "./RubroModal";
+import { SessionContext } from "../../context/SessionContext";
 
 
 const TablaRubro = () => {
 
     //Variable que va a contener los datos recibidos por la API
     const [rubros, setRubros] = useState<Rubro[]>([]);
-
+    const sessionContext = useContext(SessionContext);
     //Variable que muestra el componente Loader hasta que se reciban los datos de la API
    // const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +28,7 @@ const TablaRubro = () => {
 
         //Llamamos a la función para obtener todos los rubros declarado en el service
         const fetchRubros = async () => {
-            const rubros = await RubroService.buscarRubrosPorNombre();
+            const rubros = await RubroService.buscarRubrosPorNombre(sessionContext.jwtToken);
             setRubros(rubros);
            // setIsLoading(false);
         };
@@ -43,7 +44,7 @@ const TablaRubro = () => {
         const initializeNewRubro = (): Rubro => {
         return {
             id: 0,
-            nombreRubro: "",
+            nombre: "",
             estado: EstadoRubro.activo,
             tipoRubro: TipoRubro.cocina,
             };
@@ -64,8 +65,7 @@ const TablaRubro = () => {
         setRubro(rub);
         setShowModal(true);
     };
-
-
+    
   return (
     <>
     <div className="m-3">
@@ -75,6 +75,7 @@ const TablaRubro = () => {
                 initializeNewRubro(), ModalType.CREATE)}>
                 Nuevo Rubro
             </Button>
+            
             
 
     {/*{isLoading ? <Loader/>: (*/}
@@ -92,7 +93,7 @@ const TablaRubro = () => {
             <tbody>
                 {rubros.map(rubro=> (
                     <tr key={rubro.id}>
-                        <td className="celda"> {rubro.nombreRubro} </td>
+                        <td className="celda"> {rubro.nombre} </td>
                         <td className="celda"> {rubro.tipoRubro} </td>
                         <td className="celda"> {rubro.estado} </td>
                         <td className="celda"> <EditarRubro onClick={() => handleClick("Editar rubro", rubro, ModalType.UPDATE)}/> </td>
