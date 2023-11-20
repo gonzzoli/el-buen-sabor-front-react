@@ -8,7 +8,7 @@ import ClienteModal from "../Funcion/ClienteModal";
 import { ModalType } from "../../tipos/ModalType";
 import EditButton from "../Botones/DeleteButton";
 import DeleteButton from "../Botones/DeleteButton";
-import { Button } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 
 
 
@@ -19,7 +19,7 @@ const TablaCliente = () => {
 
 
 //Variable que muestra el componente Loader hasta que se reciban los datos de la API
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 //Variable que va actualizar los datos de la tabla luego de cada operacion exitosa
      const [refreshData, setRefreshData] = useState(false);
 
@@ -27,15 +27,15 @@ const TablaCliente = () => {
 //Este hook se va a ejecutar cada vez que se renderize el componente
     useEffect(() => {
         //Llamamos a la funcion para obtener todos los clientes declarado en el service
-        const fetchClientes = async () => {
+        const buscarClientes = async () => {
             const clientes = await ClienteService.mostrarClientes();
             setClientes(clientes);	
             setIsLoading(false);
         };
 
-        fetchClientes();
+        buscarClientes();
 
-    }, []);
+    }, [refreshData]);
 
 
 //Test, este log esta modificado para que muestre los datos de una manera mas legible
@@ -45,6 +45,7 @@ const TablaCliente = () => {
    const initializeNewCliente = (): Cliente => {
        return {
         id: 0,
+        usuario: "",
         nombre: "",
         apellido: "",
         telefono: "",
@@ -73,7 +74,7 @@ const TablaCliente = () => {
         <>
     <div className="m-3">
         {isLoading ? <Loader /> : (
-            <table>
+            <Table hover>
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -97,7 +98,7 @@ const TablaCliente = () => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </Table>
         )}
          
          {showModal && (
