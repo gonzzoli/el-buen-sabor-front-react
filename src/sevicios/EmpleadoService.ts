@@ -10,7 +10,7 @@ export const EmpleadoService = {
 
     registrarEmpleado:async (empleado: Empleado) => {
 
-        const response = await fetch(`${BASE_URL}/api/v1/empleado/registrarEmpleado`, {          //Puede que haya que cambiar la ruta
+        const response = await fetch(`${import.meta.env.VITE_URL_API}/api/v1/empleado/registrarEmpleado`, {          //Puede que haya que cambiar la ruta
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -23,18 +23,18 @@ export const EmpleadoService = {
     },
 
     getEmpleados: async (): Promise<Empleado[]> => {
-        const response = await fetch(`${BASE_URL}/api/v1/empleado`);
+        const response = await fetch(`${import.meta.env.VITE_URL_API}/api/v1/empleado`);
         const data = await response.json();
         return data;
     },
     getEmpleado: async (id: number): Promise<Empleado> => {
-        const response = await fetch(`${BASE_URL}/${id}`); //chequear rutas
+        const response = await fetch(`${import.meta.env.VITE_URL_API}/${id}`); //chequear rutas
                 const data = await response.json();
                 return data;
             },
 
     updateEmpleado: async (id: number, empleado: Empleado): Promise<Empleado> => {
-                const response = await fetch(`${BASE_URL}/api/v1/empleado/${id}`, {  // chequear rutas
+                const response = await fetch(`${import.meta.env.VITE_URL_API}/api/v1/empleado/${id}`, {  // chequear rutas
                             method: "PUT",
                             headers: {
                                 'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export const EmpleadoService = {
                     
 
      deleteEmpleado: async (id: number): Promise<void> => {
-                      await fetch(`${BASE_URL}/api/v1/empleado/${id}`, {
+                      await fetch(`$${import.meta.env.VITE_URL_API}/api/v1/empleado/${id}`, {
                             method: "DELETE"
                         });
                     }
