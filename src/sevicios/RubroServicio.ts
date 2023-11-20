@@ -4,11 +4,7 @@ export const RubroService = {
     
     /* Metodos ABM */
 
-<<<<<<< HEAD
     agregarRubro:async (rubro: Rubro, token:string) => {
-=======
-    agregarRubro:async (rubro: Rubro) => {
->>>>>>> 399da792f01996198179001e0d35d2ad7bafc21e
         //aca
         const response = await fetch(`${BASE_URL}/api/v1/rubros/agregarRubro`, {          
             method: "POST",
@@ -29,11 +25,7 @@ export const RubroService = {
         });
     },
 
-<<<<<<< HEAD
     modificarRubro:async (id:number, rubro: Rubro, token:string): Promise<Rubro> => {
-=======
-    modificarRubro:async (id:number, rubro: Rubro): Promise<Rubro> => {
->>>>>>> 399da792f01996198179001e0d35d2ad7bafc21e
         const response = await fetch(`${BASE_URL}/api/v1/rubros/modificarRubro/${id}` , {           //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona)
             method: "PUT",
             headers: {
@@ -46,14 +38,8 @@ export const RubroService = {
         return data;
     },
 //cambiarle el nombre
-<<<<<<< HEAD
     buscarRubrosPorNombre:async (token:string): Promise<Rubro[]> => {
         const response = await fetch(`${BASE_URL}/api/v1/rubros`, {          
-=======
-    buscarRubrosPorNombre:async (): Promise<Rubro[]> => {
-        const response = await fetch(`${BASE_URL}/api/v1/rubros`);
-        const data = await response.json();
->>>>>>> 399da792f01996198179001e0d35d2ad7bafc21e
         
             headers: {
                 "Authorization": "Bearer "+token,
