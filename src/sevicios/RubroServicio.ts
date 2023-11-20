@@ -5,8 +5,8 @@ export const RubroService = {
     /* Metodos ABM */
 
     agregarRubro:async (rubro: Rubro) => {
-
-        const response = await fetch(`${BASE_URL}/api/v1/rubros/agregarRubro`, {          //Puede que haya que cambiar la ruta, igual desde el POSTMAN funciona
+        //aca
+        const response = await fetch(`${BASE_URL}/api/v1/rubros/agregarRubro`, {          
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

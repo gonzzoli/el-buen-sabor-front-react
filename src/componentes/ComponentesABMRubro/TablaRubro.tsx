@@ -43,7 +43,7 @@ const TablaRubro = () => {
         const initializeNewRubro = (): Rubro => {
         return {
             id: 0,
-            nombreRubro: "",
+            nombre: "",
             estado: EstadoRubro.activo,
             tipoRubro: TipoRubro.cocina,
             };
@@ -64,8 +64,7 @@ const TablaRubro = () => {
         setRubro(rub);
         setShowModal(true);
     };
-
-
+    
   return (
     <>
     <div className="m-3">
@@ -75,6 +74,7 @@ const TablaRubro = () => {
                 initializeNewRubro(), ModalType.CREATE)}>
                 Nuevo Rubro
             </Button>
+            
             
 
     {/*{isLoading ? <Loader/>: (*/}
@@ -92,7 +92,7 @@ const TablaRubro = () => {
             <tbody>
                 {rubros.map(rubro=> (
                     <tr key={rubro.id}>
-                        <td className="celda"> {rubro.nombreRubro} </td>
+                        <td className="celda"> {rubro.nombre} </td>
                         <td className="celda"> {rubro.tipoRubro} </td>
                         <td className="celda"> {rubro.estado} </td>
                         <td className="celda"> <EditarRubro onClick={() => handleClick("Editar rubro", rubro, ModalType.UPDATE)}/> </td>
