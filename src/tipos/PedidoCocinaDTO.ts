@@ -9,7 +9,7 @@ export enum EstadoPedido{
     
 }
 
-export interface pedidoCocina {
+export interface PedidoCocina {
     id:number;
     fecha: Date;
     estadoPedido: EstadoPedido;

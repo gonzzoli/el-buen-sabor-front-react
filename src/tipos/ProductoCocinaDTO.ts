@@ -7,6 +7,8 @@ export interface ProductoCocina{
     foto:string;
     ingredienteDTOS: {
         ingredienteId: number;
+        ingredienteNombre: string;
+        ingredienteUnidadDeMedida: string;
         cantidad: number;
     }[];    
     denominacion:string;
