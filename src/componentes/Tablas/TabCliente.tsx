@@ -10,6 +10,7 @@ import EditButton from "../EditButton";
 import DeleteButton from "../DeleteButton";
 import { Button, Table } from "react-bootstrap";
 import { SessionContext } from "../../context/SessionContext";
+import { Rol } from "../../tipos/Rol";
 
 
 
@@ -69,8 +70,39 @@ const TablaCliente = () => {
         setCliente(cliente);
         setShowModal(true);
     };
+    /*type Cliente ={
+        username: string;
+        nombre: string;
+        apellido: string;
+        telefono: string;
+        email: string;
+        password: string;
+        id:number;
+    };
+    type ClienteDTOMA ={
+        id: number;
+        nombre: string;
+        apellido: string;
+        telefono: string;
+        email: string;
+        rol: Rol;
+    }*/
 
-    
+    //Logica del DTO
+
+    const cambioaDTO = ( cliente: Cliente) => {
+        const clienteDTO: ClienteDTOMA ={
+            id: cliente.id,    
+            nombre: cliente.nombre,
+            apellido: cliente.apellido,
+            telefono: cliente.telefono,
+            email: cliente.email,
+            rol: Rol.CLIENTE
+        }
+        return clienteDTO;
+    };
+
+
     return(
         <>
     <div className="m-3">
@@ -93,7 +125,7 @@ const TablaCliente = () => {
                             <td>{cliente.apellido}</td>
                             <td>{cliente.telefono}</td>
                             <td>{cliente.email}</td>
-                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cliente, ModalType.UPDATEMA)}/> </td>
+                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cambioaDTO(cliente), ModalType.UPDATEMA)}/> </td>
                             <td> <DeleteButton onClick={() => handleClick("Borrar Cliente", cliente, ModalType.DELETE)} /> </td>
 
                         </tr>
