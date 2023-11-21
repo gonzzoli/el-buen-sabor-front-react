@@ -6,6 +6,8 @@ import { Table } from "react-bootstrap";
 import EditButton from "../Botones/DeleteButton";
 import { Button } from "react-bootstrap";
 import { ModalType } from "../../tipos/ModalType";
+import PedidoCocinaModal from "../../paginas/PedidoCocina/pedidoCocinaModal";
+
 
 
 
@@ -56,7 +58,7 @@ const PedidoCocinaTable = () => {
             }
           ],
         };
-      };
+    };
       
 
     const [pedido, setPedido] = useState<PedidoCocina>(initializeNewPedidoCocina);
@@ -76,10 +78,11 @@ const PedidoCocinaTable = () => {
 
 
     return (
-        
-        <Button onClick={() => handleClick("Pedidos Cocina", initializeNewPedidoCocina(), ModalType.NONE)}>
+           <>
+           <Button onClick={() => handleClick("Pedidos Cocina", initializeNewPedidoCocina(), ModalType.NONE)}>
                 Pedidos Cocina
             </Button>
+
 
             {isLoading ? <Loader /> : (
                 <Table hover>
@@ -112,7 +115,7 @@ const PedidoCocinaTable = () => {
                                                         {ingrediente.ingredienteNombre}: {ingrediente.cantidad} {ingrediente.ingredienteUnidadDeMedida}
                                                     </li>
                                                 ))}
-                                            </ul>                                       
+                                            </ul>                                      
                                         </div>
                                     ))}
                                 </td>
@@ -121,15 +124,32 @@ const PedidoCocinaTable = () => {
                         )
                         )
 
+
                         }
                     </tbody>
                 </Table>
-            )
+
+
+            )}
+
+
+                {showModal && (
+                    <PedidoCocinaModal                
+                    show={showModal}
+                    onHide={() => setShowModal(false)}
+                    title={title}
+                    modalType={modalType}
+                    ped={pedido}
+                    />
+                )}
+
+
+           </>    
+    )            
         
-    )
 }
+
 
 
 export default PedidoCocinaTable;
 
-}

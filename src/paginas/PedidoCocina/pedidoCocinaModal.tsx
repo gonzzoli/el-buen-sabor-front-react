@@ -14,6 +14,22 @@ type PedidoCocinaModalProps = {
     ped: PedidoCocina;
 }
 
+  //CREATE - UPDATE
+  const handleSaveUpdate = async (ped: PedidoCocina) => {
+    try {
+        const isNew = ped.id === 0;
+        if (isNew) {
+            await ProductService.createProduct(ped);
+        } else {
+            await ProductService.updateProduct(ped.id, ped);
+        }
+        onHide();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
 
 
 const PedidoCocinaModal = ({ show, onHide, title, modalType, ped }: PedidoCocinaModalProps) => {
@@ -57,12 +73,30 @@ const validationSchema  = () => {
 
 
 
+    function handleDelete(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        throw new Error("Function not implemented.");
+    }
+
     return (
 
         <>
             {modalType === ModalType.DELETE ? (
-                <>Por el momento lo dejamos vacio</>
-            ) : (
+                <>
+                <Modal show={show} onHide={onHide} centered backdrop="static">
+                    <Modal.Header closeButton>
+                        <Modal.Title> {title} </Modal.Title>
+                        <Modal.Body>
+                            <p>¿Está seguro que desea eliminar <br/>
+                            <strong> {ped.id} </strong> ? </p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={onHide}> Cancelar </Button>
+                            <Button variant="danger" onClick={handleDelete}> Eliminar </Button>
+                        </Modal.Footer>
+                    </Modal.Header>
+                </Modal>
+                </>               
+                ) : (
                 <>
                     <Modal show={show} onHide={onHide} centered backdrop="static" className="modal-xl">
                         <Modal.Header closeButton>
@@ -76,15 +110,18 @@ const validationSchema  = () => {
                             <Form.Control
                                 name="fecha"
                                 type="text"
-                                value={formik.values.fecha.toString() || ''}
+                                value={formik.values.fecha.toISOString().substring(0, 10)}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 isInvalid={Boolean(formik.errors.fecha && formik.touched.fecha)}
                             />
+                            <Form.Control.Feedback type="invalid">
+                              { /* {formik.errors.fecha.toISOString().substring(0, 10)}*/}
+                            </Form.Control.Feedback>
                             
                         </Form.Group>
 
-                        <Form.Group controlId="formFecha">
+                        <Form.Group controlId="formEstado">
                             <Form.Label>Estado</Form.Label>
                             <Form.Control
                                 name="estadoPedido"
@@ -115,8 +152,7 @@ const validationSchema  = () => {
                                     formik.errors.productosCocina &&
                                     formik.errors.productosCocina[index] &&
                                     formik.touched.productosCocina &&
-                                    formik.touched.productosCocina[index] &&
-                                    formik.errors.productosCocina[index].cantidad
+                                    formik.touched.productosCocina[index] 
                                 )}
                                 />
 
@@ -134,17 +170,86 @@ const validationSchema  = () => {
                                     formik.errors.productosCocina &&
                                     formik.errors.productosCocina[index] &&
                                     formik.touched.productosCocina &&
-                                    formik.touched.productosCocina[index] &&
-                                    formik.errors.productosCocina[index].nombre
+                                    formik.touched.productosCocina[index] 
                                 )}
                                 />
                                
                             </Form.Group>
 
+                            <Form.Group controlId={`formProductosCocina.${index}.tiempoEstimadoCocina`}>
+                                <Form.Label>Tiempo estimado de cocina:</Form.Label>
+                                <Form.Control
+                                name={`productosCocina.${index}.tiempoEstimadoCocina`}
+                                type="text"
+                                value={producto.tiempoEstimadoCocina}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                isInvalid={Boolean(
+                                    formik.errors.productosCocina &&
+                                    formik.errors.productosCocina[index] &&
+                                    formik.touched.productosCocina &&
+                                    formik.touched.productosCocina[index] 
+                                )}
+                                />
+                               
+                            </Form.Group>
+
+                            <Form.Group controlId={`formProductosCocina.${index}.descripcion`}>
+                                <Form.Label>descripcion</Form.Label>
+                                <Form.Control
+                                name={`productosCocina.${index}.descripcion`}
+                                type="text"
+                                value={producto.descripcion}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                isInvalid={Boolean(
+                                    formik.errors.productosCocina &&
+                                    formik.errors.productosCocina[index] &&
+                                    formik.touched.productosCocina &&
+                                    formik.touched.productosCocina[index] 
+                                )}
+                                />
+                            </Form.Group>
+
+                               
+                               <Form.Group controlId={`formProductosCocina.${index}.foto`}>
+                                <Form.Label>foto</Form.Label>
+                                <Form.Control
+                                name={`productosCocina.${index}.foto`}
+                                type="text"
+                                value={producto.foto}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                isInvalid={Boolean(
+                                    formik.errors.productosCocina &&
+                                    formik.errors.productosCocina[index] &&
+                                    formik.touched.productosCocina &&
+                                    formik.touched.productosCocina[index] 
+                                )}
+                                />
+                                
+                            </Form.Group>
+
+                            <label>Ingredientes:</label>
+                            {producto.ingredienteDTOS.map((ingrediente, ingredienteIndex) => (
+                            <div key={ingredienteIndex}>
+                                <label htmlFor={`productosCocina.${index}.ingredienteDTOS.${ingredienteIndex}.ingredienteId`}>ID del Ingrediente:</label>
+                                <input
+                                type="number"
+                                id={`productosCocina.${index}.ingredienteDTOS.${ingredienteIndex}.ingredienteId`}
+                                name={`productosCocina.${index}.ingredienteDTOS.${ingredienteIndex}.ingredienteId`}
+                                value={ingrediente.ingredienteId}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                />
+                            
+
+                            
+
                             {/* Continuar con otros campos de ProductoCocina según la lógica del formulario... */}
                             </div>
-  ))}
-</Form.Group>
+                            ))}
+                            </Form.Group>
                     
 
                     </Form>
@@ -171,7 +276,9 @@ const validationSchema  = () => {
 
 
 export default PedidoCocinaModal;
-
+{/* 
 function handleSaveUpdate(obj: PedidoCocina): void | Promise<any> {
     throw new Error("Function not implemented.");
 }
+
+*/}
