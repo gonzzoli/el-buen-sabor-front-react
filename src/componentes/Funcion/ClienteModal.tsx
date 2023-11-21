@@ -14,6 +14,7 @@ import { ClienteService } from "../../sevicios/ClienteServicio";
 //Notificaciones al usuario
 import { toast } from 'react-toastify';
 import { SessionContext } from "../../context/SessionContext";
+import { Rol } from "../../tipos/Rol";
 
 
 
@@ -24,7 +25,7 @@ type ClienteModalProps = {
     onHide: () => void;
     title: string;
     modalType: ModalType;
-    cliente: ClienteDTOMA;
+    cliente: Cliente;
     refreshData: React.Dispatch<React.SetStateAction<boolean>>;
     
 };
@@ -36,7 +37,20 @@ type ClienteModalProps = {
 const ClienteModal = ({show, onHide, title, cliente, modalType, refreshData}:ClienteModalProps) => {
 
     const sessionContext = useContext(SessionContext);
-    //CREATE-UPDATE función handleSaveUpdate 
+    //CREATE-UPDATE función handleSaveUpdate
+    
+    const cambioaDTO = ( cliente: Cliente) => {
+        const clienteDTO: ClienteDTOMA ={
+            id: cliente.id,    
+            nombre: cliente.nombre,
+            apellido: cliente.apellido,
+            telefono: cliente.telefono,
+            email: cliente.email,
+            rol: Rol.CLIENTE
+        }
+        return clienteDTO;
+    };
+
     const handleSave = async (cliente: Cliente) => {
 
         try {
@@ -102,15 +116,15 @@ const handleDelete = async () => {
 
 //Formik -  Utiliza el esquema de validación de YUP y obtiene un formulario dinámico que
 // bloquea el formulario en caso de haber errores.
-    {/*const formik = useFormik({
+    const formik = useFormik({
         initialValues: cliente,
         validationSchema: validationSchema(),
         validateOnChange: true,
         validateOnBlur: true,
         onSubmit: (obj: Cliente) => handleSave(obj),
-     });*/}
+     });
      const formikupdate = useFormik({
-        initialValues: cliente,
+        initialValues: cambioaDTO(cliente),
         validationSchema: validationSchema(),
         validateOnChange: true,
         validateOnBlur: true,

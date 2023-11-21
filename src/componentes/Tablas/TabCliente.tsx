@@ -44,19 +44,19 @@ const TablaCliente = () => {
     console.log(JSON.stringify(clientes, null, 2));
 
      //Se inicializa un producto vacio cuando vayamos a crear uno nuevo, para evitar "undefined"
-   const initializeNewCliente = (): ClienteDTOMA => {
+   const initializeNewCliente = (): Cliente => {
        return {
         id: 0,
-       // usuario: "",
+        username: "",
         nombre: "",
         apellido: "",
         telefono: "",
         email: "",
-      //  password:"",
+        password:"",
         rol:"Cliente"
         };
     };
-    const [cliente, setCliente] = useState<ClienteDTOMA> (initializeNewCliente);
+    const [cliente, setCliente] = useState<Cliente> (initializeNewCliente);
     //Manejo de Modal
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
@@ -64,7 +64,7 @@ const TablaCliente = () => {
 
 
     //Logica de Modal
-    const handleClick = (newTitle: string, cliente: ClienteDTOMA , modal: ModalType) => {
+    const handleClick = (newTitle: string, cliente: Cliente , modal: ModalType) => {
         setTitle(newTitle);
         setModalType(modal)
         setCliente(cliente);
@@ -125,7 +125,7 @@ const TablaCliente = () => {
                             <td>{cliente.apellido}</td>
                             <td>{cliente.telefono}</td>
                             <td>{cliente.email}</td>
-                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cambioaDTO(cliente), ModalType.UPDATEMA)}/> </td>
+                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cliente, ModalType.UPDATEMA)}/> </td>
                             <td> <DeleteButton onClick={() => handleClick("Borrar Cliente", cliente, ModalType.DELETE)} /> </td>
 
                         </tr>
