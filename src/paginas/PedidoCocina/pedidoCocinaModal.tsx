@@ -5,6 +5,7 @@ import { ModalType } from "../../tipos/ModalType";
 import { Button, Form, Modal } from "react-bootstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { PedidoCocinaService } from "../../sevicios/PedidoCocinaServicio";
 
 type PedidoCocinaModalProps = {
     show: boolean;
@@ -14,15 +15,13 @@ type PedidoCocinaModalProps = {
     ped: PedidoCocina;
 }
 
-  //CREATE - UPDATE
-  const handleSaveUpdate = async (ped: PedidoCocina) => {
+  const handleSaveUpdate = async () => {
     try {
-        const isNew = ped.id === 0;
-        if (isNew) {
-            await ProductService.createProduct(ped);
-        } else {
-            await ProductService.updateProduct(ped.id, ped);
-        }
+        
+            await PedidoCocinaService.getPedidosCocina;
+        
+           // await PedidoCocinaService.editarEstado(ped);
+        
         onHide();
     } catch (error) {
         console.error(error);
@@ -68,9 +67,8 @@ const validationSchema  = () => {
     validationSchema: validationSchema(),
     validateOnChange: true,
     validateOnBlur: true,
-    onSubmit: (obj: PedidoCocina) => handleSaveUpdate(obj),
+    onSubmit: () => handleSaveUpdate(),
   });
-
 
 
     function handleDelete(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
@@ -136,7 +134,7 @@ const validationSchema  = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Group controlId="formProductosCocina">
+                    <Form.Group controlId="formProductosCocina">
                         <Form.Label>Productos de Cocina:</Form.Label>
                         {formik.values.productosCocina.map((producto, index) => (
                             <div key={index}>
@@ -249,7 +247,10 @@ const validationSchema  = () => {
                             {/* Continuar con otros campos de ProductoCocina según la lógica del formulario... */}
                             </div>
                             ))}
-                            </Form.Group>
+
+                            </div>
+                            ),
+                 </Form.Group>
                     
 
                     </Form>
@@ -282,3 +283,7 @@ function handleSaveUpdate(obj: PedidoCocina): void | Promise<any> {
 }
 
 */}
+function onHide() {
+    throw new Error("Function not implemented.");
+}
+
