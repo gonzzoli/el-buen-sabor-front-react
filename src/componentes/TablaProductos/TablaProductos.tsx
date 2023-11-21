@@ -24,7 +24,8 @@ const TablaProductos = () => {
         /* Variable que va a actualizar los datos de la tabla luego de cada operación exitosa*/
         const [refreshData, setRefreshData] = useState(false);
 
-
+        {}
+        
         /* Hook que se va a ejecutar cada vez que se renderice el componente o 'refreshData' cambie de estado*/ 
         useEffect( () => {
             
