@@ -6,6 +6,8 @@ import {useFormik} from "formik";
 import { EmpleadoService } from "../../sevicios/EmpleadoService";
 import { toast } from 'react-toastify';
 import "../../componentes/Tablas/TableStyles.css"
+import { SessionContext } from "../../context/SessionContext";
+import { useContext} from "react";
 
 type ModalEmpleadoProps = {
     	show: boolean;
@@ -18,10 +20,11 @@ type ModalEmpleadoProps = {
 
 
   const ModalEmpleado = ({ show, onHide, title, modalType, empl, refreshData }: ModalEmpleadoProps) => {
-//Handle Create
-    const handleSave = async() => {
+    const sessionContext = useContext(SessionContext);
+    //Handle Create
+    const handleSave = async(empl: Empleado) => {
         try{
-            await EmpleadoService.registrarEmpleado(empl);
+            await EmpleadoService.registrarEmpleado(empl, sessionContext.jwtToken);
             toast.success("Empleado Creado" ,{ position: "top-center"});
             onHide();
             refreshData(prevState => !prevState);
@@ -69,18 +72,40 @@ type ModalEmpleadoProps = {
         apellido: Yup.string().required('El apellido es requerido'),
         email: Yup.string().required('El email es requeridao'),
         telefono: Yup.number().required('El telefono es requerido'),
-        password: Yup.number().required('La contrasena es requerida')
             });
         };
 
+        const validationSchema2 = () => {
+            return Yup.object().shape({
+                id: Yup.number().integer().min(0),
+            nombre: Yup.string().required('El nombre es requerido'),
+            apellido: Yup.string().required('El apellido es requerido'),
+            email: Yup.string().required('El email es requeridao'),
+            telefono: Yup.number().required('El telefono es requerido'),
+             password: Yup.string().required('La contrasena es requerida')
+        });
+        };
+
         //Formik
-        
         const formik = useFormik({
             initialValues: empl,
             validationSchema: validationSchema(),
             validateOnChange: true,
             validateOnBlur: true,
-            onSubmit: (obj: Empleado) => handleUpdate(obj), //lo dejo para update falta para create
+
+            onSubmit: (obj: Empleado) => 
+            handleUpdate(obj), //lo dejo para update falta para create
+        
+        });
+        const formik2 = useFormik({
+            initialValues: empl,
+            validationSchema: validationSchema2(),
+            validateOnChange: true,
+            validateOnBlur: true,
+
+            onSubmit: (obj: Empleado) => 
+            handleSave(obj),
+        
         });
 
 
@@ -110,7 +135,7 @@ type ModalEmpleadoProps = {
                 {modalType === ModalType.UPDATE && (
                 <>
                 
-                    <Modal  show={show} onHide={onHide} centered backdrop="static" className="modal-xl modal-container">
+                    <Modal  show={show} onHide={onHide} centered backdrop="static" className="modal modal-container">
                         <Modal.Header closeButton>
                             <Modal.Title>{title}</Modal.Title>
                         </Modal.Header>
@@ -189,25 +214,25 @@ type ModalEmpleadoProps = {
             {modalType === ModalType.CREATE && (
                 <>
                 
-                <Modal   show={show} onHide={onHide} centered backdrop="static" className="modal-xl modal-container">
+                <Modal   show={show} onHide={onHide} centered backdrop="static" className="modal modal-container">
                     <Modal.Header closeButton>
                         <Modal.Title>{title}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form onSubmit={formik.handleSubmit}>
+                        <Form onSubmit={formik2.handleSubmit}>
                             {/* Debajo de la etiqueta Form, vamos a armar un <Form.Group> por cada uno de los campos para dar de alta o modificar un producto. */}
                             <Form.Group controlId="formNombreEmpleado">
                                 <Form.Label>Nombre Empleado</Form.Label>
                                 <Form.Control
                                     name="nombre"
                                     type="text"
-                                    value={formik.values.nombre || ''}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    isInvalid={Boolean(formik.errors.nombre && formik.touched.nombre)}
+                                    value={formik2.values.nombre || ''}
+                                    onChange={formik2.handleChange}
+                                    onBlur={formik2.handleBlur}
+                                    isInvalid={Boolean(formik2.errors.nombre && formik2.touched.nombre)}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {formik.errors.nombre}
+                                    {formik2.errors.nombre}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="formApellido">
@@ -215,10 +240,10 @@ type ModalEmpleadoProps = {
                                 <Form.Control
                                     name="apellido"
                                     type="text"
-                                    value={formik.values.apellido || ''}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    isInvalid={Boolean(formik.errors.apellido && formik.touched.apellido)}
+                                    value={formik2.values.apellido || ''}
+                                    onChange={formik2.handleChange}
+                                    onBlur={formik2.handleBlur}
+                                    isInvalid={Boolean(formik2.errors.apellido && formik2.touched.apellido)}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     {formik.errors.apellido}
@@ -229,13 +254,13 @@ type ModalEmpleadoProps = {
                                 <Form.Control
                                     name="email"
                                     type="string"  //chequear si puede ser type email
-                                    value={formik.values.email || ''}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    isInvalid={Boolean(formik.errors.email && formik.touched.email)}
+                                    value={formik2.values.email || ''}
+                                    onChange={formik2.handleChange}
+                                    onBlur={formik2.handleBlur}
+                                    isInvalid={Boolean(formik2.errors.email && formik2.touched.email)}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {formik.errors.email}
+                                    {formik2.errors.email}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="formTelefono">
@@ -243,13 +268,13 @@ type ModalEmpleadoProps = {
                                 <Form.Control
                                     name="telefono"
                                     type="number"
-                                    value={formik.values.telefono || ''}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    isInvalid={Boolean(formik.errors.telefono && formik.touched.telefono)}
+                                    value={formik2.values.telefono || ''}
+                                    onChange={formik2.handleChange}
+                                    onBlur={formik2.handleBlur}
+                                    isInvalid={Boolean(formik2.errors.telefono && formik2.touched.telefono)}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {formik.errors.telefono}
+                                    {formik2.errors.telefono}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="formPassword">
@@ -257,13 +282,13 @@ type ModalEmpleadoProps = {
                                 <Form.Control
                                     name="password"
                                     type="text"
-                                    value={formik.values.password || ''}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    isInvalid={Boolean(formik.errors.password && formik.touched.password)} // chequear si con formik podemos verifica el password y su sintaxis probablemente la del back no haga falta
+                                    value={formik2.values.password || ''}
+                                    onChange={formik2.handleChange}
+                                    onBlur={formik2.handleBlur}
+                                    isInvalid={Boolean(formik2.errors.password && formik2.touched.password)} // chequear si con formik podemos verifica el password y su sintaxis probablemente la del back no haga falta
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {formik.errors.password}
+                                    {formik2.errors.password}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="formRol">
@@ -271,13 +296,13 @@ type ModalEmpleadoProps = {
                                 <Form.Control
                                     name="rol"
                                     type="text"
-                                    value={formik.values.rol || ''}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    isInvalid={Boolean(formik.errors.rol && formik.touched.rol)}
+                                    value={formik2.values.rol || ''}
+                                    onChange={formik2.handleChange}
+                                    onBlur={formik2.handleBlur}
+                                    isInvalid={Boolean(formik2.errors.rol && formik2.touched.rol)}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {formik.errors.rol}
+                                    {formik2.errors.rol}
                                 </Form.Control.Feedback>
                             </Form.Group>
                         
@@ -285,7 +310,7 @@ type ModalEmpleadoProps = {
                                 <Button variant="secondary" onClick={onHide}>
                                     Cancelar
                                 </Button>
-                                <Button variant="primary" type="submit" disabled={!formik.isValid}>
+                                <Button variant="primary" type="submit" disabled={!formik2.isValid}>
                                     Guardar
                                 </Button>
                             </Modal.Footer>

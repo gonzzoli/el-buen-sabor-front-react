@@ -14,6 +14,8 @@ import { RubroService} from "../../sevicios/RubroServicio"
 import { toast } from 'react-toastify';
 import { Rubro } from "../../tipos/Rubro";
 
+import { SessionContext } from "../../context/SessionContext";
+import { useContext} from "react";
 
 
 
@@ -34,14 +36,17 @@ type RubroModalProps = {
 
 const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroModalProps) => {
 
+    const sessionContext = useContext(SessionContext);
     //CREATE-UPDATE función handleSaveUpdate 
     const handleSaveUpdate = async (rubro:Rubro) => {
     try {
         const isNew = rubro.id === 0;
         if (isNew) {
-            await RubroService.agregarRubro(rubro);
+            //aca
+            await RubroService.agregarRubro(rubro,sessionContext.jwtToken);
+
         } else {
-            await RubroService.modificarRubro(rubro.id, rubro);
+            await RubroService.modificarRubro(rubro.id, rubro, sessionContext.jwtToken);
         }
         toast.success(isNew ? "Rubro Creado" : "Rubro Actualizado", {
             position: "top-center",
@@ -49,7 +54,7 @@ const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroMo
         onHide();
         refreshData(prevState => !prevState);
     } catch (error) {
-        console.error(error);
+        console.error('error en HandleSaveUpdate',error);
         toast.error('Ha ocurrido un error');
     }
     
@@ -76,7 +81,7 @@ const handleDelete = async () => {
     const validationSchema = () => {
         return Yup.object().shape({
             id: Yup.number().integer().min(0),
-            nombreRubro: Yup.string().required('El nombre es requerido'),
+            nombre: Yup.string().required('El nombre es requerido'),
             estado: Yup.string().required('El estado es requerido'),
             tipoRubro: Yup.string().required('El  tipo de rubro es requerido'),
        
@@ -91,6 +96,7 @@ const handleDelete = async () => {
         validationSchema: validationSchema(),
         validateOnChange: true,
         validateOnBlur: true,
+        //aca
         onSubmit: (obj: Rubro) => handleSaveUpdate(obj),
      });
 
@@ -110,7 +116,7 @@ const handleDelete = async () => {
 
                     <Modal.Body>
                         <p> ¿Está seguro que desea eliminar el rubro   
-                            <br /> <strong> {rubro.nombreRubro} </strong> ?
+                            <br /> <strong> {rubro.nombre} </strong> ?
                         </p>
                     </Modal.Body>
 
@@ -140,15 +146,15 @@ const handleDelete = async () => {
                     <Form.Group controlId="formNombreRubro">
                             <Form.Label>Nombre Rubro</Form.Label>
                             <Form.Control
-                                name="nombreRubro"
+                                name="nombre"
                                 type="text"
-                                value={formik.values.nombreRubro.toString() || ''}
+                                value={(formik.values.nombre || '').toString()}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.nombreRubro && formik.touched.nombreRubro)}
+                                isInvalid={Boolean(formik.errors?.nombre && formik.touched?.nombre)}
                             />
-                            {/*<Form.Control.Feedback type="invalid">
-                                {formik.errors.nombreRubro}
+                           {/*<Form.Control.Feedback type="invalid">
+                                {formik.errors.nombre}
             </Form.Control.Feedback> */}
                         </Form.Group>
 

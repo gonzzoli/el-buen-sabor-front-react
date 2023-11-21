@@ -1,8 +1,8 @@
 import { Producto } from "../tipos/Producto";
 
 
-const BASE_URL = 'https://buensabor-api.onrender.com'
-// const BASE_URL = 'http://localhost:8080' 
+//const BASE_URL = 'https://buensabor-api.onrender.com'
+const BASE_URL = 'http://localhost:8080' 
 
 /*
 Usar la URL de RENDER o sino también probar por localhost:8080, cualquiera de las dos debería funcionar
@@ -15,11 +15,12 @@ export const ProductoService = {
 
     /* Metodos ABM */
 
-    agregarProducto:async (producto: Producto) => {
+    agregarProducto:async (producto: Producto, token: string) => {
 
         const response = await fetch(`${BASE_URL}/api/v1/productos/agregarProducto`, {          //Puede que haya que cambiar la ruta (Funciona)
             method: "POST",
             headers: {
+                'Authorization': 'Bearer '+ token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(producto)
@@ -35,10 +36,11 @@ export const ProductoService = {
         });
     },
 
-    modificarProducto:async (id:number, producto:Producto): Promise<Producto> => {
+    modificarProducto:async (id:number, producto:Producto, token: string): Promise<Producto> => {
         const response = await fetch(`${BASE_URL}/api/v1/productos/${id}` , {           //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona)
             method: "PUT",
             headers: {
+                'Authorization': 'Bearer '+ token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(producto)
@@ -47,8 +49,13 @@ export const ProductoService = {
         return data;
     },
 
-    verProductos:async (): Promise<Producto[]> => {
-        const response = await fetch(`${BASE_URL}/api/v1/productos`);
+    verProductos:async (token: string): Promise<Producto[]> => {
+        const response = await fetch(`${BASE_URL}/api/v1/productos`, {
+            headers: {
+                'Authorization': 'Bearer '+ token,
+            },
+        });
+
         const data = await response.json();
         
         return data;

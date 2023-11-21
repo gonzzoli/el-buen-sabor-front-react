@@ -1,6 +1,8 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { Producto } from "../../tipos/Producto";
 import { ModalType } from "../../tipos/ModalType";
+import { useContext } from "react";
+import { SessionContext } from "../../context/SessionContext";
 
 /* Dependencias para importar formularios */ 
 import * as Yup from "yup";
@@ -13,6 +15,8 @@ import { toast } from "react-toastify";
 /* Estilos */ 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+
 type ModalProductoProps = {
     show: boolean;
     onHide: () => void;
@@ -24,6 +28,7 @@ type ModalProductoProps = {
 
 const ModalProducto = ({show, onHide, title, modalType, producto, refreshData}: ModalProductoProps) => {
 
+    const sessionContext = useContext(SessionContext);
     
     const handleSaveUpdate =async (prod:Producto) => {
 
@@ -31,9 +36,9 @@ const ModalProducto = ({show, onHide, title, modalType, producto, refreshData}: 
         try {
             const isNew = prod.id === 0;
             if (isNew) {
-                await ProductoService.agregarProducto(prod);
+                await ProductoService.agregarProducto(prod, sessionContext.jwtToken);
             } else {
-                await ProductoService.modificarProducto(prod.id, prod);                     //Hay un problema que es que pierde el id de Rubro cuando se modifica
+                await ProductoService.modificarProducto(prod.id, prod, sessionContext.jwtToken);                     //Hay un problema que es que pierde el id de Rubro cuando se modifica
             }
             toast.success(isNew ? "Producto Creado" : "Producto Actualizado", {
                 position: "top-center",
