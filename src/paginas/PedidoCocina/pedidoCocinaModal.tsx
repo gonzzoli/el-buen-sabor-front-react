@@ -1,5 +1,6 @@
 import { boolean } from "yup";
 import { PedidoCocina } from "../../tipos/PedidoCocinaDTO";
+import { ProductoCocina } from "../../tipos/ProductoCocinaDTO";
 import { ModalType } from "../../tipos/ModalType";
 import { Button, Form, Modal } from "react-bootstrap";
 import * as Yup from "yup";
@@ -12,6 +13,8 @@ type PedidoCocinaModalProps = {
     modalType: ModalType;
     ped: PedidoCocina;
 }
+
+
 
 const PedidoCocinaModal = ({ show, onHide, title, modalType, ped }: PedidoCocinaModalProps) => {
 
@@ -66,22 +69,85 @@ const validationSchema  = () => {
                             <Modal.Title>{title}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                        <Form onSubmit={formik.handleSubmit}></Form>
+
+                        <Form onSubmit={formik.handleSubmit}>
                         <Form.Group controlId="formFecha">
                             <Form.Label>Fecha</Form.Label>
                             <Form.Control
                                 name="fecha"
-                                type="date"
+                                type="text"
                                 value={formik.values.fecha.toString() || ''}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 isInvalid={Boolean(formik.errors.fecha && formik.touched.fecha)}
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {formik.errors.fecha}
-                                </Form.Control.Feedback>
+                            
                         </Form.Group>
 
+                        <Form.Group controlId="formFecha">
+                            <Form.Label>Estado</Form.Label>
+                            <Form.Control
+                                name="estadoPedido"
+                                type="text"
+                                value={formik.values.estadoPedido}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                isInvalid={Boolean(formik.errors.estadoPedido && formik.touched.estadoPedido)}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {formik.errors.estadoPedido}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group controlId="formProductosCocina">
+                        <Form.Label>Productos de Cocina:</Form.Label>
+                        {formik.values.productosCocina.map((producto, index) => (
+                            <div key={index}>
+                            <Form.Group controlId={`formProductosCocina.${index}.cantidad`}>
+                                <Form.Label>Cantidad:</Form.Label>
+                                <Form.Control
+                                name={`productosCocina.${index}.cantidad`}
+                                type="number"
+                                value={producto.cantidad}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                isInvalid={Boolean(
+                                    formik.errors.productosCocina &&
+                                    formik.errors.productosCocina[index] &&
+                                    formik.touched.productosCocina &&
+                                    formik.touched.productosCocina[index] &&
+                                    formik.errors.productosCocina[index].cantidad
+                                )}
+                                />
+
+                            </Form.Group>
+
+                            <Form.Group controlId={`formProductosCocina.${index}.nombre`}>
+                                <Form.Label>Nombre:</Form.Label>
+                                <Form.Control
+                                name={`productosCocina.${index}.nombre`}
+                                type="text"
+                                value={producto.nombre}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                isInvalid={Boolean(
+                                    formik.errors.productosCocina &&
+                                    formik.errors.productosCocina[index] &&
+                                    formik.touched.productosCocina &&
+                                    formik.touched.productosCocina[index] &&
+                                    formik.errors.productosCocina[index].nombre
+                                )}
+                                />
+                               
+                            </Form.Group>
+
+                            {/* Continuar con otros campos de ProductoCocina según la lógica del formulario... */}
+                            </div>
+  ))}
+</Form.Group>
+                    
+
+                    </Form>
 
                         <Modal.Footer className="mt-4">
                     <Button variant="secondary" onClick={onHide}>
@@ -105,3 +171,7 @@ const validationSchema  = () => {
 
 
 export default PedidoCocinaModal;
+
+function handleSaveUpdate(obj: PedidoCocina): void | Promise<any> {
+    throw new Error("Function not implemented.");
+}
