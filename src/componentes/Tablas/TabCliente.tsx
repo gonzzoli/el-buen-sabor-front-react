@@ -11,6 +11,7 @@ import DeleteButton from "../DeleteButton";
 import { Button, Table } from "react-bootstrap";
 import { SessionContext } from "../../context/SessionContext";
 import { Rol } from "../../tipos/Rol";
+import "../../estilos_generales.scss";
 
 
 
@@ -145,13 +146,10 @@ const TablaCliente = () => {
         /> 
         )}
 
-
-    {/* Botón para que cuando el usuario haga click llame a la función que declaramos 
-    <Button onClick={() => handleClick("Nuevo Cliente",
-        initializeNewCliente(), ModalType.CREATE)}>
-        Nuevo Cliente
+    <Button className="boton-primario">
+        <a href="/Domicilio">Editar Domicilio</a>
     </Button>
-    */}
+   
 </div>
 
     </>
