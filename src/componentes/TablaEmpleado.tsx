@@ -25,7 +25,8 @@ const TablaEmpleado = () => {
           email: '',
           domicilio: null,
           password: '',
-          rol: Rol.CAJERO
+          rol: Rol.CAJERO,
+          username:''
         };
       };
       

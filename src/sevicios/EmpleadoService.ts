@@ -13,7 +13,7 @@ export const EmpleadoService = {
         const response = await fetch(`${import.meta.env.VITE_URL_API}/empleado/registrarEmpleado`, {          //Puede que haya que cambiar la ruta
             method: "POST",
             headers: {
-                'Authorization': 'Bearer '+token,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(empleado)

@@ -142,6 +142,24 @@ type ModalEmpleadoProps = {
                         <Modal.Body>
                             <Form onSubmit={formik.handleSubmit}>
                                 {/* Debajo de la etiqueta Form, vamos a armar un <Form.Group> por cada uno de los campos para dar de alta o modificar un producto. */}
+                                <Form.Group controlId="formid">
+                                    <Form.Label>ID Empleado</Form.Label>
+                                    <Form.Control
+                                        name="id"
+                                        type="text"
+                                        value={formik.values.id || ''}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        isInvalid={Boolean(formik.errors.id && formik.touched.id)}
+                                        disabled 
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {formik.errors.id}
+                                    </Form.Control.Feedback>
+                                    <Form.Text className="text-muted">
+                                        El ID no se puede modificar.
+                                    </Form.Text>
+                                    </Form.Group>
                                 <Form.Group controlId="formNombreEmpleado">
                                     <Form.Label>Nombre Empleado</Form.Label>
                                     <Form.Control
