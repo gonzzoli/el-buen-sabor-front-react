@@ -56,7 +56,7 @@ const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroMo
         refreshData(prevState => !prevState);
     } catch (error) {
         //console.error('error en HandleSaveUpdate',error);
-        console.error(error);
+        //console.error(error);
         toast.error('Ha ocurrido un error');
     }
     
