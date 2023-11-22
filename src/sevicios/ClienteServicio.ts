@@ -2,7 +2,7 @@ import { Cliente } from "../tipos/Cliente";
 import { ClienteDTOMA } from "../tipos/DTOClienteMA";
 import { ClienteDTOMC } from "../tipos/DTOClienteMC";
 
-const BASE_URL = 'api/v1/cliente' 
+const BASE_URL = 'http://localhost:8080/api/v1/cliente' 
 
 export const ClienteService = {
 
@@ -20,10 +20,10 @@ export const ClienteService = {
         const response = await fetch (`${BASE_URL}/verDatos/${id}`);
         const data = await response.json();
         return data;
-        
     },
 
     saveCliente:async (cliente:Cliente):Promise<Cliente> => {
+        console.log(cliente)
         const response = await fetch(`${import.meta.env.VITE_AUTH_URL}/registerCliente`, {
             method: "POST",
             headers: {

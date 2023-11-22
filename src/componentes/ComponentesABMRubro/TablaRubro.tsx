@@ -30,6 +30,7 @@ const TablaRubro = () => {
         const fetchRubros = async () => {
             const rubros = await RubroService.buscarRubrosPorNombre(sessionContext.jwtToken);
             setRubros(rubros);
+            console.log(rubros)
            // setIsLoading(false);
         };
 
