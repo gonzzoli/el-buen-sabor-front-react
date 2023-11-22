@@ -1,5 +1,5 @@
 import { Rubro } from "../tipos/Rubro";
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_URL_API_sinv1;
 export const RubroService = {
     
     /* Metodos ABM */

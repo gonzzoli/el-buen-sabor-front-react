@@ -1,6 +1,6 @@
 import { Empleado } from "../tipos/Empleado";
 
-const BASE_URL = 'https://buensabor-api.onrender.com' 
+const BASE_URL = import.meta.env.VITE_URL_API_sinv1 
 
 /*
 Usar la URL de RENDER o sino también probar por localhost:8080, cualquiera de las dos debería funcionar
@@ -34,10 +34,11 @@ export const EmpleadoService = {
                 return data;
             },
 
-    updateEmpleado: async (empleado: Empleado): Promise<Empleado> => {
+    updateEmpleado: async (empleado: Empleado, token:string): Promise<Empleado> => {
                 const response = await fetch(`${import.meta.env.VITE_URL_API}/empleado/modificarDatosEmpleado`, {  // chequear rutas
                             method: "PUT",
                             headers: {
+                                'Authorization': `Bearer ${token}`,
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(empleado)

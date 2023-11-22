@@ -1,4 +1,4 @@
-import { Domicilio } from "./Domicilio"
+import { Domicilio } from "./Domicilio"   
 import { Rol } from "./Rol";
 import { Usuario } from "./Usuario";
 

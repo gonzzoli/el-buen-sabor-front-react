@@ -149,7 +149,7 @@ const ModalEmpleado = ({
                                     <Form.Label>ID Empleado</Form.Label>
                                     <Form.Control
                                         name="id"
-                                        type="text"
+                                        type="number"
                                         value={formik.values.id || ''}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
@@ -195,7 +195,7 @@ const ModalEmpleado = ({
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
                                         name="email"
-                                        type="string"  //chequear si puede ser type email
+                                        type="text" 
                                         value={formik.values.email || ''}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
@@ -209,7 +209,7 @@ const ModalEmpleado = ({
                                     <Form.Label>Telefono</Form.Label>
                                     <Form.Control
                                         name="telefono"
-                                        type="number"
+                                        type="text"
                                         value={formik.values.telefono || ''}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
