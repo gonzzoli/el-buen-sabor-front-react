@@ -23,8 +23,9 @@ const PedidoCocinaTable = () => {
           productosCocina: " "
     };
     };  
-
-    const [pedidos, setPedidos] = useState<PedidoCocina>(initializeNewPedidoCocina);
+//CAMBIO
+    //const [pedidos, setPedidos] = useState<PedidoCocina>(initializeNewPedidoCocina);
+    const [pedidos, setPedidos] = useState<PedidoCocina[]>([]);
     const sessionContext = useContext(SessionContext);
     const [isLoading, setIsLoading] = useState(true);
     const [refreshData, setRefreshData] = useState(false);
@@ -34,6 +35,7 @@ const PedidoCocinaTable = () => {
         //Llamamos a la funcion para obtener todos los productos declarado en el service
         const fetchPedidos = async () => {
             const pedidos = await PedidoCocinaService.getPedidosCocina();
+            //CONSEGURIDAD: const pedidos = await PedidoCocinaService.getPedidosCocina(sessionContext.jwtToken);
             setPedidos(pedidos);
             //setIsLoading(false);
         }
@@ -42,7 +44,7 @@ const PedidoCocinaTable = () => {
         fetchPedidos();
     }, [refreshData]);
 
-    //console.log(JSON.stringify(pedidos, null, 2));
+    console.log(JSON.stringify(pedidos, null, 2));
 
  
 
@@ -64,7 +66,7 @@ const PedidoCocinaTable = () => {
 
     <Button onClick={() => handleClick("Nuevo Pedido", initializeNewPedidoCocina(), ModalType.CREATE)}> Nuevo Pedido Cocina </Button>
         
-    {isLoading ? <Loader /> : (
+    {/*{isLoading ? <Loader/>: (*/}
             <Table hover>
                 <thead>
                     <tr>
@@ -77,7 +79,7 @@ const PedidoCocinaTable = () => {
                  </thead>
                  <tbody>
                     {
-                        pedidos.map (pedido =>  (
+                        pedidos.map(pedido =>  (
                             <tr key={pedido.id}>
                                 <td>{pedido.fecha.toString()}</td>
                                 <td>{pedido.estadoPedido}</td>
@@ -89,7 +91,7 @@ const PedidoCocinaTable = () => {
                     }
                  </tbody>
                  </Table>       
-    )}
+    {/*})}*/}
                 {showModal && (
                         <PedidoCocinaModal
                         show={showModal}

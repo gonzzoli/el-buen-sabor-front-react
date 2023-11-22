@@ -39,8 +39,19 @@ const ModalPedidoCocina = ({show, onHide, title, modalType, ped, refreshData}: P
     
       const handleEstadoPedidoChange = async (pedidoCocinaListo: PedidoCocina) => {
         try {
+            const isNew = pedidoCocinaListo.id === 0;
+        if (isNew) {
+            await PedidoCocinaService.agregarPedido(pedidoCocinaListo);
+
+        } else {
           await PedidoCocinaService.editarEstado(pedidoCocinaListo);
           fetchPedidosCocina();
+        }
+        toast.success(isNew ? "Rubro Creado" : "Rubro Actualizado", {
+            position: "top-center",
+        });
+        onHide();
+        refreshData(prevState => !prevState);
         } catch (error) {
           console.error('Error updating order status', error);
           setError('Error updating order status');

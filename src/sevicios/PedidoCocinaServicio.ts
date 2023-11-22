@@ -40,6 +40,19 @@ export const PedidoCocinaService = {
                 const data = await response.json();
                 return data;
             },
-        
+    
+            agregarPedido:async (pedidoCocina: PedidoCocina) => {
+                
+                const response = await fetch(`${BASE_URL}/api/v1/pedidos`, { //CAMBIAR RUTA  
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(pedidoCocina)
+                });
+                const data = await response.json();
+            
+                return data;
+            },
 
 };
