@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { ModalType } from "../tipos/ModalType";
 import Loader from "./Loader/Loader";
@@ -7,14 +7,15 @@ import DeleteButton from "./DeleteButton/DeleteButton";
 import { Domicilio } from "../tipos/Domicilio";
 import { DomicilioService } from "../sevicios/DomicilioServicio";
 import ModalDomicilio from "./modalDomicilio";
-
+import { SessionContext } from "../context/SessionContext";
 const TablaDomicilio = () => {
 
         /* Variable que va a contener los datos recibidos por la API*/
         const [domicilios, setDomicilios] = useState<Domicilio[]>([]);
-  
+        /* SessionContext */ 
+        const sessionContext = useContext(SessionContext);
         /* Variable que muestra el Loader(spinner) hasta que se reciban los datos provenientes de la API */
-        const [isLoading, setIsLoading] = useState(true);
+        //const [isLoading, setIsLoading] = useState(true);
     
         /* Variable que va a actualizar los datos de la tabla luego de cada operación exitosa*/
         const [refreshData, setRefreshData] = useState(false);
@@ -25,9 +26,9 @@ const TablaDomicilio = () => {
             
             /* Llamada a la función para obtener todos los productos declarados en el ProductoService */
             const buscarDomicilio = async () => {
-                const domicilios = await DomicilioService.getDomicilios();
+                const domicilios = await DomicilioService.getDomicilios(sessionContext.jwtToken);
                 setDomicilios(domicilios);
-                setIsLoading(false);
+                //setIsLoading(false);
             }
 
             buscarDomicilio();
@@ -69,8 +70,8 @@ const TablaDomicilio = () => {
     return (
         <>
             <Button onClick={() => handleClick("Nuevo domicilio", initializableDomicilioNuevo(), ModalType.CREATE)}> Nuevo domicilio </Button>
-            {
-                isLoading ? <Loader/> : (
+            
+                {/* isLoading ? <Loader/> : (*/}
                     <Table hover>
                     <thead>
                         <tr>
@@ -99,8 +100,9 @@ const TablaDomicilio = () => {
                         }
                     </tbody>
                     </Table>
-                ) 
-            }
+
+
+
             {showModal && (
                 <ModalDomicilio
                 show={showModal}

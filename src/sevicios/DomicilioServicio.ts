@@ -12,15 +12,20 @@ const BASE_URL = 'http://localhost:8080/api/v1';
     export const DomicilioService = {
 
     
-        getDomicilios: async (): Promise<Domicilio[]> => {
+        getDomicilios: async (token:string): Promise<Domicilio[]> => {
     
-            const response = await fetch(`${BASE_URL}/domicilios/mostrarDomicilioscliente`);
-            const data = await response.json();
+            const response = await fetch(`${BASE_URL}/domicilios/mostrarDomicilioscliente`,{
+            headers: {
+                'Authorization': 'Bearer '+ token,
+            },
+        });
+
+        const data = await response.json();
             return data;
         },
     
         
-        getDomicilio: async (id:number): Promise<Domicilio> => {
+        getDomicilio: async (id:number, ): Promise<Domicilio> => {
             
             const response = await fetch (`${BASE_URL}/domicilios/mostrarDomicilioscliente/${id}`,{
             method: 'GET',
@@ -30,12 +35,13 @@ const BASE_URL = 'http://localhost:8080/api/v1';
             
         },
     
-        createDomicilio:async (domicilio: Domicilio):Promise<Domicilio> => {
+        createDomicilio:async (domicilio: Domicilio, token :string) => {
             console.log('createDomicilio',domicilio)
             const response = await fetch(`${BASE_URL}/domicilios`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Authorization': 'Bearer '+ token,
+                'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(domicilio)
             });
@@ -45,11 +51,12 @@ const BASE_URL = 'http://localhost:8080/api/v1';
             
         },
     
-        updateDomicilio: async (id: number, domicilio: Domicilio): Promise<Domicilio> => {
+        updateDomicilio: async (id: number, domicilio: Domicilio, token: string): Promise<Domicilio> => {
             
             const response = await fetch(`${BASE_URL}/domicilios/${id}`, {
                 method: "PUT",
                 headers: {
+                    'Authorization': 'Bearer '+ token,
                     'Content-Type':'application/json'
                 },
                 body: JSON.stringify(domicilio)
