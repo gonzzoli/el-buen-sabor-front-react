@@ -1,15 +1,20 @@
 import { Button, Form, Modal } from "react-bootstrap";
+import { Domicilio } from "../tipos/Domicilio";
 import { ModalType } from "../tipos/ModalType";
+import { useContext } from "react";
+import { SessionContext } from "../context/SessionContext";
+
 /* Dependencias para importar formularios */ 
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { DomicilioService } from "../sevicios/DomicilioServicio";
+
 /* Notificaciones al usuario */
 import { toast } from "react-toastify";
+
+
 /* Estilos */ 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { DomicilioService } from "../sevicios/DomicilioServicio";
-import { dom } from "@fortawesome/fontawesome-svg-core";
-import { Domicilio } from "../tipos/Domicilio";
 
 type ModalDomicilioProps = {
     show: boolean;
@@ -22,16 +27,17 @@ type ModalDomicilioProps = {
 
 const ModalDomicilio = ({show, onHide, title, modalType, domicilio, refreshData}: ModalDomicilioProps) => {
 
-    
+    const sessionContext = useContext(SessionContext);
+   
     const handleSaveUpdate =async (dom:Domicilio) => {
 
         /* Crear - Actualizar Producto */
         try {
             const isNew = dom.id === 0;
             if (isNew) {
-                await DomicilioService.createDomicilio(dom);
+                await DomicilioService.createDomicilio(dom, sessionContext.jwtToken);
             } else {
-                await DomicilioService.updateDomicilio(dom.id, dom);  
+                await DomicilioService.updateDomicilio(dom.id, dom, sessionContext.jwtToken);  
             }
             toast.success(isNew ? "domicilio Creado" : "domicilio Actualizado", {
                 position: "top-center",
