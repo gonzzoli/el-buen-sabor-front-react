@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ClienteDTOMA } from  "../../tipos/DTOClienteMA";
 import { ClienteDTOMC } from  "../../tipos/DTOClienteMC";
 import { Cliente } from  "../../tipos/Cliente";
@@ -6,9 +6,12 @@ import { ClienteService } from "../../sevicios/ClienteServicio";
 import Loader from "../Loader/Loader";
 import ClienteModal from "../Funcion/ClienteModal";
 import { ModalType } from "../../tipos/ModalType";
-import EditButton from "../Botones/DeleteButton";
-import DeleteButton from "../Botones/DeleteButton";
-import { Button } from "react-bootstrap";
+import EditButton from "../EditButton";
+import DeleteButton from "../DeleteButton";
+import { Button, Table } from "react-bootstrap";
+import { SessionContext } from "../../context/SessionContext";
+import { Rol } from "../../tipos/Rol";
+import "../../estilos_generales.scss";
 
 
 
@@ -16,10 +19,10 @@ const TablaCliente = () => {
 
     //Variable que va a contener los datos recibidos por la API
     const [clientes, setClientes] = useState<Cliente[]>([]);
-
-
+    const sessionContext = useContext(SessionContext);
+    //const sessionContext = useContext(SessionContext);
 //Variable que muestra el componente Loader hasta que se reciban los datos de la API
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 //Variable que va actualizar los datos de la tabla luego de cada operacion exitosa
      const [refreshData, setRefreshData] = useState(false);
 
@@ -27,15 +30,15 @@ const TablaCliente = () => {
 //Este hook se va a ejecutar cada vez que se renderize el componente
     useEffect(() => {
         //Llamamos a la funcion para obtener todos los clientes declarado en el service
-        const fetchClientes = async () => {
-            const clientes = await ClienteService.mostrarClientes();
+        const buscarClientes = async () => {
+            const clientes = await ClienteService.mostrarClientes(sessionContext.jwtToken);
             setClientes(clientes);	
             setIsLoading(false);
         };
 
-        fetchClientes();
+        buscarClientes();
 
-    }, []);
+    }, [refreshData]);
 
 
 //Test, este log esta modificado para que muestre los datos de una manera mas legible
@@ -45,6 +48,7 @@ const TablaCliente = () => {
    const initializeNewCliente = (): Cliente => {
        return {
         id: 0,
+        username: "",
         nombre: "",
         apellido: "",
         telefono: "",
@@ -67,13 +71,44 @@ const TablaCliente = () => {
         setCliente(cliente);
         setShowModal(true);
     };
+    /*type Cliente ={
+        username: string;
+        nombre: string;
+        apellido: string;
+        telefono: string;
+        email: string;
+        password: string;
+        id:number;
+    };
+    type ClienteDTOMA ={
+        id: number;
+        nombre: string;
+        apellido: string;
+        telefono: string;
+        email: string;
+        rol: Rol;
+    }*/
 
-    
+    //Logica del DTO
+
+    const cambioaDTO = ( cliente: Cliente) => {
+        const clienteDTO: ClienteDTOMA ={
+            id: cliente.id,    
+            nombre: cliente.nombre,
+            apellido: cliente.apellido,
+            telefono: cliente.telefono,
+            email: cliente.email,
+            //rol: Rol.CLIENTE
+        }
+        return clienteDTO;
+    };
+
+
     return(
         <>
     <div className="m-3">
         {isLoading ? <Loader /> : (
-            <table>
+            <Table hover>
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -91,13 +126,13 @@ const TablaCliente = () => {
                             <td>{cliente.apellido}</td>
                             <td>{cliente.telefono}</td>
                             <td>{cliente.email}</td>
-                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cliente, ModalType.UPDATEMA)}/> </td>
+                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cliente, ModalType.UPDATE)}/> </td>
                             <td> <DeleteButton onClick={() => handleClick("Borrar Cliente", cliente, ModalType.DELETE)} /> </td>
 
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </Table>
         )}
          
          {showModal && (
@@ -111,13 +146,9 @@ const TablaCliente = () => {
         /> 
         )}
 
-
-    {/* Botón para que cuando el usuario haga click llame a la función que declaramos */}
-    <Button onClick={() => handleClick("Nuevo Cliente",
-        initializeNewCliente(), ModalType.CREATE)}>
-        Nuevo Cliente
+    <Button className="boton-primario" href="/Domicilio">Editar Domicilio
     </Button>
-    
+   
 </div>
 
     </>
