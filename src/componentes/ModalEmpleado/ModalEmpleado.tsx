@@ -78,7 +78,6 @@ const ModalEmpleado = ({
       apellido: Yup.string().required("El apellido es requerido"),
       email: Yup.string().required("El email es requeridao"),
       telefono: Yup.number().required("El telefono es requerido"),
-      username: Yup.string().required("El usuario es requerido"),
     });
   };
 
@@ -91,6 +90,7 @@ const ModalEmpleado = ({
       email: Yup.string().required("El email es requeridao"),
       telefono: Yup.number().required("El telefono es requerido"),
       password: Yup.string().required("La contrasena es requerida"),
+      rol: Yup.string().required("El rol es requerido")
     });
   };
 
@@ -162,21 +162,7 @@ const ModalEmpleado = ({
                                     <Form.Text className="text-muted">
                                         El ID no se puede modificar.
                                     </Form.Text>
-                                    <Form.Group controlId="formsername">
-                                <Form.Label>Nombre Usuario</Form.Label>
-                                <Form.Control
-                                    name="username"
-                                    type="text"
-                                    value={formik.values.username || ''}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    isInvalid={Boolean(formik.errors.username && formik.touched.username)}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {formik.errors.username}
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                                    </Form.Group>
+                                </Form.Group>
                                 <Form.Group controlId="formNombreEmpleado">
                                     <Form.Label>Nombre Empleado</Form.Label>
                                     <Form.Control
@@ -233,6 +219,20 @@ const ModalEmpleado = ({
                                         {formik.errors.telefono}
                                     </Form.Control.Feedback>
                                 </Form.Group>
+                                {/* <Form.Group controlId="formRol">
+                                <Form.Label>Rol</Form.Label>
+                                <Form.Control
+                                    name="rol"
+                                    type="text"
+                                    value={formik.values.rol || ''}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    isInvalid={Boolean(formik.errors.rol && formik.touched.rol)}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {formik2.errors.rol}
+                                </Form.Control.Feedback>
+                            </Form.Group> */} 
                                 <Modal.Footer className="mt-4">
                                     <Button variant="secondary" onClick={onHide}>
                                         Cancelar
