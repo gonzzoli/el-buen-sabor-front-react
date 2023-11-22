@@ -1,6 +1,6 @@
 import { Empleado } from "../tipos/Empleado";
 
-const BASE_URL = 'https://buensabor-api.onrender.com' 
+const BASE_URL = import.meta.env.VITE_URL_API_sinv1 
 
 /*
 Usar la URL de RENDER o sino también probar por localhost:8080, cualquiera de las dos debería funcionar
