@@ -20,25 +20,28 @@ interface ListaProductosProps {
 }
 
 const ListaProductos: React.FC<ListaProductosProps> = ({
-  rubroProductos,
+  rubroProductos
 }) => {
   return (
     <div>
-      {rubroProductos.map((categoria: RubroProducto) => {
-        return (
-          <div className="categoria-productos">
-            <h2 className="titulo-3 categoria-titulo">{categoria.nombreRubro}</h2>
-            <div className="categoria-lista-productos">
+      {
+        rubroProductos.map((categoria: RubroProducto) => {
+          return (
+            <div className="categoria-productos">
+              <h2 className="titulo-3 categoria-titulo">
+                {categoria.nombreRubro}
+              </h2>
+              <div className="categoria-lista-productos">
                 {categoria.productos.map((producto: Producto) => {
-                    return (
-                        // le pasamos las props, que son las mismas que el tipo Producto
-                        <ProductoCarta {...producto} />
-                    )
+                  return (
+                    // le pasamos las props, que son las mismas que el tipo Producto
+                    <ProductoCarta {...producto} />
+                  );
                 })}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };
