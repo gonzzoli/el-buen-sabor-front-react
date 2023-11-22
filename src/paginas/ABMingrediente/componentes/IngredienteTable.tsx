@@ -103,7 +103,7 @@ const handleClick = (newTittle: string, ingr: Ingrediente, modal: ModalType) => 
                                 <td>{ingrediente.unidadMedida}</td>
                                 <td><img src={ingrediente.foto} alt={ingrediente.nombre} style={{ width: '50px' }} /></td>
                                 <td><EditButton onClick={() => handleClick("Editar Ingrediente", ingrediente, ModalType.UPDATE)} /></td>
-                                <td><DeleteButton onClick={() => handleClick("Borrar INgrediente", ingrediente, ModalType.DELETE)} /></td>
+                                <td><DeleteButton onClick={() => handleClick("Borrar Ingrediente", ingrediente, ModalType.DELETE)} /></td>
                             </tr>
                         ))
                         }
