@@ -15,7 +15,16 @@ import DeleteButton from "../DeleteButton";
 
 const PedidoCocinaTable = () => {
 
-    const [pedidos, setPedidos] = useState<PedidoCocina[]>([]);
+    const initializeNewPedidoCocina = (): PedidoCocina => {
+        return {
+          id: 0,
+          fecha: new Date(),
+          estadoPedido: EstadoPedido.aPreparar,
+          productosCocina: " "
+    };
+    };  
+
+    const [pedidos, setPedidos] = useState<PedidoCocina>(initializeNewPedidoCocina);
     const sessionContext = useContext(SessionContext);
     const [isLoading, setIsLoading] = useState(true);
     const [refreshData, setRefreshData] = useState(false);
@@ -35,14 +44,7 @@ const PedidoCocinaTable = () => {
 
     //console.log(JSON.stringify(pedidos, null, 2));
 
-    const initializeNewPedidoCocina = (): PedidoCocina => {
-        return {
-          id: 0,
-          fecha: new Date(),
-          estadoPedido: EstadoPedido.aPreparar,
-          productosCocina: " "
-    };
-    };  
+ 
 
     const [pedido, setPedido] = useState<PedidoCocina>(initializeNewPedidoCocina);
 
