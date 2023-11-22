@@ -56,7 +56,7 @@ const ModalProducto = ({show, onHide, title, modalType, producto, refreshData}: 
 
         /* Borrar Producto */
         try {
-            await ProductoService.eliminarProducto(producto.id);
+            await ProductoService.eliminarProducto(producto.id, sessionContext.jwtToken);
             toast.success("Producto eliminado con éxito", {
                 position: "top-center",
             });
