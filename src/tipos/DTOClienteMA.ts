@@ -6,6 +6,6 @@ export interface ClienteDTOMA {
     apellido: string;
     telefono: string;
     email: string;
-    rol: Rol;
+    //rol: Rol;
     //Falta Domicilio que se va a hacer de otra manera
     }

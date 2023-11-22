@@ -126,7 +126,7 @@ const TablaCliente = () => {
                             <td>{cliente.apellido}</td>
                             <td>{cliente.telefono}</td>
                             <td>{cliente.email}</td>
-                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cliente, ModalType.UPDATEMA)}/> </td>
+                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cliente, ModalType.UPDATE)}/> </td>
                             <td> <DeleteButton onClick={() => handleClick("Borrar Cliente", cliente, ModalType.DELETE)} /> </td>
 
                         </tr>

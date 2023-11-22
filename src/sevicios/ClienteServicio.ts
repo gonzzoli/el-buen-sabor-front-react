@@ -3,7 +3,7 @@ import { ClienteDTOMA } from "../tipos/DTOClienteMA";
 import { ClienteDTOMC } from "../tipos/DTOClienteMC";
 
 const BASE_URL = 'https://buensabor-api.onrender.com'
-// const BASE_URL = 'http://localhost:8080' 
+ //const BASE_URL = 'http://localhost:8080' 
 
 export const ClienteService = {
 
