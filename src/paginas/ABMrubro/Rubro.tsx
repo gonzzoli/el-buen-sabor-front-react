@@ -1,7 +1,4 @@
 import TablaRubro from "../../componentes/ComponentesABMRubro/TablaRubro";
-import FiltrosProductos from "../PaginaPrincipal/FiltrosProductos";
-
-
 
 const Rubro = () => {
     
@@ -9,7 +6,6 @@ const Rubro = () => {
         <>
          <div style={{ display: "flex", justifyContent: "space-between", margin: "40px" }}>
          <TablaRubro/>
-        <FiltrosProductos/>
         </div>
         </>
     )
