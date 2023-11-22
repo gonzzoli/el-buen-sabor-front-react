@@ -20,9 +20,13 @@ export const RubroService = {
     },
     
 
-    eliminarRubro:async (id:number): Promise<void> => {
+    eliminarRubro:async (id:number,token:string): Promise<void> => {
         await fetch(`${import.meta.env.VITE_URL_API}/rubros/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
         });
     },
 
@@ -41,8 +45,10 @@ export const RubroService = {
 //cambiarle el nombre
     buscarRubrosPorNombre:async (token:string): Promise<Rubro[]> => {
         const response = await fetch(`${import.meta.env.VITE_URL_API}/rubros`, {          
+            method: "GET",
             headers: {
-                "Authorization": "Bearer "+token,
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
             }, 
         });
         const data = await response.json();
