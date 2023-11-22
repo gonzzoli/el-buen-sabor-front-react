@@ -42,7 +42,7 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
   const agregarProducto = (productoNuevo: Producto) => {
     console.log(productosCarrito)
     const estabaAgregado = productosCarrito.find(
-      (producto) => producto.producto.id === productoNuevo.id
+      (producto) => producto.producto.idProducto === productoNuevo.idProducto
     );
     setTotalCarrito(prevTotal => prevTotal + productoNuevo.precio)
     if (!estabaAgregado) {
@@ -55,7 +55,7 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
 
     setProductosCarrito((productos) => {
       return productos.map((productoCarrito) => {
-        if (productoCarrito.producto.id == productoNuevo.id)
+        if (productoCarrito.producto.idProducto == productoNuevo.idProducto)
           return {
             ...productoCarrito,
             cantidad: productoCarrito.cantidad + 1,
@@ -73,7 +73,7 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
     setTotalCarrito(prevTotal => prevTotal - productoEliminar.precio)
     setProductosCarrito((productos) => {
       const productoEnCarrito = productos.find(
-        (productoCarrito) => productoCarrito.producto.id == productoEliminar.id
+        (productoCarrito) => productoCarrito.producto.idProducto == productoEliminar.idProducto
       );
       // si solo tenia una unidad pedida, lo elimina del arreglo
       if (productoEnCarrito?.cantidad == 1)
@@ -83,7 +83,7 @@ export const CarritoContextProvider = ({ children }: PropsWithChildren) => {
 
       // si no, solo resta uno
       return productos.map((productoCarrito) => {
-        if (productoCarrito.producto.id == productoEliminar.id)
+        if (productoCarrito.producto.idProducto == productoEliminar.idProducto)
           return {
             ...productoCarrito,
             cantidad: productoCarrito.cantidad - 1,

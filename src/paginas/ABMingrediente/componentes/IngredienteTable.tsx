@@ -57,9 +57,11 @@ const handleClick = (newTittle: string, ingr: Ingrediente, modal: ModalType) => 
 
         //Llamamos a la funcion para obtener todos los ingredientes declarado en el service
         const fetchIngredientes = async () => {
+            console.log("fetching")
             const ingredientes = await IngredienteServicio.getIngredientes();
             setIngredientes(ingredientes);
             setIsLoading(false);
+            console.log("termino fetch")
         };
 
         fetchIngredientes();

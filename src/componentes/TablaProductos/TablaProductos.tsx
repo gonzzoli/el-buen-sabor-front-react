@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Button, Table } from "react-bootstrap";
 import { Producto } from "../../tipos/Producto";
 import { EstadoProducto } from "../../tipos/EstadoProducto";
@@ -8,27 +8,32 @@ import ModalProducto from "../ModalProducto/ModalProducto";
 import Loader from "../Loader/Loader";
 import EditButton from "../EditButton/EditButton";
 import DeleteButton from "../DeleteButton/DeleteButton";
+import { SessionContext } from "../../context/SessionContext";
 
 const TablaProductos = () => {
 
         /* Variable que va a contener los datos recibidos por la API*/
         const [productos, setProductos] = useState<Producto[]>([]);
-  
+
+        /* SessionContext */ 
+        const sessionContext = useContext(SessionContext);
+
         /* Variable que muestra el Loader(spinner) hasta que se reciban los datos provenientes de la API */
-        const [isLoading, setIsLoading] = useState(true);
+        //const [isLoading, setIsLoading] = useState(true);
     
         /* Variable que va a actualizar los datos de la tabla luego de cada operación exitosa*/
         const [refreshData, setRefreshData] = useState(false);
 
-
+        {}
+        
         /* Hook que se va a ejecutar cada vez que se renderice el componente o 'refreshData' cambie de estado*/ 
         useEffect( () => {
             
             /* Llamada a la función para obtener todos los productos declarados en el ProductoService */
             const buscarProductos = async () => {
-                const productos = await ProductoService.verProductos();
+                const productos = await ProductoService.verProductos(sessionContext.jwtToken);
                 setProductos(productos);
-                setIsLoading(false);
+                //setIsLoading(false);
             }
 
             buscarProductos();
@@ -79,8 +84,8 @@ const TablaProductos = () => {
     return (
         <>
             <Button onClick={() => handleClick("Nuevo Producto", initializableProductoNuevo(), ModalType.CREATE)}> Nuevo Producto </Button>
-            {
-                isLoading ? <Loader/> : (
+            
+                {/*isLoading ? <Loader/> : (*/}
                     <Table hover>
                     <thead>
                         <tr>
@@ -115,8 +120,8 @@ const TablaProductos = () => {
                         }
                     </tbody>
                     </Table>
-                ) 
-            }
+                 
+            
             {showModal && (
                 <ModalProducto
                 show={showModal}
