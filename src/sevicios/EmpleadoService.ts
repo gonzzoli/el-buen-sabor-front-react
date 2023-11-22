@@ -34,10 +34,11 @@ export const EmpleadoService = {
                 return data;
             },
 
-    updateEmpleado: async (empleado: Empleado): Promise<Empleado> => {
+    updateEmpleado: async (empleado: Empleado, token:string): Promise<Empleado> => {
                 const response = await fetch(`${import.meta.env.VITE_URL_API}/empleado/modificarDatosEmpleado`, {  // chequear rutas
                             method: "PUT",
                             headers: {
+                                'Authorization': `Bearer ${token}`,
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(empleado)
