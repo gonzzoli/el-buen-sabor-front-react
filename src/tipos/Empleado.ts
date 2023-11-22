@@ -1,6 +1,5 @@
 import { Domicilio } from "./Domicilio"
 import { Rol } from "./Rol";
-import { Usuario } from "./Usuario";
 
 export interface Empleado {
    id: number,

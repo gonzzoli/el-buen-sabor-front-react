@@ -7,7 +7,6 @@ import { ModalType } from "../../../tipos/ModalType";
 import IngredienteModal from "./IngredienteModal";
 import EditButton from "../../../componentes/EditButton/EditButton.tsx";
 import DeleteButton from "../../../componentes/DeleteButton/DeleteButton.tsx";
-import React from "react";
 
 const initializeNewIngrediente = (): Ingrediente => {
     return {
@@ -71,9 +70,11 @@ const handleClick = (newTittle: string, ingr: Ingrediente, modal: ModalType) => 
     console.log(JSON.stringify(ingredientes, null, 2));
     return (
         <>
+            <div className="nuevoEmpl-container">
             <Button onClick={() => handleClick("Nuevo Ingrediente", initializeNewIngrediente(), ModalType.CREATE)}>
                 Nuevo Ingrediente
             </Button>
+            </div>
 
             {isLoading ? (
                 <Loader />
