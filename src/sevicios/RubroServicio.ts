@@ -19,9 +19,13 @@ export const RubroService = {
         return data;
     },
 
-    eliminarRubro:async (id:number): Promise<void> => {
+    eliminarRubro:async (id:number, token:string): Promise<void> => {
         await fetch(`${BASE_URL}/api/v1/rubros/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer "+token,
+                'Content-Type': 'application/json'
+            },
         });
     },
 
@@ -40,10 +44,10 @@ export const RubroService = {
 //cambiarle el nombre
     buscarRubrosPorNombre:async (token:string): Promise<Rubro[]> => {
         const response = await fetch(`${BASE_URL}/api/v1/rubros`, {          
-        
+            method: "GET",
             headers: {
                 "Authorization": "Bearer "+token,
-                
+                'Content-Type': 'application/json'
             },
             
         });
