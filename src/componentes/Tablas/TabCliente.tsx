@@ -98,7 +98,7 @@ const TablaCliente = () => {
             apellido: cliente.apellido,
             telefono: cliente.telefono,
             email: cliente.email,
-            rol: Rol.CLIENTE
+            //rol: Rol.CLIENTE
         }
         return clienteDTO;
     };
@@ -126,7 +126,7 @@ const TablaCliente = () => {
                             <td>{cliente.apellido}</td>
                             <td>{cliente.telefono}</td>
                             <td>{cliente.email}</td>
-                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cliente, ModalType.UPDATE)}/> </td>
+                            <td> <EditButton onClick={() => handleClick("Editar Cliente", cliente, ModalType.UPDATEMA)}/> </td>
                             <td> <DeleteButton onClick={() => handleClick("Borrar Cliente", cliente, ModalType.DELETE)} /> </td>
 
                         </tr>
@@ -146,8 +146,7 @@ const TablaCliente = () => {
         /> 
         )}
 
-    <Button className="boton-primario">
-        <a href="/Domicilio">Editar Domicilio</a>
+    <Button className="boton-primario" href="/Domicilio">Editar Domicilio
     </Button>
    
 </div>

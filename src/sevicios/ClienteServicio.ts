@@ -63,7 +63,7 @@ export const ClienteService = {
         const response = await fetch(`${BASE_URL}/api/v1/clientes/modificarCliente`, {
             method: "PUT",
             headers: {
-                'Authorization': 'Bearer'+ token,
+                'Authorization': 'Bearer '+ token,
                 'Content-Type':'application/json'
             },
             body: JSON.stringify(clienteDTO)
