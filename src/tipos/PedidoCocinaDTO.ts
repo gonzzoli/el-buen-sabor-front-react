@@ -1,5 +1,3 @@
-import { ProductoCocina } from "./ProductoCocinaDTO";
-
 
 export enum EstadoPedido{
     aConfirmar='A CONFIRMAR',
@@ -13,5 +11,5 @@ export interface PedidoCocina {
     id:number;
     fecha: Date;
     estadoPedido: EstadoPedido;
-    productosCocina: ProductoCocina[];
+    productosCocina: string;
 }

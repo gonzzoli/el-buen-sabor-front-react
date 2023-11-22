@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { EstadoPedido, PedidoCocina } from "../../tipos/PedidoCocinaDTO";
 import { PedidoCocinaService } from "../../sevicios/PedidoCocinaServicio";
 import Loader from "../Loader/Loader";
@@ -7,6 +7,8 @@ import EditButton from "../Botones/DeleteButton";
 import { Button } from "react-bootstrap";
 import { ModalType } from "../../tipos/ModalType";
 import PedidoCocinaModal from "../../paginas/PedidoCocina/pedidoCocinaModal";
+import { SessionContext } from "../../context/SessionContext";
+import DeleteButton from "../DeleteButton";
 
 
 
@@ -14,52 +16,33 @@ import PedidoCocinaModal from "../../paginas/PedidoCocina/pedidoCocinaModal";
 const PedidoCocinaTable = () => {
 
     const [pedidos, setPedidos] = useState<PedidoCocina[]>([]);
+    const sessionContext = useContext(SessionContext);
     const [isLoading, setIsLoading] = useState(true);
+    const [refreshData, setRefreshData] = useState(false);
+
 
     useEffect(() => {
         //Llamamos a la funcion para obtener todos los productos declarado en el service
         const fetchPedidos = async () => {
             const pedidos = await PedidoCocinaService.getPedidosCocina();
             setPedidos(pedidos);
-            setIsLoading(false);
-        };
+            //setIsLoading(false);
+        }
 
 
         fetchPedidos();
+    }, [refreshData]);
 
-
-    }, []);
-
-    console.log(JSON.stringify(pedidos, null, 2));
+    //console.log(JSON.stringify(pedidos, null, 2));
 
     const initializeNewPedidoCocina = (): PedidoCocina => {
         return {
           id: 0,
           fecha: new Date(),
           estadoPedido: EstadoPedido.aPreparar,
-          productosCocina: [
-            {
-              id: 0,
-              cantidad: 0,
-              tiempoEstimadoCocina: 0,
-              nombre: " ",
-              descripcion: " ",
-              foto: " ",
-              ingredienteDTOS: [
-                {
-                  ingredienteId: 0,
-                  ingredienteNombre: " ",
-                  ingredienteUnidadDeMedida: " ",
-                  cantidad:0 ,
-                }
-              ],
-              denominacion: " ",
-              receta: " ",
-            }
-          ],
-        };
+          productosCocina: " "
     };
-      
+    };  
 
     const [pedido, setPedido] = useState<PedidoCocina>(initializeNewPedidoCocina);
 
@@ -74,82 +57,53 @@ const PedidoCocinaTable = () => {
         setShowModal(true);
     };
 
-
-
-
     return (
-           <>
-           <Button onClick={() => handleClick("Pedidos Cocina", initializeNewPedidoCocina(), ModalType.NONE)}>
-                Pedidos Cocina
-            </Button>
+        <>
 
-
-            {isLoading ? <Loader /> : (
-                <Table hover>
-                    <thead>
-                        <tr>
-                            <th> Fecha</th>
-                            <th>EstadoPedido</th>
-                            <th>Productos</th>
-                            <th> Marcar Como Listo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {pedidos.map(pedido => (
+    <Button onClick={() => handleClick("Nuevo Pedido", initializeNewPedidoCocina(), ModalType.CREATE)}> Nuevo Pedido Cocina </Button>
+        
+    {isLoading ? <Loader /> : (
+            <Table hover>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Estado Pedido</th>
+                        <th>Productos</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr> 
+                 </thead>
+                 <tbody>
+                    {
+                        pedidos.map (pedido =>  (
                             <tr key={pedido.id}>
                                 <td>{pedido.fecha.toString()}</td>
                                 <td>{pedido.estadoPedido}</td>
-                                <td>
-                                    {/* Mapea cada producto a un elemento JSX */}
-                                    {pedido.productosCocina.map((producto, index) => (
-                                        <div key={index}>
-                                            {/* Renderiza la información del producto, por ejemplo: */}
-                                            <p>{producto.nombre}</p>
-                                            <p>{producto.cantidad}</p>
-                                            <p>{producto.tiempoEstimadoCocina}</p>
-                                            <p>{producto.descripcion}</p>
-                                            <p>{producto.foto}</p>
-                                            <ul>
-                                                {producto.ingredienteDTOS.map((ingrediente, ingredienteIndex) => (
-                                                    <li key={ingredienteIndex}>
-                                                        {ingrediente.ingredienteNombre}: {ingrediente.cantidad} {ingrediente.ingredienteUnidadDeMedida}
-                                                    </li>
-                                                ))}
-                                            </ul>                                      
-                                        </div>
-                                    ))}
-                                </td>
-                                <td> <EditButton onClick={() => handleClick("Editar Estado", pedido, ModalType.UPDATEMA)} /> </td>
-                            </tr>
-                        )
-                        )
-
-
-                        }
-                    </tbody>
-                </Table>
-
-
-            )}
-
-
+                                <td>{pedido.productosCocina}</td>
+                                <td> <EditButton onClick={() => handleClick("Editar Producto", pedido, ModalType.UPDATE)}/> </td>
+                                <td> <DeleteButton onClick={() => handleClick("Borrar Producto", pedido, ModalType.DELETE)}/> </td>
+                             </tr>   
+                        ))
+                    }
+                 </tbody>
+                 </Table>       
+    )}
                 {showModal && (
-                    <PedidoCocinaModal                
-                    show={showModal}
-                    onHide={() => setShowModal(false)}
-                    title={title}
-                    modalType={modalType}
-                    ped={pedido}
-                    />
-                )}
-
-
-           </>    
-    )            
+                        <PedidoCocinaModal
+                        show={showModal}
+                        onHide={() => setShowModal(false)}
+                        title={title}
+                        modalType={modalType}
+                        ped={pedido}
+                        refreshData={setRefreshData}
+                        />
+                    )}
         
+        </>
+
+    )
+
 }
 
 
-
-export default PedidoCocinaTable;
-
+export default PedidoCocinaTable

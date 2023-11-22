@@ -1,13 +1,15 @@
 import { PedidoCocina } from '../tipos/PedidoCocinaDTO';
 
 
-const BASE_URL = 'api/v1/pedido';
+const BASE_URL = 'https://buensabor-api.onrender.com';
+//const BASE_URL = 'https://localhost:8080';
+
 
 
 export const PedidoCocinaService = {
     
     getPedidosCocina: async (): Promise<PedidoCocina[]> => {
-        const response = await fetch(`${BASE_URL}/produbuscarPedidosAPreparar`);
+        const response = await fetch(`${import.meta.env.VITE_URL_API}/api/v1/pedidos/buscarPedidosAPreparar`);
         const data = await response.json();
         return data;
     },
@@ -19,10 +21,16 @@ export const PedidoCocinaService = {
       //  return data;
     //},
 
+    eliminarPedido:async (id:number): Promise<void> => {
+        await fetch(`${BASE_URL}/api/v1/pedidos/${id}`, {   
+            method: "DELETE"
+        });
+    },
 
+    
 
     editarEstado: async (pedidoCocina: PedidoCocina): Promise<PedidoCocina> => {
-        const response = await fetch(`${BASE_URL}/editarEstado/${pedidoCocina}`, {
+        const response = await fetch(`${import.meta.env.VITE_URL_API}/editarEstado/${pedidoCocina}`, {
                     method: "PUT",
                     headers: {
                         'Content-Type': 'application/json'

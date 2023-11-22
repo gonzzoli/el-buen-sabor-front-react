@@ -1,9 +1,14 @@
-import {PedidoCocinaTable} from "../../componentes/Tablas/tablaPedidoCocina";
+//import {PedidoCocinaTable} from "../../componentes/Tablas/tablaPedocina";
+import PedidoCocinaTable from "../../componentes/Tablas/tablaPedidoCocina"
 
 const PedidoCocina = () => {
     return(
         <>
-        <PedidoCocinaTable/>
+        
+         <div style={{ display: "flex", justifyContent: "space-between", margin: "40px" }}>
+         <PedidoCocinaTable/>
+        </div>
+        
          </>
     )
 }

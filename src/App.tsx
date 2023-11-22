@@ -20,6 +20,7 @@ import ABMIngrediente from "./paginas/ABMingrediente/ABMIngrediente";
 import Carrito from "./paginas/Carrito/Carrito";
 import Rubro from "./paginas/ABMrubro/Rubro";
 import Domicilio from "./paginas/ABMdomicilio/Domicilio";
+import PedidoCocina from "./paginas/PedidoCocina/pedidoCocina";
 
 
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/rubros" element={<Rubro/>}/>
         <Route path="/ingredientes" element={<ABMIngrediente/>}/>
         <Route path="/Domicilio" element={<Domicilio/>} />
+       <Route path="/pedidoCocina" element={<PedidoCocina/>}/>
 
       </Routes>
 

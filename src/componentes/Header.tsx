@@ -37,6 +37,9 @@ const Header: React.FC = () => {
           <li className="header-link">
             <Link to="/ingredientes">Ingredientes</Link>
           </li>
+          <li className="header-link">
+            <Link to="/pedidoCocina">Pedidos De Cocina</Link>
+          </li>
         </ul>
         </nav>
         <div className="header-botones">
