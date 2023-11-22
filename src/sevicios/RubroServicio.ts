@@ -1,63 +1,66 @@
 import { Rubro } from "../tipos/Rubro";
-
-const BASE_URL = 'https://fakestoreapi.com';
-
+const BASE_URL = 'http://localhost:8080';
 export const RubroService = {
-
     
-    getRubros: async (): Promise<Rubro[]> => {
-       
-        const response = await fetch(`${BASE_URL}/rubros`);
-        const data = await response.json();
-        return data;
-    },
+    /* Metodos ABM */
 
-    
-    getRubro: async (id:number): Promise<Rubro> => {
-
-        const response = await fetch (`${BASE_URL}/rubros/${id}`);
-        const data = await response.json();
-        return data;
-        
-    },
-
-    createRubro:async (rubro:Rubro):Promise<Rubro> => {
-
-        const response = await fetch(`${BASE_URL}/rubros`, {
+    agregarRubro:async (rubro: Rubro, token:string) => {
+        //aca
+        const response = await fetch(`${BASE_URL}/api/v1/rubros/agregarRubro`, {          
             method: "POST",
             headers: {
+                "Authorization": "Bearer "+token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(rubro)
         });
-
         const data = await response.json();
+    
         return data;
-        
     },
 
-    updateRubro: async (id: number, rubro: Rubro): Promise<Rubro> => {
-        
-        const response = await fetch(`${BASE_URL}/rubros/${id}`, {
+    eliminarRubro:async (id:number): Promise<void> => {
+        await fetch(`${BASE_URL}/api/v1/rubros/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
+            method: "DELETE"
+        });
+    },
+
+    modificarRubro:async (id:number, rubro: Rubro, token:string): Promise<Rubro> => {
+        const response = await fetch(`${BASE_URL}/api/v1/rubros/modificarRubro/${id}` , {           //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona)
             method: "PUT",
             headers: {
-                'Content-Type':'application/json'
+                "Authorization": "Bearer "+token,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(rubro)
         });
-
         const data = await response.json();
         return data;
     },
-
-    
-
-    deleteRubro: async (id:number): Promise<void> => {
-        await fetch(`${BASE_URL}/rubros/${id}`, {
-            method: "DELETE"
+//cambiarle el nombre
+    buscarRubrosPorNombre:async (token:string): Promise<Rubro[]> => {
+        const response = await fetch(`${BASE_URL}/api/v1/rubros`, {          
+        
+            headers: {
+                "Authorization": "Bearer "+token,
+                
+            },
+            
         });
+        const data = await response.json();
+        return data;
     }
+
+   // mostrarRubro: async (id:number): Promise<void> => {
+    //    const response = await fetch(`${BASE_URL}/api/v1/rubros/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl
+          //  method: "GET"
+     //   });
+       // const rubro = await response.json();
+        //console.log("Rubro obtenido:", rubro);
+   // }
+
+
+
     
 
-  
 }
