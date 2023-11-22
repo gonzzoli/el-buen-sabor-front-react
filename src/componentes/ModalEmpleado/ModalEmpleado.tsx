@@ -42,7 +42,7 @@ const ModalEmpleado = ({
   //HandleUpdate
   const handleUpdate = async (empl: Empleado) => {
     try {
-      await EmpleadoService.updateEmpleado(empl.id, empl);
+      await EmpleadoService.updateEmpleado(empl);
 
       toast.success("Empleado Actualizado", {
         position: "top-center",
@@ -162,6 +162,20 @@ const ModalEmpleado = ({
                                     <Form.Text className="text-muted">
                                         El ID no se puede modificar.
                                     </Form.Text>
+                                    <Form.Group controlId="formsername">
+                                <Form.Label>Nombre Usuario</Form.Label>
+                                <Form.Control
+                                    name="username"
+                                    type="text"
+                                    value={formik.values.username || ''}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    isInvalid={Boolean(formik.errors.username && formik.touched.username)}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {formik.errors.username}
+                                </Form.Control.Feedback>
+                            </Form.Group>
                                     </Form.Group>
                                 <Form.Group controlId="formNombreEmpleado">
                                     <Form.Label>Nombre Empleado</Form.Label>
@@ -242,6 +256,21 @@ const ModalEmpleado = ({
                     <Modal.Body>
                         <Form onSubmit={formik2.handleSubmit}>
                             {/* Debajo de la etiqueta Form, vamos a armar un <Form.Group> por cada uno de los campos para dar de alta o modificar un producto. */}
+                            <Form.Group controlId="formsername">
+                                <Form.Label>Nombre Usuario</Form.Label>
+                                <Form.Control
+                                    name="username"
+                                    type="text"
+                                    value={formik2.values.username || ''}
+                                    onChange={formik2.handleChange}
+                                    onBlur={formik2.handleBlur}
+                                    isInvalid={Boolean(formik2.errors.username && formik2.touched.username)}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {formik2.errors.username}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            
                             <Form.Group controlId="formNombreEmpleado">
                                 <Form.Label>Nombre Empleado</Form.Label>
                                 <Form.Control

@@ -29,13 +29,13 @@ export const EmpleadoService = {
         return data;
     },
     getEmpleado: async (id: number): Promise<Empleado> => {
-        const response = await fetch(`${import.meta.env.VITE_URL_API}/${id}`); //chequear rutas
+        const response = await fetch(`${import.meta.env.VITE_URL_API}/empleado/${id}`); //chequear rutas
                 const data = await response.json();
                 return data;
             },
 
-    updateEmpleado: async (id: number, empleado: Empleado): Promise<Empleado> => {
-                const response = await fetch(`${import.meta.env.VITE_URL_API}/empleado/${id}`, {  // chequear rutas
+    updateEmpleado: async (empleado: Empleado): Promise<Empleado> => {
+                const response = await fetch(`${import.meta.env.VITE_URL_API}/empleado/modificarDatosEmpleado`, {  // chequear rutas
                             method: "PUT",
                             headers: {
                                 'Content-Type': 'application/json'

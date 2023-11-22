@@ -11,7 +11,6 @@ export interface Empleado {
    email: string,
    domicilio: (Domicilio| null),
    password: string,
-   username: string,
    rol: Rol
 }
 
