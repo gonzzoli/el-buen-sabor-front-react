@@ -26,7 +26,7 @@ const ModalPedidoCocina = ({show, onHide, title, modalType, ped, refreshData}: P
 
     const fetchPedidosCocina = async () => {
         try {
-          const pedidos = await PedidoCocinaService.getPedidosCocina();
+          const pedidos = await PedidoCocinaService.getPedidosCocina(sessionContext.jwtToken);
           
         } catch (error) {
             console.error('error en HandleSaveUpdate',error);
@@ -62,7 +62,7 @@ const ModalPedidoCocina = ({show, onHide, title, modalType, ped, refreshData}: P
 
         /* Borrar Producto */
         try {
-            await ProductoService.eliminarProducto(ped.id);
+            await PedidoCocinaService.eliminarPedido(ped.id, sessionContext.jwtToken);
             toast.success("Pedido eliminado con éxito", {
                 position: "top-center",
             });

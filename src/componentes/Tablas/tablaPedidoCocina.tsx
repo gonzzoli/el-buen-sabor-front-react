@@ -11,30 +11,37 @@ import { SessionContext } from "../../context/SessionContext";
 import DeleteButton from "../DeleteButton";
 
 
-
+const initializeNewPedidoCocina = (): PedidoCocina => {
+    return {
+        id: 0,
+        fecha: new Date(),
+        estadoPedido: EstadoPedido.aPreparar,
+        productosCocina: " "
+    };
+};
 
 const PedidoCocinaTable = () => {
+    const [pedido, setPedido] = useState<PedidoCocina>(initializeNewPedidoCocina);
 
-    const initializeNewPedidoCocina = (): PedidoCocina => {
-        return {
-          id: 0,
-          fecha: new Date(),
-          estadoPedido: EstadoPedido.aPreparar,
-          productosCocina: " "
-    };
-    };  
-//CAMBIO
+    const [showModal, setShowModal] = useState(false);
+    const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
+    const [title, setTitle] = useState("");
+
+    const sessionContext = useContext(SessionContext);
+
+
+
+    //CAMBIO
     //const [pedidos, setPedidos] = useState<PedidoCocina>(initializeNewPedidoCocina);
     const [pedidos, setPedidos] = useState<PedidoCocina[]>([]);
-    const sessionContext = useContext(SessionContext);
-    const [isLoading, setIsLoading] = useState(true);
+    //const [isLoading, setIsLoading] = useState(true);
     const [refreshData, setRefreshData] = useState(false);
 
 
     useEffect(() => {
         //Llamamos a la funcion para obtener todos los productos declarado en el service
         const fetchPedidos = async () => {
-            const pedidos = await PedidoCocinaService.getPedidosCocina();
+            const pedidos = await PedidoCocinaService.getPedidosCocina(sessionContext.jwtToken);
             //CONSEGURIDAD: const pedidos = await PedidoCocinaService.getPedidosCocina(sessionContext.jwtToken);
             setPedidos(pedidos);
             //setIsLoading(false);
@@ -42,18 +49,7 @@ const PedidoCocinaTable = () => {
 
 
         fetchPedidos();
-    }, [refreshData]);
-
-    console.log(JSON.stringify(pedidos, null, 2));
-
- 
-
-    const [pedido, setPedido] = useState<PedidoCocina>(initializeNewPedidoCocina);
-
-    const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
-    const [title, setTitle] = useState("");
-
+    }, [refreshData])
     const handleClick = (newTitle: string, ped: PedidoCocina, modal: ModalType) => {
         setTitle(newTitle);
         setModalType(modal)
@@ -63,10 +59,7 @@ const PedidoCocinaTable = () => {
 
     return (
         <>
-
-    <Button onClick={() => handleClick("Nuevo Pedido", initializeNewPedidoCocina(), ModalType.CREATE)}> Nuevo Pedido Cocina </Button>
-        
-    {/*{isLoading ? <Loader/>: (*/}
+            {/*{isLoading ? <Loader/>: (*/}
             <Table hover>
                 <thead>
                     <tr>
@@ -75,39 +68,39 @@ const PedidoCocinaTable = () => {
                         <th>Productos</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
-                    </tr> 
-                 </thead>
-                 <tbody>
+                    </tr>
+                </thead>
+                <tbody>
                     {
-                        pedidos.map(pedido =>  (
+                        pedidos.map(pedido => (
                             <tr key={pedido.id}>
                                 <td>{pedido.fecha.toString()}</td>
                                 <td>{pedido.estadoPedido}</td>
                                 <td>{pedido.productosCocina}</td>
-                                <td> <EditButton onClick={() => handleClick("Editar Producto", pedido, ModalType.UPDATE)}/> </td>
-                                <td> <DeleteButton onClick={() => handleClick("Borrar Producto", pedido, ModalType.DELETE)}/> </td>
-                             </tr>   
+                                <td> <EditButton onClick={() => handleClick("Editar Pedido", pedido, ModalType.UPDATE)} /> </td>
+                                <td> <DeleteButton onClick={() => handleClick("Borrar Pedido", pedido, ModalType.DELETE)} /> </td>
+                            </tr>
                         ))
                     }
-                 </tbody>
-                 </Table>       
-    {/*})}*/}
-                {showModal && (
-                        <PedidoCocinaModal
-                        show={showModal}
-                        onHide={() => setShowModal(false)}
-                        title={title}
-                        modalType={modalType}
-                        ped={pedido}
-                        refreshData={setRefreshData}
-                        />
-                    )}
-        
+                </tbody>
+            </Table>
+            {/*})}*/}
+            {showModal && (
+                <PedidoCocinaModal
+                    show={showModal}
+                    onHide={() => setShowModal(false)}
+                    title={title}
+                    modalType={modalType}
+                    ped={pedido}
+                    refreshData={setRefreshData}
+                />
+            )}
+
         </>
 
     )
+};
 
-}
 
 
 export default PedidoCocinaTable
