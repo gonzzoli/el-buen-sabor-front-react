@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import "./PaginaPrincipal.scss";
 import Hero from "../../componentes/Hero";
 import fotoHero from "../../archivos/hamburguesa-producto.jpg";
@@ -22,6 +22,10 @@ interface RubroProducto {
 
 const PaginaPrincipal: React.FC = () => {
   const [productos, setProductos] = useState<RubroProducto[]>([]);
+  const [productosMostrados, setProductosMostrados] = useState<
+    RubroProducto[]
+  >([]);
+  const [aplicandoFiltros, setAplicandoFiltros] = useState(false);
 
   // aca traeriamos los productos desde el backend
   // primero hay que subirlo a render
@@ -33,17 +37,32 @@ const PaginaPrincipal: React.FC = () => {
       const datos = await respuesta.json();
       console.log(datos);
       setProductos(datos);
+      setProductosMostrados(datos);
     }
     console.log("corriendo");
     traerProductos();
   }, []);
 
+  const aplicarFiltro = (nombreRubro: string) => {
+    setProductosMostrados(
+      productos.filter(
+        (rubroProducto) => rubroProducto.nombreRubro == nombreRubro
+      )
+    );
+    return
+  };
+
   return (
     <div className="principal">
-      <Hero texto="El buen Sabor. Bien sabroso todo lo que gozo. El Buen Sabroso" rutaImagen={fotoHero} />
-      <FiltrosProductos />
+      <Hero
+        texto="El Buen Sabor. Vas a volver por mas..."
+        rutaImagen={fotoHero}
+      />
+      <FiltrosProductos aplicarFiltro={aplicarFiltro} />
       {productos.length > 0 && (
-        <ListaProductos rubroProductos={productos} />
+        <ListaProductos
+          rubroProductos={productosMostrados}
+        />
       )}
     </div>
   );

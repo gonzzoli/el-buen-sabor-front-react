@@ -30,9 +30,13 @@ export const ProductoService = {
         return data;
     },
 
-    eliminarProducto:async (id:number): Promise<void> => {
+    eliminarProducto:async (id:number, token: string): Promise<void> => {
         await fetch(`${BASE_URL}/api/v1/productos/${id}`, {         //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona, igual hay problemas con el id de Rubro)
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + token,
+                'Content-Type': 'application/json'
+            },
         });
     },
 

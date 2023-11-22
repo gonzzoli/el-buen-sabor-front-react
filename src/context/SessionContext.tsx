@@ -25,7 +25,7 @@ export const SessionContextProvider = ({ children }: PropsWithChildren) => {
   const login = async (credenciales: CredencialesLogin) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_AUTH_URL}/login`,
+        `https://buensabor-api.onrender.com/auth/login`,
         {
           method: "POST",
           headers: {

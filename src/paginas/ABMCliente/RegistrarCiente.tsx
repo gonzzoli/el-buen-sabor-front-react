@@ -8,10 +8,12 @@ import { ClienteService } from "../../sevicios/ClienteServicio";
 //Notificaciones al usuario
 import { toast } from 'react-toastify';
 import {  useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Registro: React.FC =()=> {
+    const navigate = useNavigate();
 
     //Variable que muestra el componente Loader hasta que se reciban los datos de la API
 const [isLoading, setIsLoading] = useState(true);
@@ -33,6 +35,7 @@ const validationSchema = () => {
     const handleSave = async (cliente: Cliente) => {
         try {
             await ClienteService.saveCliente(cliente);
+            navigate("/")
             toast.success("Cliente Creado")
            /* onHide () => void;
             refreshData(prevState => !prevState);*/

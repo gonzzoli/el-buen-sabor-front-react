@@ -60,7 +60,7 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingr, refreshData }:
             stockActual: Yup.number().required('El stock actual es requerida'),
             stockMinimo: Yup.number().required('El stock minimo es requerida'),
             foto: Yup.string().required('La URL de la imagen es requerida'),
-            unidadMedida: Yup.string().required('La URL de la imagen es requerida'),
+            unidadMedida: Yup.string().required('La unidad de medida es requerida'),
         });
     };
 
@@ -180,7 +180,7 @@ const IngredienteModal = ({ show, onHide, title, modalType, ingr, refreshData }:
 
 
                                 <Form.Group controlId="formUnidadMedida">
-                                    <Form.Label>UnidadMedida</Form.Label>
+                                    <Form.Label>Unidad Medida</Form.Label>
                                     <Form.Control
                                         name="UnidadMedida"
                                         type="text"

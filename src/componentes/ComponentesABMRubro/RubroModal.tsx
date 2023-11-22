@@ -64,7 +64,7 @@ const RubroModal = ({show, onHide, title, rubro, modalType, refreshData}:RubroMo
 //Función handleDelete (DELETE)
 const handleDelete = async () => {
     try {
-        await RubroService.eliminarRubro(rubro.id);
+        await RubroService.eliminarRubro(rubro.id,sessionContext.jwtToken);
         toast.success("Rubro borrado", {
             position: "top-center",
         });

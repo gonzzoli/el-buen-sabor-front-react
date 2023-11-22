@@ -57,9 +57,11 @@ const handleClick = (newTittle: string, ingr: Ingrediente, modal: ModalType) => 
 
         //Llamamos a la funcion para obtener todos los ingredientes declarado en el service
         const fetchIngredientes = async () => {
+            console.log("fetching")
             const ingredientes = await IngredienteServicio.getIngredientes();
             setIngredientes(ingredientes);
             setIsLoading(false);
+            console.log("termino fetch")
         };
 
         fetchIngredientes();
@@ -101,7 +103,7 @@ const handleClick = (newTittle: string, ingr: Ingrediente, modal: ModalType) => 
                                 <td>{ingrediente.unidadMedida}</td>
                                 <td><img src={ingrediente.foto} alt={ingrediente.nombre} style={{ width: '50px' }} /></td>
                                 <td><EditButton onClick={() => handleClick("Editar Ingrediente", ingrediente, ModalType.UPDATE)} /></td>
-                                <td><DeleteButton onClick={() => handleClick("Borrar INgrediente", ingrediente, ModalType.DELETE)} /></td>
+                                <td><DeleteButton onClick={() => handleClick("Borrar Ingrediente", ingrediente, ModalType.DELETE)} /></td>
                             </tr>
                         ))
                         }
