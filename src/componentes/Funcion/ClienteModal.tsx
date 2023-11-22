@@ -46,7 +46,7 @@ const ClienteModal = ({show, onHide, title, cliente, modalType, refreshData}:Cli
             apellido: cliente.apellido,
             telefono: cliente.telefono,
             email: cliente.email,
-            rol: Rol.CLIENTE
+            //rol: Rol.CLIENTE
         }
         return clienteDTO;
     };
