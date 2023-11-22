@@ -29,6 +29,8 @@ export const RubroService = {
         });
     },
 
+    
+
     modificarRubro:async (id:number, rubro: Rubro, token:string): Promise<Rubro> => {
         const response = await fetch(`${BASE_URL}/api/v1/rubros/modificarRubro/${id}` , {           //Esta ruta igual se puede mantener, ya que esta mapeando con BaseControllerImpl (Funciona)
             method: "PUT",
