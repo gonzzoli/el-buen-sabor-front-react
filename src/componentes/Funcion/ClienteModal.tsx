@@ -70,13 +70,13 @@ const ClienteModal = ({show, onHide, title, cliente, modalType, refreshData}:Cli
     
 };
 
-//HandleUpdate
-   const handleUpdate = async (cliente: ClienteDTOMA) => {
+//HandleUpdate del DTO
+   const handleUpdateDTO = async (cliente: ClienteDTOMA) => {
             try {
                  
             await ClienteService.modificarCliente(cliente, sessionContext.jwtToken);
                 
-                toast.success("Empleado Actualizado", {
+                toast.success("Cliente Actualizado", {
                     position: "top-center"});
             onHide();
             refreshData(prevState => !prevState);
@@ -85,6 +85,25 @@ const ClienteModal = ({show, onHide, title, cliente, modalType, refreshData}:Cli
                 toast.error('A ocurrido un error');
             }
         };
+
+        //HandleUpdate
+        const handleUpdate = async (cliente: Cliente) => {
+            try {
+                 
+            await ClienteService.updateCliente(cliente.id, cliente);
+                
+                toast.success("Cliente Actualizado", {
+                    position: "top-center"});
+            onHide();
+            refreshData(prevState => !prevState);
+            } catch (error) {
+                console.error(error);
+                toast.error('A ocurrido un error');
+            }
+        };
+  
+
+
 //Función handleDelete (DELETE)
 const handleDelete = async () => {
     try {
@@ -123,12 +142,19 @@ const handleDelete = async () => {
         validateOnBlur: true,
         onSubmit: (obj: Cliente) => handleSave(obj),
      });
+     const formikupdate2 = useFormik({
+        initialValues: cliente,
+        validationSchema: validationSchema(),
+        validateOnChange: true,
+        validateOnBlur: true,
+        onSubmit: (obj: Cliente) => handleUpdate(obj),
+     });
      const formikupdate = useFormik({
         initialValues: cambioaDTO(cliente),
         validationSchema: validationSchema(),
         validateOnChange: true,
         validateOnBlur: true,
-        onSubmit: (obj: ClienteDTOMA) => handleUpdate(obj),
+        onSubmit: (obj: ClienteDTOMA) => handleUpdateDTO(obj),
      });
 
 
@@ -281,7 +307,125 @@ const handleDelete = async () => {
 
                 </Modal>
                 </>
-            )} {/*{modalType === ModalType.CREATE && (
+            )}{modalType === ModalType.UPDATE && (
+                <>
+                
+                <Modal show={show} onHide={onHide} centered backdrop="static" className="modal-xl">
+                    
+                    <Modal.Header closeButton>
+                        <Modal.Title>{title}</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+
+                    {/*"Formulario"*/}
+                    <Form onSubmit={formikupdate2.handleSubmit}>
+                        
+                    {/*"Nombre"*/}
+                        <Form.Group controlId="formNombre">
+                            <Form.Label>Nombre</Form.Label>
+                            <Form.Control
+                                name="nombre"
+                                type="text"
+                                value={formikupdate2.values.nombre}
+                                onChange={formikupdate2.handleChange}
+                                onBlur={formikupdate2.handleBlur}
+                                isInvalid={Boolean(formikupdate2.errors.nombre &&
+                                formikupdate2.touched.nombre)}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {formikupdate2.errors.nombre}
+                             </Form.Control.Feedback>
+                        </Form.Group>
+
+                    {/*"Apellido"*/}
+                        <Form.Group controlId="formApellido">
+                            <Form.Label>Apellido</Form.Label>
+                            <Form.Control
+                                name="apellido"
+                                type="text"
+                                value={formikupdate2.values.apellido || ''}
+                                onChange={formikupdate2.handleChange}
+                                onBlur={formikupdate2.handleBlur}
+                                isInvalid={Boolean(formikupdate2.errors.apellido &&
+                                formikupdate2.touched.apellido)}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {formikupdate2.errors.apellido}
+                             </Form.Control.Feedback>
+                        </Form.Group>
+
+                    {/*"Telefono"*/}
+                        <Form.Group controlId="formTelefono">
+                            <Form.Label>Telefono</Form.Label>
+                            <Form.Control
+                                name="telefono"
+                                type="text"
+                                value={formikupdate2.values.telefono}
+                                onChange={formikupdate2.handleChange}
+                                onBlur={formikupdate2.handleBlur}
+                                isInvalid={Boolean(formikupdate2.errors.telefono &&
+                                formikupdate2.touched.telefono)}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {formikupdate2.errors.telefono}
+                             </Form.Control.Feedback>
+                        </Form.Group>
+
+                    {/*"Email"*/}                
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                name="email"
+                                type="text"
+                                value={formikupdate2.values.email || ''}
+                                onChange={formikupdate2.handleChange}
+                                onBlur={formikupdate2.handleBlur}
+                                isInvalid={Boolean(formikupdate2.errors.email &&
+                                formikupdate2.touched.email)}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {formikupdate2.errors.email}
+                             </Form.Control.Feedback>
+                        </Form.Group>
+                    
+                    {/*{"Contraseña"}                
+                        <Form.Group controlId="formPassword">
+                            <Form.Label>Contraseña</Form.Label>
+                            <Form.Control
+                                name="password"
+                                type="text"
+                                value={formikupdate.values.password}
+                                onChange={formikupdate.handleChange}
+                                onBlur={formikupdate.handleBlur}
+                                isInvalid={Boolean(formikupdate.errors.password &&
+                                formikupdate.touched.password)}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {formikupdate.errors.password}
+                             </Form.Control.Feedback>
+                                </Form.Group>*/}
+                
+
+                            <Modal.Footer className="mt-4">
+                                
+                                <Button variant="secondary" onClick={onHide}>
+                                    Cancelar
+                                </Button>
+                                <Button variant="primary" type="submit" disabled={!formikupdate2.isValid}>
+                                    Guardar
+                                </Button>
+
+                            </Modal.Footer>
+                            </Form>
+                               
+
+                    </Modal.Body>
+
+                </Modal>
+                </>
+            )}  
+            {/*{modalType === ModalType.CREATE && (
                 <>
                 
                 <Modal show={show} onHide={onHide} centered backdrop="static" className="modal-xl">

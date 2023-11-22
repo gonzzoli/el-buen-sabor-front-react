@@ -79,5 +79,21 @@ export const ClienteService = {
         await fetch(`${BASE_URL}/api/v1/clientes/${id}`, {
             method: "DELETE"
         });
-    }
+    },
+
+
+    
+    updateCliente: async (id: number, cliente: Cliente): Promise<Cliente> => {
+        const response = await fetch(`${BASE_URL}/api/v1/clientes/${id}`, {  // chequear rutas
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cliente)
+                });
+                const data = await response.json();
+                return data;
+            }
+            
+
 }
