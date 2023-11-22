@@ -1,6 +1,6 @@
 import { Ingrediente } from "../tipos/Ingrediente";
 
-const BASE_URL = 'https://buensabor-api.onrender.com';
+const BASE_URL = import.meta.env.VITE_URL_API_sinv1;
 
 export const IngredienteServicio = {
 
