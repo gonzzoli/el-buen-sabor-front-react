@@ -73,7 +73,7 @@ const ModalDomicilio = ({show, onHide, title, modalType, domicilio, refreshData}
             id: Yup.number().integer().min(0),
             calle: Yup.string().required('El nombre de la calle es requerido'),
             numero: Yup.number().required('El numero es requerido'),
-            //localiad: Yup.string().required('La localiad es requerida'),
+            localiad: Yup.string().required('La localiad es requerida'),
         });
     };
     /* Formik, utiliza el esquema de validación para crear un formulario dinámico y que lo bloquee en caso de errores */
